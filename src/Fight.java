@@ -71,4 +71,8 @@ public class Fight {
             creature.setNumberOfAttacks(0);
         }
     }
+
+    public ArrayList<Player> getFightOrder() {
+        return fightOrder;
+    }
 }

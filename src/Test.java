@@ -7,7 +7,9 @@ public class Test {
     playerTestInitialliser();
     Fight fight = new Fight();
     fight.drawFights(Initialisation.players);
-    fight.vsFight(Initialisation.players.get(0),Initialisation.players.get(1));
+    for(int i=0;i<3;i++){
+        fight.vsFight(fight.getFightOrder().get(2*i),fight.getFightOrder().get(2*i+1));
+        }
     }
 
     public static void playerTestInitialliser(){

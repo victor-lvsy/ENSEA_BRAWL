@@ -53,7 +53,7 @@ public class Player {
                         }
                     }
                     alea=haveTaunt.get(alea);
-                    isDead = this.onBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)));
+                    isDead = this.onBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
                 }
                 else{
                     alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
