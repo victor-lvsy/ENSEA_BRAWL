@@ -2,8 +2,25 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Creature extends Card{
+
+    public int getCreatureHp() {
+        return creatureHp;
+    }
+
+    public int getCreatureAtt() {
+        return creatureAtt;
+    }
+
+    public void setCreatureHp(int creatureHp) {
+        this.creatureHp = creatureHp;
+    }
+
+    public void setCreatureAtt(int creatureAtt) {
+        this.creatureAtt = creatureAtt;
+    }
 
     private int creatureHp;
     private int creatureAtt;
@@ -21,6 +38,16 @@ public class Creature extends Card{
     private boolean effectList[]=new boolean[47];
     private int numberOfAttacks;
     private boolean currentBouclierDivin;
+
+    public boolean isCurrentCamouflage() {
+        return currentCamouflage;
+    }
+
+    public void setCurrentCamouflage(boolean currentCamouflage) {
+        this.currentCamouflage = currentCamouflage;
+    }
+
+    private boolean currentCamouflage;
 
     public boolean isCurrentBouclierDivin() {
         return currentBouclierDivin;
@@ -138,16 +165,24 @@ public class Creature extends Card{
         }
     }
 
-    public void attackCreature(Creature isAttacked){
+    public boolean[] attackCreature(Creature isAttacked){
+        boolean isDead[] = new boolean[2];
+        isDead[0]=false;isDead[1]=false;
         if(isAttacked.getEffectList()[6]==false){
             if(isAttacked.isCurrentBouclierDivin()==false){
-                if(isAttacked.getEffectList()[]){
-
+               isAttacked.setCreatureHp(isAttacked.creatureHp-this.creatureAtt);
+               this.setCreatureHp(this.creatureHp- isAttacked.creatureAtt);
+               if(this.creatureHp<=0){
+                   isDead[0]=true;
+               }
+                if(isAttacked.creatureHp<=0){
+                    isDead[1]=true;
                 }
-
             }
         }
         isAttacked.setCurrentBouclierDivin(false);
+        this.setCurrentCamouflage(false);
+        return isDead;
     }
 
 

@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
@@ -14,16 +15,54 @@ public class Player {
 
     private ArrayList<Creature> onBoard;
 
-    public void attackTurn(Player toBeFight,int willFight){
-        ArrayList <Integer> bouvierDivin;
-        int alea,i=0;
-        for (Creature creature : toBeFight.getOnBoard()){
-            if(creature.getEffectList()[35]==true){
+    public ArrayList<Creature> getCurrentOnBoard() {
+        return currentOnBoard;
+    }
 
+    public void setCurrentOnBoard(ArrayList<Creature> currentOnBoard) {
+        this.currentOnBoard = currentOnBoard;
+    }
+
+    private ArrayList<Creature> currentOnBoard;
+
+    public void attackTurn(Player toBeFight,int willFight){
+        boolean isDead[] = new boolean[2];
+        ArrayList <Integer> haveTaunt = null;
+        int alea,i=0;
+        for (Creature creature : toBeFight.getCurrentOnBoard()){
+            if(creature.getEffectList()[35]==true){
+                haveTaunt.add(i);
             }
             i++;
         }
-        alea=(int) (Math.random() * (toBeFight.getOnBoard().size()));
-        this.onBoard.get(willFight).attackCreature(toBeFight.getOnBoard().get(alea));
+        if (haveTaunt != null){
+            i=1;
+            alea=(int) (Math.random() * (haveTaunt.size()));
+            while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).isCurrentCamouflage()==true){
+                alea=(int) (Math.random() * (haveTaunt.size()));
+                i++;
+                if(i==haveTaunt.size()){
+                    toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).setCurrentCamouflage(false);
+                }
+            }
+            alea=haveTaunt.get(alea);
+            isDead = this.onBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)));
+        }
+        else{
+            alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
+            while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).isCurrentCamouflage()==true){
+                alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
+                if(i==toBeFight.getCurrentOnBoard().size()){
+                    toBeFight.getCurrentOnBoard().get(alea).setCurrentCamouflage(false);
+                }
+            }
+            isDead = this.onBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
+        }
+        if (isDead[0]==true){
+            this.currentOnBoard.remove(willFight);
+        }
+        if (isDead[1]==true){
+            toBeFight.currentOnBoard.remove(alea);
+        }
     }
 }
