@@ -30,11 +30,12 @@ public class Player {
         if (haveTaunt != null){
             i=1;
             alea=(int) (Math.random() * (haveTaunt.size()));
-            while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).isCurrentCamouflage()==true){
+            while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).getEffectList()[8]==true){
                 alea=(int) (Math.random() * (haveTaunt.size()));
                 i++;
                 if(i==haveTaunt.size()){
-                    toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).setCurrentCamouflage(false);
+                    toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).setEffectList(false,8);
+                    System.out.println("Camouflage is set to false because of impossibility to attack");
                 }
             }
             alea=haveTaunt.get(alea);
@@ -42,10 +43,11 @@ public class Player {
         }
         else{
             alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
-            while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).isCurrentCamouflage()==true){
+            while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).getEffectList()[8]==true){
                 alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
                 if(i==toBeFight.getCurrentOnBoard().size()){
-                    toBeFight.getCurrentOnBoard().get(alea).setCurrentCamouflage(false);
+                    toBeFight.getCurrentOnBoard().get(alea).setEffectList(false,8);
+                    System.out.println("Camouflage is set to false because of impossibility to attack");
                 }
             }
             isDead = this.onBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));

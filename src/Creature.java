@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Creature extends Card{
+public class Creature extends Card {
     private int creatureHp;
     private int creatureAtt;
     private int creatureTier;
@@ -13,49 +13,48 @@ public class Creature extends Card{
     private Spell toBeGeneratedDiploma = new Spell();
     private Spell currentItem;
     private Spell paniersBio;
-    private boolean effectList[]=new boolean[47];
+    private boolean effectList[] = new boolean[47];
     private int numberOfAttacks;
-    private boolean currentBouclierDivin;
-    private boolean currentCamouflage;
+
+    public void setEffectList(boolean effect, int i) {
+        this.effectList[i] = effect;
+    }
+
     public boolean[] getEffectList() {
         return effectList;
     }
+
     public int getCreatureHp() {
         return creatureHp;
     }
+
     public int getCreatureAtt() {
         return creatureAtt;
     }
+
     public void setCreatureHp(int creatureHp) {
         this.creatureHp = creatureHp;
     }
+
     public void setCreatureAtt(int creatureAtt) {
         this.creatureAtt = creatureAtt;
     }
-    public boolean isCurrentCamouflage() {
-        return currentCamouflage;
-    }
-    public void setCurrentCamouflage(boolean currentCamouflage) {
-        this.currentCamouflage = currentCamouflage;
-    }
-    public boolean isCurrentBouclierDivin() {
-        return currentBouclierDivin;
-    }
-    public void setCurrentBouclierDivin(boolean currentBouclierDivin) {
-        this.currentBouclierDivin = currentBouclierDivin;
-    }
+
     public int getNumberOfAttacks() {
         return numberOfAttacks;
     }
+
     public void setNumberOfAttacks(int numberOfAttacks) {
         this.numberOfAttacks = numberOfAttacks;
     }
-    public void setToFalseEffectList(boolean toBeSet[]){
-        for(int i=0;i<=46;i++) {
+
+    public void setToFalseEffectList(boolean toBeSet[]) {
+        for (int i = 0; i <= 46; i++) {
             toBeSet[i] = false;
         }
     }
-    public void setCreature(String Name, String fileName){
+
+    public void setCreature(String Name, String fileName) {
         setToFalseEffectList(this.effectList);
         this.toBeGeneratedDiploma.setSpellEffect(this.effectList);
         try {
@@ -77,30 +76,30 @@ public class Creature extends Card{
                     Integer eighthComma = li.indexOf(';', seventhComma + 1);
                     stringToIntALEAStats(li.substring(thirdComma + 1, fourthComma), li.substring(fourthComma + 1, fifthComma));
                     stringToIntALEADiploma(li.substring(sixthComma + 1, seventhComma), li.substring(seventhComma + 1, eighthComma));
-                    this.effectList[stringToInt(li.substring(fifthComma + 1, sixthComma))]=true;
-                    this.toBeGeneratedDiploma.setThisSpellEffect(stringToInt(li.substring(eighthComma + 1)),true);
+                    this.effectList[stringToInt(li.substring(fifthComma + 1, sixthComma))] = true;
+                    this.toBeGeneratedDiploma.setThisSpellEffect(stringToInt(li.substring(eighthComma + 1)), true);
                 }
                 li = br.readLine();
             }
-            } catch(FileNotFoundException e){
-                e.printStackTrace();
-            } catch(IOException e){
-                e.printStackTrace();
-            } catch(Exception e){
-                e.printStackTrace();
-            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public void stringToIntALEAStats(String toBeConverted1,String toBeConverted2){
-        if (toBeConverted1.equals("ALEA")){
+
+    public void stringToIntALEAStats(String toBeConverted1, String toBeConverted2) {
+        if (toBeConverted1.equals("ALEA")) {
             try {
                 int number = Integer.parseInt(toBeConverted2);
                 this.creatureAtt = (int) (Math.random() * (number));
-                this.creatureHp=number-this.creatureAtt+1;
+                this.creatureHp = number - this.creatureAtt + 1;
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
             }
-     }
-        else {
+        } else {
             try {
                 this.creatureAtt = Integer.parseInt(toBeConverted1);
                 this.creatureHp = Integer.parseInt(toBeConverted2);
@@ -109,17 +108,17 @@ public class Creature extends Card{
             }
         }
     }
-    public void stringToIntALEADiploma(String toBeConverted1,String toBeConverted2){
-        if (toBeConverted1.equals("ALEA")){
+
+    public void stringToIntALEADiploma(String toBeConverted1, String toBeConverted2) {
+        if (toBeConverted1.equals("ALEA")) {
             try {
                 int number = Integer.parseInt(toBeConverted2);
                 this.toBeGeneratedDiploma.setSpellAttBoost((int) (Math.random() * (number)));
-                this.toBeGeneratedDiploma.setSpellHpBoost(number-this.toBeGeneratedDiploma.getSpellAttBoost()+1);
+                this.toBeGeneratedDiploma.setSpellHpBoost(number - this.toBeGeneratedDiploma.getSpellAttBoost() + 1);
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
             }
-        }
-        else {
+        } else {
             try {
                 this.toBeGeneratedDiploma.setSpellAttBoost(Integer.parseInt(toBeConverted1));
                 this.toBeGeneratedDiploma.setSpellHpBoost(Integer.parseInt(toBeConverted2));
@@ -128,41 +127,77 @@ public class Creature extends Card{
             }
         }
     }
-    public int stringToInt(String toBeConverted){
-            try {
-                int number = Integer.parseInt(toBeConverted);
-                return number;
-            } catch (NumberFormatException ex) {
-                ex.printStackTrace();
-            }
-        return 0;
+
+    public int stringToInt(String toBeConverted) {
+        try {
+            int number = Integer.parseInt(toBeConverted);
+            return number;
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
         }
-    public void effectAdder(){
-        int i=0;
-        for (boolean b : this.currentDiploma.getSpellEffect()){
-            if(this.toBeGeneratedDiploma.getThisSpellEffect(i)!=this.currentDiploma.getThisSpellEffect(i)){
-                this.toBeGeneratedDiploma.setThisSpellEffect(i,true);
+        return 0;
+    }
+
+    public void effectAdder() {
+        int i = 0;
+        for (boolean b : this.currentDiploma.getSpellEffect()) {
+            if (this.toBeGeneratedDiploma.getThisSpellEffect(i) != this.currentDiploma.getThisSpellEffect(i)) {
+                this.toBeGeneratedDiploma.setThisSpellEffect(i, true);
             }
         }
     }
-    public boolean[] attackCreature(Creature isAttacked){
+
+    public boolean[] attackCreature(Creature isAttacked) {
         boolean isDead[] = new boolean[2];
-        isDead[0]=false;isDead[1]=false;
-        if(isAttacked.getEffectList()[6]==false){
-            if(isAttacked.isCurrentBouclierDivin()==false){
-               isAttacked.setCreatureHp(isAttacked.creatureHp-this.creatureAtt);
-               this.setCreatureHp(this.creatureHp- isAttacked.creatureAtt);
-               if(this.creatureHp<=0){
-                   isDead[0]=true;
-               }
-                if(isAttacked.creatureHp<=0){
-                    isDead[1]=true;
-                }
-            }
+        isDead[0] = false;isDead[1] = false;
+        int bd=gestionBoucliersDivins(this.getEffectList()[7],isAttacked.getEffectList()[7]);
+        switch (bd){
+            case 0: isAttacked.setCreatureHp(isAttacked.creatureHp - this.creatureAtt);
+                this.setCreatureHp(this.creatureHp - isAttacked.creatureAtt);
+                System.out.println("Attacker did " + this.creatureAtt + " damages and Defender did " + isAttacked.creatureAtt + " damages");
+                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+                break;
+            case 1: isAttacked.setCreatureHp(isAttacked.creatureHp - this.creatureAtt);
+                System.out.println("Attacker did " + this.creatureAtt + " damages and Defender did 0 damages");
+                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+                break;
+            case 2: this.setCreatureHp(this.creatureHp - isAttacked.creatureAtt);
+                System.out.println("Attacker did 0 damages and Defender did " + isAttacked.creatureAtt + " damages");
+                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+                break;
+            case 3: System.out.println("Attacker did 0 damages and Defender did 0 damages");
+                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+                break;
+            default:
         }
-        isAttacked.setCurrentBouclierDivin(false);
-        this.setCurrentCamouflage(false);
+        isAttacked.setEffectList(false, 7);
+        this.setEffectList(false, 8);
         return isDead;
     }
 
+    public int gestionBoucliersDivins(boolean attacker, boolean defender) {
+        if (attacker == true && defender == false) {
+            return 1;
+        }
+        if (attacker == false && defender == true) {
+            return 2;
+        }
+        if (attacker == true && defender == true) {
+            return 3;
+        }
+        return 0;
+    }
+    public boolean[] isDead(int i,int j){
+        boolean isDead[] = new boolean[2];
+        isDead[0] = false;isDead[1] = false;
+        if (i <= 0) {
+            isDead[0] = true;
+            System.out.println("Attacker died fighting");
+        }
+        if (j <= 0) {
+            isDead[1] = true;
+            System.out.println("Defender died fighting");
+        }
+        return isDead;
+    }
 }
