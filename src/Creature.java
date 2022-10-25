@@ -147,30 +147,33 @@ public class Creature extends Card {
         }
     }
 
-    public boolean[] attackCreature(Creature isAttacked) {
+    public boolean[] attackCreature(Creature defender) {
         boolean isDead[] = new boolean[2];
         isDead[0] = false;isDead[1] = false;
-        int bd=gestionBoucliersDivins(this.getEffectList()[7],isAttacked.getEffectList()[7]);
+        int bd=gestionBoucliersDivins(this.getEffectList()[7],defender.getEffectList()[7]);
         switch (bd){
-            case 0: isAttacked.setCreatureHp(isAttacked.creatureHp - this.creatureAtt);
-                this.setCreatureHp(this.creatureHp - isAttacked.creatureAtt);
-                System.out.println("Attacker did " + this.creatureAtt + " damages and Defender did " + isAttacked.creatureAtt + " damages");
-                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+            case 0: defender.setCreatureHp(defender.creatureHp - this.creatureAtt);
+                this.setCreatureHp(this.creatureHp - defender.creatureAtt);
+                System.out.println("Attacker did " + this.creatureAtt + " damages and Defender did " + defender.creatureAtt + " damages");
+                isDead=isDead(this.creatureHp,defender.creatureHp);
                 break;
-            case 1: isAttacked.setCreatureHp(isAttacked.creatureHp - this.creatureAtt);
+            case 1: defender.setCreatureHp(defender.creatureHp - this.creatureAtt);
                 System.out.println("Attacker did " + this.creatureAtt + " damages and Defender did 0 damages");
-                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+                isDead=isDead(this.creatureHp,defender.creatureHp);
+                voidingBD(this,defender);
                 break;
-            case 2: this.setCreatureHp(this.creatureHp - isAttacked.creatureAtt);
-                System.out.println("Attacker did 0 damages and Defender did " + isAttacked.creatureAtt + " damages");
-                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+            case 2: this.setCreatureHp(this.creatureHp - defender.creatureAtt);
+                System.out.println("Attacker did 0 damages and Defender did " + defender.creatureAtt + " damages");
+                isDead=isDead(this.creatureHp,defender.creatureHp);
+                voidingBD(this,defender);
                 break;
             case 3: System.out.println("Attacker did 0 damages and Defender did 0 damages");
-                isDead=isDead(this.creatureHp,isAttacked.creatureHp);
+                isDead=isDead(this.creatureHp,defender.creatureHp);
+                voidingBD(this,defender);
                 break;
             default:
         }
-        isAttacked.setEffectList(false, 7);
+        defender.setEffectList(false, 7);
         this.setEffectList(false, 8);
         return isDead;
     }
@@ -199,5 +202,13 @@ public class Creature extends Card {
             System.out.println("Defender died fighting");
         }
         return isDead;
+    }
+    public void voidingBD(Creature attacker, Creature defender){
+        if(defender.creatureAtt>0){
+            attacker.setEffectList(false, 7);
+        }
+        if(attacker.creatureAtt>0){
+            defender.setEffectList(false, 7);
+        }
     }
 }
