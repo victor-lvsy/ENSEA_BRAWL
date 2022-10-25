@@ -5,23 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Creature extends Card{
-
-    public int getCreatureHp() {
-        return creatureHp;
-    }
-
-    public int getCreatureAtt() {
-        return creatureAtt;
-    }
-
-    public void setCreatureHp(int creatureHp) {
-        this.creatureHp = creatureHp;
-    }
-
-    public void setCreatureAtt(int creatureAtt) {
-        this.creatureAtt = creatureAtt;
-    }
-
     private int creatureHp;
     private int creatureAtt;
     private int creatureTier;
@@ -30,48 +13,48 @@ public class Creature extends Card{
     private Spell toBeGeneratedDiploma = new Spell();
     private Spell currentItem;
     private Spell paniersBio;
-
-    public boolean[] getEffectList() {
-        return effectList;
-    }
-
     private boolean effectList[]=new boolean[47];
     private int numberOfAttacks;
     private boolean currentBouclierDivin;
-
+    private boolean currentCamouflage;
+    public boolean[] getEffectList() {
+        return effectList;
+    }
+    public int getCreatureHp() {
+        return creatureHp;
+    }
+    public int getCreatureAtt() {
+        return creatureAtt;
+    }
+    public void setCreatureHp(int creatureHp) {
+        this.creatureHp = creatureHp;
+    }
+    public void setCreatureAtt(int creatureAtt) {
+        this.creatureAtt = creatureAtt;
+    }
     public boolean isCurrentCamouflage() {
         return currentCamouflage;
     }
-
     public void setCurrentCamouflage(boolean currentCamouflage) {
         this.currentCamouflage = currentCamouflage;
     }
-
-    private boolean currentCamouflage;
-
     public boolean isCurrentBouclierDivin() {
         return currentBouclierDivin;
     }
-
     public void setCurrentBouclierDivin(boolean currentBouclierDivin) {
         this.currentBouclierDivin = currentBouclierDivin;
     }
-
     public int getNumberOfAttacks() {
         return numberOfAttacks;
     }
-
     public void setNumberOfAttacks(int numberOfAttacks) {
         this.numberOfAttacks = numberOfAttacks;
     }
-
-
     public void setToFalseEffectList(boolean toBeSet[]){
         for(int i=0;i<=46;i++) {
             toBeSet[i] = false;
         }
     }
-
     public void setCreature(String Name, String fileName){
         setToFalseEffectList(this.effectList);
         this.toBeGeneratedDiploma.setSpellEffect(this.effectList);
@@ -126,7 +109,6 @@ public class Creature extends Card{
             }
         }
     }
-
     public void stringToIntALEADiploma(String toBeConverted1,String toBeConverted2){
         if (toBeConverted1.equals("ALEA")){
             try {
@@ -155,7 +137,6 @@ public class Creature extends Card{
             }
         return 0;
         }
-
     public void effectAdder(){
         int i=0;
         for (boolean b : this.currentDiploma.getSpellEffect()){
@@ -164,7 +145,6 @@ public class Creature extends Card{
             }
         }
     }
-
     public boolean[] attackCreature(Creature isAttacked){
         boolean isDead[] = new boolean[2];
         isDead[0]=false;isDead[1]=false;
@@ -184,6 +164,5 @@ public class Creature extends Card{
         this.setCurrentCamouflage(false);
         return isDead;
     }
-
 
 }

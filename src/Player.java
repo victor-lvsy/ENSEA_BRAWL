@@ -4,27 +4,19 @@ import java.util.ArrayList;
 public class Player {
 
     private String PlayerName;
-
     private int PlayerHp;
-
     private ArrayList<Card> hand;
-
+    private ArrayList<Creature> onBoard;
+    private ArrayList<Creature> currentOnBoard;
     public ArrayList<Creature> getOnBoard() {
         return onBoard;
     }
-
-    private ArrayList<Creature> onBoard;
-
     public ArrayList<Creature> getCurrentOnBoard() {
         return currentOnBoard;
     }
-
     public void setCurrentOnBoard(ArrayList<Creature> currentOnBoard) {
         this.currentOnBoard = currentOnBoard;
     }
-
-    private ArrayList<Creature> currentOnBoard;
-
     public void attackTurn(Player toBeFight,int willFight){
         boolean isDead[] = new boolean[2];
         ArrayList <Integer> haveTaunt = null;
@@ -65,4 +57,5 @@ public class Player {
             toBeFight.currentOnBoard.remove(alea);
         }
     }
+
 }
