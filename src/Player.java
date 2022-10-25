@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Player {
     private String PlayerName;
     private int PlayerHp;
+    private int PlayerGolds;
     private ArrayList<Card> hand;
     private ArrayList<Creature> onBoard;
     private ArrayList<Creature> currentOnBoard;

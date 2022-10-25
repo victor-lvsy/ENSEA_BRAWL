@@ -15,45 +15,35 @@ public class Creature extends Card {
     private Spell paniersBio;
     private boolean effectList[] = new boolean[47];
     private int numberOfAttacks;
-
     public void setEffectList(boolean effect, int i) {
         this.effectList[i] = effect;
     }
-
     public boolean[] getEffectList() {
         return effectList;
     }
-
     public int getCreatureHp() {
         return creatureHp;
     }
-
     public int getCreatureAtt() {
         return creatureAtt;
     }
-
     public void setCreatureHp(int creatureHp) {
         this.creatureHp = creatureHp;
     }
-
     public void setCreatureAtt(int creatureAtt) {
         this.creatureAtt = creatureAtt;
     }
-
     public int getNumberOfAttacks() {
         return numberOfAttacks;
     }
-
     public void setNumberOfAttacks(int numberOfAttacks) {
         this.numberOfAttacks = numberOfAttacks;
     }
-
     public void setToFalseEffectList(boolean toBeSet[]) {
         for (int i = 0; i <= 46; i++) {
             toBeSet[i] = false;
         }
     }
-
     public void setCreature(String Name, String fileName) {
         setToFalseEffectList(this.effectList);
         this.toBeGeneratedDiploma.setSpellEffect(this.effectList);
@@ -89,7 +79,6 @@ public class Creature extends Card {
             e.printStackTrace();
         }
     }
-
     public void stringToIntALEAStats(String toBeConverted1, String toBeConverted2) {
         if (toBeConverted1.equals("ALEA")) {
             try {
@@ -108,7 +97,6 @@ public class Creature extends Card {
             }
         }
     }
-
     public void stringToIntALEADiploma(String toBeConverted1, String toBeConverted2) {
         if (toBeConverted1.equals("ALEA")) {
             try {
@@ -127,7 +115,6 @@ public class Creature extends Card {
             }
         }
     }
-
     public int stringToInt(String toBeConverted) {
         try {
             int number = Integer.parseInt(toBeConverted);
@@ -137,7 +124,6 @@ public class Creature extends Card {
         }
         return 0;
     }
-
     public void effectAdder() {
         int i = 0;
         for (boolean b : this.currentDiploma.getSpellEffect()) {
@@ -146,7 +132,6 @@ public class Creature extends Card {
             }
         }
     }
-
     public boolean[] attackCreature(Creature defender) {
         boolean isDead[] = new boolean[2];
         isDead[0] = false;isDead[1] = false;
@@ -177,7 +162,6 @@ public class Creature extends Card {
         this.setEffectList(false, 8);
         return isDead;
     }
-
     public int gestionBoucliersDivins(boolean attacker, boolean defender) {
         if (attacker == true && defender == false) {
             return 1;
