@@ -2,7 +2,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
-
     private String PlayerName;
     private int PlayerHp;
     private ArrayList<Card> hand;

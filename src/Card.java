@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class Card {
     private String CardName;
     public String getCardName() {
@@ -6,4 +12,5 @@ public class Card {
     public void setCardName(String cardName) {
         CardName = cardName;
     }
+
 }
