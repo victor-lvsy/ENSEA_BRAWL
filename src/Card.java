@@ -12,5 +12,9 @@ public class Card {
     public void setCardName(String cardName) {
         CardName = cardName;
     }
+    @Override
+    public String toString() {
+        return "Name: " + CardName;
+    }
 
 }

@@ -27,6 +27,11 @@ public class Creature extends Card {
     public int getCreatureAtt() {
         return creatureAtt;
     }
+
+    public int getCreatureTier() {
+        return creatureTier;
+    }
+
     public void setCreatureHp(int creatureHp) {
         this.creatureHp = creatureHp;
     }
@@ -195,4 +200,5 @@ public class Creature extends Card {
             defender.setEffectList(false, 7);
         }
     }
+
 }

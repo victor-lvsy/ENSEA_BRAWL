@@ -1,13 +1,18 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
     private String PlayerName;
     private int PlayerHp;
     private int PlayerGolds;
+    public Shop shop = new Shop();
     private ArrayList<Card> hand;
     private ArrayList<Creature> onBoard;
     private ArrayList<Creature> currentOnBoard;
+    public Player(String playerName, int playerHp, int playerGolds) {
+        PlayerName = playerName;
+        PlayerHp = playerHp;
+        PlayerGolds = playerGolds;
+    }
     public ArrayList<Creature> getOnBoard() {
         return onBoard;
     }
@@ -69,5 +74,8 @@ public class Player {
             }
         }
     }
-
+    private void buyCreature(int indexOfCreature){
+        this.hand.add(shop.actuallySelling.get(indexOfCreature));
+        shop.actuallySelling.remove(indexOfCreature);
+    }
 }
