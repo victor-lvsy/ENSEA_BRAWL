@@ -66,7 +66,7 @@ public class Fight {
         return true;
     }
     public void fightingBoardInitializer(Player toBeInitialized){
-        toBeInitialized.setCurrentOnBoard(toBeInitialized.getOnBoard());
+        toBeInitialized.getCurrentOnBoard().addAll(toBeInitialized.getOnBoard());
         for (Creature creature : toBeInitialized.getOnBoard()){
             creature.setNumberOfAttacks(0);
         }

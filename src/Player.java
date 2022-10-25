@@ -20,7 +20,7 @@ public class Player {
     public ArrayList<Creature> getCurrentOnBoard() {
         return currentOnBoard;
     }
-    public void setCurrentOnBoard(ArrayList<Creature> currentOnBoard) {
+    public void setCurrentOnBoard() {
         this.currentOnBoard = currentOnBoard;
     }
     public void attackTurn(Player toBeFight,int willFight){
