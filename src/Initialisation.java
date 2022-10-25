@@ -6,6 +6,13 @@ import java.util.ArrayList;
 
 public class Initialisation {
     int i=0;
+    public static Player player1 = new Player("zssnu",30,3);
+    public static Player player2 = new Player("Sltmapoule",30,3);
+    public static Player player3 = new Player("Eitonan",30,3);
+    public static Player player4 = new Player("I rule ENSEA",30,3);
+    public static Player player5 = new Player("PPZ",30,3);
+    public static Player player6 = new Player("PixelBlot",30,3);
+
     public ArrayList<String> getNameList() {
         return nameList;
     }

@@ -5,9 +5,9 @@ public class Player {
     private int PlayerHp;
     private int PlayerGolds;
     public Shop shop = new Shop();
-    private ArrayList<Card> hand;
-    private ArrayList<Creature> onBoard;
-    private ArrayList<Creature> currentOnBoard;
+    private ArrayList<Card> hand = new ArrayList<Card>();
+    private ArrayList<Creature> onBoard = new ArrayList<Creature>();
+    private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
     public Player(String playerName, int playerHp, int playerGolds) {
         PlayerName = playerName;
         PlayerHp = playerHp;
@@ -77,5 +77,14 @@ public class Player {
     private void buyCreature(int indexOfCreature){
         this.hand.add(shop.actuallySelling.get(indexOfCreature));
         shop.actuallySelling.remove(indexOfCreature);
+    }
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
+    }
+    public void setOnBoard(ArrayList<Creature> onBoard) {
+        this.onBoard = onBoard;
     }
 }
