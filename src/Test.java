@@ -5,20 +5,17 @@ public class Test {
     public static void main(String[] args) {
 
     init.Initialisation();
-    Initialisation.player1.getOnBoard().add(init.getCreaturePool().get(15));
-    Initialisation.player1.getOnBoard().add(init.getCreaturePool().get(163));
-    Initialisation.player1.getOnBoard().add(init.getCreaturePool().get(422));
-    Initialisation.player1.getOnBoard().add(init.getCreaturePool().get(600));
-    Initialisation.player1.getOnBoard().add(init.getCreaturePool().get(394));
-    Initialisation.player1.getOnBoard().add(init.getCreaturePool().get(500));
-    Initialisation.player1.getOnBoard().add(init.getCreaturePool().get(212));
+    playerTestInitialliser();
+    }
 
-    Initialisation.player2.getOnBoard().add(init.getCreaturePool().get(23));
-    Initialisation.player2.getOnBoard().add(init.getCreaturePool().get(290));
-    Initialisation.player2.getOnBoard().add(init.getCreaturePool().get(600));
-    Initialisation.player2.getOnBoard().add(init.getCreaturePool().get(610));
-    Initialisation.player2.getOnBoard().add(init.getCreaturePool().get(350));
-    Initialisation.player2.getOnBoard().add(init.getCreaturePool().get(434));
-    Initialisation.player2.getOnBoard().add(init.getCreaturePool().get(111));
+    public static void playerTestInitialliser(){
+        for(int i =0; i<6;i++){
+            Initialisation.player1.getOnBoard().add(init.getCreaturePool().get((int) (Math.random() * (init.getCreaturePool().size()))));
+            Initialisation.player2.getOnBoard().add(init.getCreaturePool().get((int) (Math.random() * (init.getCreaturePool().size()))));
+            Initialisation.player3.getOnBoard().add(init.getCreaturePool().get((int) (Math.random() * (init.getCreaturePool().size()))));
+            Initialisation.player4.getOnBoard().add(init.getCreaturePool().get((int) (Math.random() * (init.getCreaturePool().size()))));
+            Initialisation.player5.getOnBoard().add(init.getCreaturePool().get((int) (Math.random() * (init.getCreaturePool().size()))));
+            Initialisation.player6.getOnBoard().add(init.getCreaturePool().get((int) (Math.random() * (init.getCreaturePool().size()))));
+        }
     }
 }
