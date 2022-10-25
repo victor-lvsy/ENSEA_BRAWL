@@ -25,7 +25,7 @@ public class Player {
     }
     public void attackTurn(Player toBeFight,int willFight){
         boolean isDead[] = new boolean[2];
-        ArrayList <Integer> haveTaunt = null;
+        ArrayList <Integer> haveTaunt = new ArrayList<Integer>();
         int alea,i=0,furieDesVents=0,j=0;
         if(this.currentOnBoard.get(willFight).getEffectList()[20]==true){
             furieDesVents=1;
@@ -41,7 +41,7 @@ public class Player {
                     }
                     i++;
                 }
-                if (haveTaunt != null){
+                if (haveTaunt.size()!=0){
                     i=1;
                     alea=(int) (Math.random() * (haveTaunt.size()));
                     while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).getEffectList()[8]==true){
@@ -57,7 +57,7 @@ public class Player {
                 }
                 else{
                     alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
-                    while(toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).getEffectList()[8]==true){
+                    while(toBeFight.getCurrentOnBoard().get(alea).getEffectList()[8]==true){
                         alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
                         if(i==toBeFight.getCurrentOnBoard().size()){
                             toBeFight.getCurrentOnBoard().get(alea).setEffectList(false,8);

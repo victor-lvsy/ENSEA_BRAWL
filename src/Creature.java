@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Creature extends Card {
     private int creatureHp;
@@ -13,6 +12,7 @@ public class Creature extends Card {
     private Spell toBeGeneratedDiploma = new Spell();
     private Spell currentItem;
     private Spell paniersBio;
+    private int alreadyFight;
     private boolean effectList[] = new boolean[47];
     private int numberOfAttacks;
     public void setEffectList(boolean effect, int i) {
@@ -200,5 +200,10 @@ public class Creature extends Card {
             defender.setEffectList(false, 7);
         }
     }
-
+    public int getAlreadyFight() {
+        return alreadyFight;
+    }
+    public void setAlreadyFight(int alreadyFight) {
+        this.alreadyFight = alreadyFight;
+    }
 }
