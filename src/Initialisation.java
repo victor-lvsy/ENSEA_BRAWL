@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class Initialisation {
     int i=0;
-    public static Player player1 = new Player("zssnu",30,3);
-    public static Player player2 = new Player("Sltmapoule",30,3);
-    public static Player player3 = new Player("Eitonan",30,3);
-    public static Player player4 = new Player("I rule ENSEA",30,3);
-    public static Player player5 = new Player("PPZ",30,3);
-    public static Player player6 = new Player("PixelBlot",30,3);
-
+    private Player player1 = new Player("zssnu",30,3);
+    private Player player2 = new Player("Sltmapoule",30,3);
+    private Player player3 = new Player("Eitonan",30,3);
+    private Player player4 = new Player("I rule ENSEA",30,3);
+    private Player player5 = new Player("PPZ",30,3);
+    private Player player6 = new Player("PixelBlot",30,3);
+    public static ArrayList<Player> players = new ArrayList<Player>();
     public ArrayList<String> getNameList() {
         return nameList;
     }
@@ -50,6 +50,11 @@ public class Initialisation {
             }
             i++;
         }
+        players.add(player1);players.add(player2);
+        players.add(player3);players.add(player4);
+        players.add(player5);players.add(player6);
+
+
     }
 
     private void creatingTypeOfCreature(String name,int i){

@@ -4,6 +4,7 @@ public class Player {
     private String PlayerName;
     private int PlayerHp;
     private int PlayerGolds;
+    private Player precedentOpponent = null;
     public Shop shop = new Shop();
     private ArrayList<Card> hand = new ArrayList<Card>();
     private ArrayList<Creature> onBoard = new ArrayList<Creature>();
@@ -86,5 +87,8 @@ public class Player {
     }
     public void setOnBoard(ArrayList<Creature> onBoard) {
         this.onBoard = onBoard;
+    }
+    public Player getPrecedentOpponent() {
+        return precedentOpponent;
     }
 }
