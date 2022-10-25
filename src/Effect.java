@@ -6,10 +6,5 @@ public class Effect {
     public String getEffectName() {
         return effectName;
     }
-    public void furieDesVents(Creature getEffect){
-        if(getEffect.getNumberOfAttacks()==1){
-            getEffect.setNumberOfAttacks(getEffect.getNumberOfAttacks()+1);
-        }
-    }
 
 }
