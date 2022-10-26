@@ -50,7 +50,7 @@ public class Fight {
             first.attackTurn(second,i);
         }
         else{
-            System.out.println("Un des joueurs n'a plus de creatures sur le board");
+            haveLost(first,second);
             return false;
         }
         if(first.getCurrentOnBoard().size()!=0 && second.getCurrentOnBoard().size()!=0){
@@ -60,7 +60,7 @@ public class Fight {
             second.attackTurn(first,i);
         }
         else{
-            System.out.println("Un des joueurs n'a plus de creatures sur le board");
+            haveLost(first,second);
             return false;
         }
         return true;
@@ -75,5 +75,14 @@ public class Fight {
 
     public ArrayList<Player> getFightOrder() {
         return fightOrder;
+    }
+
+    public void haveLost(Player player1,Player player2){
+        if(player1.getCurrentOnBoard().size()==0){
+            System.out.println(player1.getPlayerName() +" doesn't have anymore creatures on board.");
+        }
+        if(player2.getCurrentOnBoard().size()==0){
+            System.out.println(player2.getPlayerName() +" doesn't have anymore creatures on board.");
+        }
     }
 }

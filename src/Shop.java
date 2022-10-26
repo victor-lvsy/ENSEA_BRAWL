@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Shop {
-    private int level=3;
-    ArrayList<Creature> actuallySelling = new ArrayList<Creature>();
-    ArrayList<Creature> canBeSold = new ArrayList<Creature>();
+    private int level=5;
+    private ArrayList<Creature> actuallySelling = new ArrayList<Creature>();
+    private ArrayList<Creature> canBeSold = new ArrayList<Creature>();
 
     public void Shop(){
         ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
@@ -15,8 +17,9 @@ public class Shop {
             }
             i++;
         }
+        Collections.sort(indexToBeRemoved, Collections.reverseOrder());
         for (Integer j : indexToBeRemoved) {
-            Test.init.getCreaturePool().remove(j);
+            Test.init.getCreaturePool().remove((int) j);
         }
         switch (level){
             case 1: setShop(3);break;
@@ -25,26 +28,7 @@ public class Shop {
             case 4: setShop(5);break;
             case 5: setShop(6);break;
         }
-        i=0;
-        indexToBeRemoved.clear();
-        for(Creature creature : canBeSold){
-            Test.init.getCreaturePool().add(creature);
-            indexToBeRemoved.add(i);
-            i++;
-        }
-        for (Integer j : indexToBeRemoved) {
-            canBeSold.remove(j);
-        }
-        i=0;
-        indexToBeRemoved.clear();
-        for(Creature creature : actuallySelling){
-            Test.init.getCreaturePool().add(creature);
-            indexToBeRemoved.add(i);
-            i++;
-        }
-        for (Integer j : indexToBeRemoved) {
-            actuallySelling.remove(j);
-        }
+
     }
 
     private void setShop(int numberOfDraw){
@@ -54,5 +38,18 @@ public class Shop {
             actuallySelling.add(canBeSold.get(choice));
             canBeSold.remove(choice);
         }
+        Test.init.getCreaturePool().addAll(canBeSold);
+        canBeSold.clear();
+        System.out.println("================================BOUTIQUE================================");
+        for (Creature creature:actuallySelling){
+            System.out.println(creature);
+        }
+        System.out.println("========================================================================");
+    }
+    public ArrayList<Creature> getCanBeSold() {
+        return canBeSold;
+    }
+    public ArrayList<Creature> getActuallySelling() {
+        return actuallySelling;
     }
 }

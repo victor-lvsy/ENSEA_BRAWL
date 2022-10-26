@@ -23,6 +23,9 @@ public class Player {
     public void setCurrentOnBoard() {
         this.currentOnBoard = currentOnBoard;
     }
+    public Shop getShop() {
+        return shop;
+    }
     public void attackTurn(Player toBeFight,int willFight){
         boolean isDead[] = new boolean[2];
         ArrayList <Integer> haveTaunt = new ArrayList<Integer>();
@@ -82,9 +85,18 @@ public class Player {
             }
         }
     }
-    private void buyCreature(int indexOfCreature){
-        this.hand.add(shop.actuallySelling.get(indexOfCreature));
-        shop.actuallySelling.remove(indexOfCreature);
+    public void buyCreature(int indexOfCreature){
+        this.hand.add(shop.getActuallySelling().get(indexOfCreature));
+        shop.getActuallySelling().remove(indexOfCreature);
+    }
+    public void handToBoard(int indexOfHand){
+        if(this.hand.get(indexOfHand) instanceof Creature){
+            this.onBoard.add((Creature) this.hand.get(indexOfHand));
+            this.hand.remove(indexOfHand);
+        }
+        else {
+            System.out.println("This card "+ this.hand.get(indexOfHand).getCardName() +" is not a creature");
+        }
     }
     public ArrayList<Card> getHand() {
         return hand;
@@ -101,5 +113,4 @@ public class Player {
     public String getPlayerName() {
         return PlayerName;
     }
-
 }
