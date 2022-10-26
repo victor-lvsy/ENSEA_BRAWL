@@ -144,20 +144,20 @@ public class Creature extends Card {
         switch (bd){
             case 0: defender.setCreatureHp(defender.creatureHp - this.creatureAtt);
                 this.setCreatureHp(this.creatureHp - defender.creatureAtt);
-                System.out.println("Attacker did " + this.creatureAtt + " damages and Defender did " + defender.creatureAtt + " damages");
+                System.out.println("Attacker "+ this.getCardName()+" did " + this.creatureAtt + " damages and Defender "+defender.getCardName()+" did " + defender.creatureAtt + " damages");
                 isDead=isDead(this.creatureHp,defender.creatureHp);
                 break;
             case 1: defender.setCreatureHp(defender.creatureHp - this.creatureAtt);
-                System.out.println("Attacker did " + this.creatureAtt + " damages and Defender did 0 damages");
+                System.out.println("Attacker "+ this.getCardName() +" did " + this.creatureAtt + " damages and Defender "+defender.getCardName()+" did 0 damages");
                 isDead=isDead(this.creatureHp,defender.creatureHp);
                 voidingBD(this,defender);
                 break;
             case 2: this.setCreatureHp(this.creatureHp - defender.creatureAtt);
-                System.out.println("Attacker did 0 damages and Defender did " + defender.creatureAtt + " damages");
+                System.out.println("Attacker "+this.getCardName()+" did 0 damages and Defender "+defender.getCardName()+" did " + defender.creatureAtt + " damages");
                 isDead=isDead(this.creatureHp,defender.creatureHp);
                 voidingBD(this,defender);
                 break;
-            case 3: System.out.println("Attacker did 0 damages and Defender did 0 damages");
+            case 3: System.out.println("Attacker "+ this.getCardName()+" did 0 damages and Defender "+defender.getCardName()+" did 0 damages");
                 isDead=isDead(this.creatureHp,defender.creatureHp);
                 voidingBD(this,defender);
                 break;
@@ -206,4 +206,5 @@ public class Creature extends Card {
     public void setAlreadyFight(int alreadyFight) {
         this.alreadyFight = alreadyFight;
     }
+
 }

@@ -32,7 +32,7 @@ public class Player {
         }
         for(j=0; j == furieDesVents; j++){
             if(this.currentOnBoard.get(willFight).getCreatureHp()<=0){
-                System.out.println("This creature is dead impossible to attack");
+                System.out.println("This creature "+this.currentOnBoard.get(willFight).getCardName() +" is dead impossible to attack");
             }
             else{
                 for (Creature creature : toBeFight.getCurrentOnBoard()){
@@ -53,25 +53,32 @@ public class Player {
                         }
                     }
                     alea=haveTaunt.get(alea);
+                    System.out.println( this.getPlayerName() +" "+ this.getCurrentOnBoard().get(willFight).getCardName() + " attacked " +toBeFight.getPlayerName()+" "+toBeFight.currentOnBoard.get(alea));
                     isDead = this.onBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
                 }
                 else{
+                    int k=1;
                     alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
                     while(toBeFight.getCurrentOnBoard().get(alea).getEffectList()[8]==true){
                         alea=(int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
-                        if(i==toBeFight.getCurrentOnBoard().size()){
+                        if(k==toBeFight.getCurrentOnBoard().size()){
                             toBeFight.getCurrentOnBoard().get(alea).setEffectList(false,8);
                             System.out.println("Camouflage is set to false because of impossibility to attack");
                         }
+                        k++;
                     }
-                    isDead = this.onBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
+                    System.out.println( this.getPlayerName() +" "+ this.getCurrentOnBoard().get(willFight).getCardName() + " attacked " +toBeFight.getPlayerName()+" "+toBeFight.currentOnBoard.get(alea));
+                    isDead = this.currentOnBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
                 }
                 if (isDead[0]==true){
+                    System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.PlayerName+" hand");
                     this.currentOnBoard.remove(willFight);
                 }
                 if (isDead[1]==true){
+                    System.out.println(toBeFight.currentOnBoard.get(alea) + " has been removed from "+toBeFight.PlayerName+" currentBoard");
                     toBeFight.currentOnBoard.remove(alea);
                 }
+                System.out.println("_____________________________ROUND FINISHED_____________________________");
             }
         }
     }
@@ -91,4 +98,8 @@ public class Player {
     public Player getPrecedentOpponent() {
         return precedentOpponent;
     }
+    public String getPlayerName() {
+        return PlayerName;
+    }
+
 }

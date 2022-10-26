@@ -14,7 +14,6 @@ public class Card {
     }
     @Override
     public String toString() {
-        return "Name: " + CardName;
+        return CardName;
     }
-
 }

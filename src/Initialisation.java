@@ -19,7 +19,7 @@ public class Initialisation {
     private ArrayList<String> nameList = new ArrayList<String>();
     private ArrayList<Integer> tierList = new ArrayList<Integer>();
     private ArrayList<Creature> creaturePool = new ArrayList<Creature>();
-    public void Initialisation(){
+    public void Initialisation (){
 ;        try {
             FileReader fr = new FileReader("doc/effectListCSV_epure.csv");
             BufferedReader br = new BufferedReader(fr);
@@ -57,7 +57,7 @@ public class Initialisation {
 
     }
 
-    private void creatingTypeOfCreature(String name,int i){
+    private void creatingTypeOfCreature (String name,int i){
         for (int j=0;j<i;j++){
             Creature creature =new Creature();
             creature.setCreature(name,"doc/effectListCSV_epure.csv");
