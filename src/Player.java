@@ -2,30 +2,43 @@ import java.util.ArrayList;
 
 public class Player {
     private String PlayerName;
+
     private int PlayerHp;
+
     private int PlayerGolds;
+
     private Player precedentOpponent = null;
+
     public Shop shop = new Shop();
+
     private ArrayList<Card> hand = new ArrayList<Card>();
+
     private ArrayList<Creature> onBoard = new ArrayList<Creature>();
+
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
+
     public Player(String playerName, int playerHp, int playerGolds) {
         PlayerName = playerName;
         PlayerHp = playerHp;
         PlayerGolds = playerGolds;
     }
+
     public ArrayList<Creature> getOnBoard() {
         return onBoard;
     }
+
     public ArrayList<Creature> getCurrentOnBoard() {
         return currentOnBoard;
     }
+
     public void setCurrentOnBoard() {
         this.currentOnBoard = currentOnBoard;
     }
+
     public Shop getShop() {
         return shop;
     }
+
     public void attackTurn(Player toBeFight,int willFight){
         boolean isDead[] = new boolean[2];
         ArrayList <Integer> haveTaunt = new ArrayList<Integer>();
@@ -74,7 +87,7 @@ public class Player {
                     isDead = this.currentOnBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
                 }
                 if (isDead[0]==true){
-                    System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.PlayerName+" hand");
+                    System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.PlayerName+" currentBoard");
                     this.currentOnBoard.remove(willFight);
                 }
                 if (isDead[1]==true){
@@ -85,10 +98,12 @@ public class Player {
             }
         }
     }
+
     public void buyCreature(int indexOfCreature){
         this.hand.add(shop.getActuallySelling().get(indexOfCreature));
         shop.getActuallySelling().remove(indexOfCreature);
     }
+
     public void handToBoard(int indexOfHand){
         if(this.hand.get(indexOfHand) instanceof Creature){
             this.onBoard.add((Creature) this.hand.get(indexOfHand));
@@ -98,19 +113,31 @@ public class Player {
             System.out.println("This card "+ this.hand.get(indexOfHand).getCardName() +" is not a creature");
         }
     }
+
     public ArrayList<Card> getHand() {
         return hand;
     }
+
     public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
+
     public void setOnBoard(ArrayList<Creature> onBoard) {
         this.onBoard = onBoard;
     }
+
     public Player getPrecedentOpponent() {
         return precedentOpponent;
     }
     public String getPlayerName() {
         return PlayerName;
+    }
+
+    public int getPlayerHp() {
+        return PlayerHp;
+    }
+
+    public void setPlayerHp(int playerHp) {
+        PlayerHp = playerHp;
     }
 }

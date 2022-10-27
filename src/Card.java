@@ -6,12 +6,15 @@ import java.util.ArrayList;
 
 public class Card {
     private String CardName;
+
     public String getCardName() {
         return CardName;
     }
+
     public void setCardName(String cardName) {
         CardName = cardName;
     }
+
     @Override
     public String toString() {
         return CardName;

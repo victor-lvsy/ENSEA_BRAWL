@@ -4,7 +4,9 @@ import java.util.Collections;
 
 public class Shop {
     private int level=5;
+
     private ArrayList<Creature> actuallySelling = new ArrayList<Creature>();
+
     private ArrayList<Creature> canBeSold = new ArrayList<Creature>();
 
     public void Shop(){
