@@ -11,6 +11,8 @@ public class Player {
 
     public Shop shop = new Shop();
 
+    public int shopLvl;
+
     private ArrayList<Card> hand = new ArrayList<Card>();
 
     private ArrayList<Creature> onBoard = new ArrayList<Creature>();
@@ -100,8 +102,39 @@ public class Player {
     }
 
     public void buyCreature(int indexOfCreature){
-        this.hand.add(shop.getActuallySelling().get(indexOfCreature));
-        shop.getActuallySelling().remove(indexOfCreature);
+        if(shop.getActuallySelling().get(indexOfCreature).getEffectList()[10]==false){
+            if(this.getPlayerGolds()>=3){
+                this.hand.add(shop.getActuallySelling().get(indexOfCreature));
+                this.setPlayerGolds(this.getPlayerGolds()-3);
+                System.out.println("Creature: "+shop.getActuallySelling().get(indexOfCreature).getCardName()+" has been bought");
+                shop.getActuallySelling().remove(indexOfCreature);
+            }
+            else{
+                System.out.println("Not enough golds to buy this creature");
+            }
+        }
+        else{
+            this.hand.add(shop.getActuallySelling().get(indexOfCreature));
+            System.out.println("Creature: "+shop.getActuallySelling().get(indexOfCreature).getCardName()+" has been bought");
+            shop.getActuallySelling().remove(indexOfCreature);
+        }
+    }
+
+    public void sellCreature(int indexOfCreature, boolean i){
+        if(i==true){
+            Creature creature = new Creature();
+            creature.setCreature(this.hand.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
+            Test.init.getCreaturePool().add(creature);
+            System.out.println("Creature: "+this.hand.get(indexOfCreature).getCardName()+" has been sold");
+            this.hand.remove(indexOfCreature);
+        }
+        else{
+            Creature creature = new Creature();
+            creature.setCreature(this.onBoard.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
+            Test.init.getCreaturePool().add(creature);
+            System.out.println("Creature: "+this.onBoard.get(indexOfCreature).getCardName()+" has been sold");
+            this.onBoard.remove(indexOfCreature);
+        }
     }
 
     public void handToBoard(int indexOfHand){
@@ -112,6 +145,11 @@ public class Player {
         else {
             System.out.println("This card "+ this.hand.get(indexOfHand).getCardName() +" is not a creature");
         }
+    }
+
+    public void boardToHand(int indexOfHand){
+            this.hand.add( this.getOnBoard().get(indexOfHand));
+            this.getOnBoard().remove(indexOfHand);
     }
 
     public ArrayList<Card> getHand() {
@@ -129,6 +167,7 @@ public class Player {
     public Player getPrecedentOpponent() {
         return precedentOpponent;
     }
+
     public String getPlayerName() {
         return PlayerName;
     }
@@ -140,4 +179,21 @@ public class Player {
     public void setPlayerHp(int playerHp) {
         PlayerHp = playerHp;
     }
+
+    public int getPlayerGolds() {
+        return PlayerGolds;
+    }
+
+    public int getShopLvl() {
+        return shopLvl;
+    }
+
+    public void setPlayerGolds(int playerGolds) {
+        PlayerGolds = playerGolds;
+    }
+
+    public void setShopLvl(int shopLvl) {
+        this.shopLvl = shopLvl;
+    }
+
 }

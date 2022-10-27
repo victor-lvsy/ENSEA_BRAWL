@@ -7,17 +7,17 @@ import java.util.ArrayList;
 public class Initialisation {
     int i=0;
 
-    private Player player1 = new Player("zssnu",30,3);
+    private Player player1 = new Player("zssnu",30,100);
 
-    private Player player2 = new Player("Sltmapoule",30,3);
+    private Player player2 = new Player("Sltmapoule",30,100);
 
-    private Player player3 = new Player("Eitonan",30,3);
+    private Player player3 = new Player("Eitonan",30,100);
 
-    private Player player4 = new Player("I rule ENSEA",30,3);
+    private Player player4 = new Player("I rule ENSEA",30,100);
 
-    private Player player5 = new Player("PPZ",30,3);
+    private Player player5 = new Player("PPZ",30,100);
 
-    private Player player6 = new Player("PixelBlot",30,3);
+    private Player player6 = new Player("PixelBlot",30,100);
 
     public static ArrayList<Player> players = new ArrayList<Player>();
 

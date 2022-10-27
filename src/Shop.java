@@ -3,13 +3,14 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Shop {
-    private int level=5;
+    private int level;
 
     private ArrayList<Creature> actuallySelling = new ArrayList<Creature>();
 
     private ArrayList<Creature> canBeSold = new ArrayList<Creature>();
 
-    public void Shop(){
+    public void shop(int lvl){
+        level=lvl;
         ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
         int i=0;
         for (Creature creature : Test.init.getCreaturePool()) {
@@ -42,7 +43,7 @@ public class Shop {
         }
         Test.init.getCreaturePool().addAll(canBeSold);
         canBeSold.clear();
-        System.out.println("================================BOUTIQUE================================");
+        System.out.println("==================================SHOP===================================");
         for (Creature creature:actuallySelling){
             System.out.println(creature);
         }

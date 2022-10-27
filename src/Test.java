@@ -17,7 +17,7 @@ public class Test {
     public static void playerTestInitialliser(){
         int j=5;
         for(int i=0;i<6;i++){
-            Initialisation.players.get(i).getShop().Shop();
+            Initialisation.players.get(i).getShop().shop(5);
         }
         for(int i = 0; i<6;i++){
             Initialisation.players.get(0).buyCreature(j);
@@ -28,14 +28,25 @@ public class Test {
             Initialisation.players.get(5).buyCreature(j);
             j--;
         }
-        for(int i = 0; i<6;i++){
+        for(int i = 0; i<Initialisation.players.get(0).getHand().size();i++){
             Initialisation.players.get(0).handToBoard(0);
-            Initialisation.players.get(1).handToBoard(0);
-            Initialisation.players.get(2).handToBoard(0);
-            Initialisation.players.get(3).handToBoard(0);
-            Initialisation.players.get(4).handToBoard(0);
-            Initialisation.players.get(5).handToBoard(0);
-            j--;
         }
+        for(int i = 0; i<Initialisation.players.get(1).getHand().size();i++){
+            Initialisation.players.get(1).handToBoard(0);
+        }
+        for(int i = 0; i<Initialisation.players.get(2).getHand().size();i++){
+            Initialisation.players.get(2).handToBoard(0);
+        }
+        for(int i = 0; i<Initialisation.players.get(3).getHand().size();i++){
+            Initialisation.players.get(3).handToBoard(0);
+        }
+        for(int i = 0; i<Initialisation.players.get(4).getHand().size();i++){
+            Initialisation.players.get(4).handToBoard(0);
+        }
+        for(int i = 0; i<Initialisation.players.get(5).getHand().size();i++){
+            Initialisation.players.get(5).handToBoard(0);
+        }
+
+
     }
 }

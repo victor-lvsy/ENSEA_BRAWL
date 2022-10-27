@@ -17,12 +17,7 @@ public class Fight {
                 i.remove(0);
                 i.remove(0);
             }
-            else{
-                fightOrder.add(players.get(i.get(0)));
-                fightOrder.add(players.get(i.get(2)));
-                i.remove(0);
-                i.remove(0);
-            }
+
         }
     }
 
@@ -96,7 +91,7 @@ public class Fight {
             }
             System.out.println(player1.getPlayerName()+" HP is at "+player1.getPlayerHp()+" and "+player2.getPlayerName()+" HP is at "+player2.getPlayerHp());
         }
-        else{
+        if(player1.getCurrentOnBoard().size()!=0 && player2.getCurrentOnBoard().size()!=0){
             System.out.println("Fight cannot continue further because remaining creatures doesn't have anymore damages");
         }
     }
