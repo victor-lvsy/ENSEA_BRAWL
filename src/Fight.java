@@ -6,18 +6,44 @@ public class Fight {
 
     public void drawFights(ArrayList<Player> players){
         ArrayList<Integer> i = new ArrayList<Integer>();
+        extractOrder(players, i);
+        switch (fightOrder.size()){
+            case 6:
+            while (fightOrder.get(0).getPrecedentOpponent()==fightOrder.get(1)||
+                        fightOrder.get(2).getPrecedentOpponent()==fightOrder.get(3)||
+                            fightOrder.get(4).getPrecedentOpponent()==fightOrder.get(5)){
+                extractOrder(players, i);
+            }
+            break;
+            case 4:
+                while (fightOrder.get(0).getPrecedentOpponent()==fightOrder.get(1)||
+                        fightOrder.get(2).getPrecedentOpponent()==fightOrder.get(3)){
+                    extractOrder(players, i);
+                }
+                break;
+            case 2:
+                while (fightOrder.get(0).getPrecedentOpponent()==fightOrder.get(1)){
+                    extractOrder(players, i);
+                }
+                break;
+            default:
+                System.out.println("ERROR, cannot extract fight Order");
+        }
+
+    }
+
+    private void extractOrder(ArrayList<Player> players, ArrayList<Integer> i) {
+        int k;
         for (int j=0 ; j<players.size() ; j++){
             i.add(j);
         }
+        k= i.size();
         Collections.shuffle(i);
-        for(int j=0 ; j<3 ; j++){
-            if(players.get(i.get(0))!=players.get(i.get(1)).getPrecedentOpponent()){
-                fightOrder.add(players.get(i.get(0)));
-                fightOrder.add(players.get(i.get(1)));
-                i.remove(0);
-                i.remove(0);
-            }
-
+        for(int j=0 ; j<k/2 ; j++){
+            fightOrder.add(players.get(i.get(0)));
+            fightOrder.add(players.get(i.get(1)));
+            i.remove(0);
+            i.remove(0);
         }
     }
 

@@ -49,6 +49,10 @@ public class Shop {
         }
         System.out.println("========================================================================");
     }
+
+    public int getShopLevelUpCost(){
+        return 0;
+    }
     public ArrayList<Creature> getCanBeSold() {
         return canBeSold;
     }

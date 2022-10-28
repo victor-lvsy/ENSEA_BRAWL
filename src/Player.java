@@ -120,21 +120,49 @@ public class Player {
         }
     }
 
-    public void sellCreature(int indexOfCreature, boolean i){
-        if(i==true){
+    public void sellCreature(int indexOfCreature, String i){
+        if(i=="Hand"){
             Creature creature = new Creature();
             creature.setCreature(this.hand.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
             Test.init.getCreaturePool().add(creature);
             System.out.println("Creature: "+this.hand.get(indexOfCreature).getCardName()+" has been sold");
+            if(this.hand.get(indexOfCreature).getCardName()=="Absenteiste"){
+                this.setPlayerGolds(cardValue());
+            }
+            else {
+                this.setPlayerGolds(this.getPlayerGolds()+1);
+            }
             this.hand.remove(indexOfCreature);
         }
-        else{
+        if(i=="Board"){
             Creature creature = new Creature();
             creature.setCreature(this.onBoard.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
             Test.init.getCreaturePool().add(creature);
             System.out.println("Creature: "+this.onBoard.get(indexOfCreature).getCardName()+" has been sold");
+            if(this.onBoard.get(indexOfCreature).getCardName()=="Absenteiste"){
+                this.setPlayerGolds(cardValue());
+            }
+            else {
+                this.setPlayerGolds(this.getPlayerGolds()+1);
+            }
             this.onBoard.remove(indexOfCreature);
         }
+        else {
+            System.out.println("ERROR, argument has to be set to Board or Hand");
+        }
+    }
+
+    public int cardValue(){
+        int i=0;
+        for (Creature creature:this.onBoard){
+            if(creature.getEffectList()[23]==true){
+                i=i+2;
+            }
+        }
+        if(i==0){
+            i++;
+        }
+        return i;
     }
 
     public void handToBoard(int indexOfHand){
@@ -150,6 +178,11 @@ public class Player {
     public void boardToHand(int indexOfHand){
             this.hand.add( this.getOnBoard().get(indexOfHand));
             this.getOnBoard().remove(indexOfHand);
+    }
+
+    public void invertCards(int toBeInverted1,int toBeInverted2){
+        this.onBoard.set(toBeInverted1,this.onBoard.set(toBeInverted2,this.onBoard.get(toBeInverted1)));
+
     }
 
     public ArrayList<Card> getHand() {
@@ -195,5 +228,6 @@ public class Player {
     public void setShopLvl(int shopLvl) {
         this.shopLvl = shopLvl;
     }
+
 
 }
