@@ -13,7 +13,7 @@ public class Shop {
         level=lvl;
         ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
         int i=0;
-        for (Creature creature : Test.init.getCreaturePool()) {
+        for (Creature creature : Game.init.getCreaturePool()) {
             if(creature.getCreatureTier()<=level){
                 canBeSold.add(creature);
                 indexToBeRemoved.add(i);
@@ -22,7 +22,7 @@ public class Shop {
         }
         Collections.sort(indexToBeRemoved, Collections.reverseOrder());
         for (Integer j : indexToBeRemoved) {
-            Test.init.getCreaturePool().remove((int) j);
+            Game.init.getCreaturePool().remove((int) j);
         }
         switch (level){
             case 1: setShop(3);break;
@@ -32,6 +32,8 @@ public class Shop {
             case 5: setShop(6);break;
         }
 
+        Game.init.getCreaturePool().addAll(actuallySelling);
+        actuallySelling.clear();
     }
 
     private void setShop(int numberOfDraw){
@@ -41,7 +43,7 @@ public class Shop {
             actuallySelling.add(canBeSold.get(choice));
             canBeSold.remove(choice);
         }
-        Test.init.getCreaturePool().addAll(canBeSold);
+        Game.init.getCreaturePool().addAll(canBeSold);
         canBeSold.clear();
         System.out.println("==================================SHOP===================================");
         for (Creature creature:actuallySelling){
@@ -50,13 +52,14 @@ public class Shop {
         System.out.println("========================================================================");
     }
 
-    public int getShopLevelUpCost(){
-        return 0;
-    }
+
     public ArrayList<Creature> getCanBeSold() {
         return canBeSold;
     }
+
     public ArrayList<Creature> getActuallySelling() {
         return actuallySelling;
     }
+
+
 }

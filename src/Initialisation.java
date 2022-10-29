@@ -32,7 +32,7 @@ public class Initialisation {
     private ArrayList<Creature> creaturePool = new ArrayList<Creature>();
 
     public void Initialisation (){
-;        try {
+        try {
             FileReader fr = new FileReader("doc/effectListCSV_epure.csv");
             BufferedReader br = new BufferedReader(fr);
             String li = br.readLine();

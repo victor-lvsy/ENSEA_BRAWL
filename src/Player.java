@@ -1,17 +1,19 @@
 import java.util.ArrayList;
 
 public class Player {
-    private String PlayerName;
+    private String playerName;
 
-    private int PlayerHp;
+    private int playerHp;
 
-    private int PlayerGolds;
+    private int playerGolds;
 
     private Player precedentOpponent = null;
 
     public Shop shop = new Shop();
 
-    public int shopLvl;
+    private int shopLvl=1;
+
+    private int shopLevelUpCost=5;
 
     private ArrayList<Card> hand = new ArrayList<Card>();
 
@@ -19,10 +21,10 @@ public class Player {
 
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
 
-    public Player(String playerName, int playerHp, int playerGolds) {
-        PlayerName = playerName;
-        PlayerHp = playerHp;
-        PlayerGolds = playerGolds;
+    public Player(String newPlayerName, int newPlayerHp, int newPlayerGolds) {
+        playerName = newPlayerName;
+        playerHp = newPlayerHp;
+        playerGolds = newPlayerGolds;
     }
 
     public ArrayList<Creature> getOnBoard() {
@@ -89,11 +91,11 @@ public class Player {
                     isDead = this.currentOnBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
                 }
                 if (isDead[0]==true){
-                    System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.PlayerName+" currentBoard");
+                    System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.playerName +" currentBoard");
                     this.currentOnBoard.remove(willFight);
                 }
                 if (isDead[1]==true){
-                    System.out.println(toBeFight.currentOnBoard.get(alea) + " has been removed from "+toBeFight.PlayerName+" currentBoard");
+                    System.out.println(toBeFight.currentOnBoard.get(alea) + " has been removed from "+toBeFight.playerName +" currentBoard");
                     toBeFight.currentOnBoard.remove(alea);
                 }
                 System.out.println("_____________________________ROUND FINISHED_____________________________");
@@ -124,7 +126,7 @@ public class Player {
         if(i=="Hand"){
             Creature creature = new Creature();
             creature.setCreature(this.hand.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
-            Test.init.getCreaturePool().add(creature);
+            Game.init.getCreaturePool().add(creature);
             System.out.println("Creature: "+this.hand.get(indexOfCreature).getCardName()+" has been sold");
             if(this.hand.get(indexOfCreature).getCardName()=="Absenteiste"){
                 this.setPlayerGolds(cardValue());
@@ -137,7 +139,7 @@ public class Player {
         if(i=="Board"){
             Creature creature = new Creature();
             creature.setCreature(this.onBoard.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
-            Test.init.getCreaturePool().add(creature);
+            Game.init.getCreaturePool().add(creature);
             System.out.println("Creature: "+this.onBoard.get(indexOfCreature).getCardName()+" has been sold");
             if(this.onBoard.get(indexOfCreature).getCardName()=="Absenteiste"){
                 this.setPlayerGolds(cardValue());
@@ -202,32 +204,57 @@ public class Player {
     }
 
     public String getPlayerName() {
-        return PlayerName;
+        return playerName;
     }
 
     public int getPlayerHp() {
-        return PlayerHp;
+        return playerHp;
     }
 
     public void setPlayerHp(int playerHp) {
-        PlayerHp = playerHp;
+        this.playerHp = playerHp;
     }
 
     public int getPlayerGolds() {
-        return PlayerGolds;
+        return playerGolds;
     }
 
     public int getShopLvl() {
         return shopLvl;
     }
 
-    public void setPlayerGolds(int playerGolds) {
-        PlayerGolds = playerGolds;
+    public void setPlayerGolds(int golds) {
+        playerGolds = golds;
     }
 
     public void setShopLvl(int shopLvl) {
         this.shopLvl = shopLvl;
     }
 
+    public void ShopLevelUp(){
+        shopLevelUpCost--;
+        playerGolds--;
+        testLevelUp();
+    }
+
+    public int getShopLevelUpCost() {
+        return shopLevelUpCost;
+    }
+
+    public void setShopLevelUpCost(int shopLevelUpCost) {
+        this.shopLevelUpCost = shopLevelUpCost;
+    }
+
+    public void testLevelUp(){
+        if(shopLevelUpCost==0){
+            switch (shopLvl){
+                case 1: shopLevelUpCost=7;shopLvl++;System.out.println("SHOP LEVEL UP");break;
+                case 2: shopLevelUpCost=9;shopLvl++;System.out.println("SHOP LEVEL UP");break;
+                case 3: shopLevelUpCost=10;shopLvl++;System.out.println("SHOP LEVEL UP");break;
+                case 4: shopLevelUpCost=12;shopLvl++;System.out.println("SHOP LEVEL UP");break;
+                case 5: shopLvl++;System.out.println("SHOP LEVEL UP, last level reached");break;
+            }
+        }
+    }
 
 }
