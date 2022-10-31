@@ -9,7 +9,7 @@ public class Shop {
 
     private ArrayList<Creature> canBeSold = new ArrayList<Creature>();
 
-    public void shop(int lvl){
+    public void shop(int lvl, int player){
         level=lvl;
         ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
         int i=0;
@@ -33,6 +33,7 @@ public class Shop {
         }
 
         Game.init.getCreaturePool().addAll(actuallySelling);
+        Turn.playerTestInitializer(player);
         actuallySelling.clear();
     }
 

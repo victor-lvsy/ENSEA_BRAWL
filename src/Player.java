@@ -231,10 +231,15 @@ public class Player {
         this.shopLvl = shopLvl;
     }
 
-    public void ShopLevelUp(){
-        shopLevelUpCost--;
-        playerGolds--;
-        testLevelUp();
+    public void shopLevelUp(){
+        if(shopLvl<5){
+            shopLevelUpCost--;
+            playerGolds--;
+            testLevelUp();
+    }
+    else {
+        System.out.println("Last shop level reached");
+    }
     }
 
     public int getShopLevelUpCost() {
@@ -248,11 +253,10 @@ public class Player {
     public void testLevelUp(){
         if(shopLevelUpCost==0){
             switch (shopLvl){
-                case 1: shopLevelUpCost=7;shopLvl++;System.out.println("SHOP LEVEL UP");break;
-                case 2: shopLevelUpCost=9;shopLvl++;System.out.println("SHOP LEVEL UP");break;
-                case 3: shopLevelUpCost=10;shopLvl++;System.out.println("SHOP LEVEL UP");break;
-                case 4: shopLevelUpCost=12;shopLvl++;System.out.println("SHOP LEVEL UP");break;
-                case 5: shopLvl++;System.out.println("SHOP LEVEL UP, last level reached");break;
+                case 1: shopLevelUpCost=8;shopLvl++;System.out.println("SHOP LEVEL UP");break;
+                case 2: shopLevelUpCost=10;shopLvl++;System.out.println("SHOP LEVEL UP");break;
+                case 3: shopLevelUpCost=12;shopLvl++;System.out.println("SHOP LEVEL UP");break;
+                case 4: shopLvl++;System.out.println("SHOP LEVEL UP, last level reached");break;
             }
         }
     }

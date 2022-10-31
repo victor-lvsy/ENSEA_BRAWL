@@ -91,8 +91,10 @@ public class Fight {
     }
 
     public void fightingBoardInitializer(Player toBeInitialized){
-        ArrayList <Creature> creatures = (ArrayList<Creature>) toBeInitialized.getOnBoard().clone();
-        toBeInitialized.getCurrentOnBoard().addAll(creatures);
+        toBeInitialized.getCurrentOnBoard().clear();
+        for(Creature creature:toBeInitialized.getOnBoard()){
+            toBeInitialized.getCurrentOnBoard().add(creature.clone());
+        }
         for (Creature creature : toBeInitialized.getOnBoard()){
             creature.setAlreadyFight(0);
         }
