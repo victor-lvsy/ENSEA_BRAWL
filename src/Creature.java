@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Creature extends Card {
     private int creatureHp;
@@ -235,6 +232,20 @@ public class Creature extends Card {
 
     public void setAlreadyFight(int alreadyFight) {
         this.alreadyFight = alreadyFight;
+    }
+
+    public void copyCreature(Creature creature){
+        this.creatureAtt=creature.creatureAtt;
+        this.creatureHp=creature.creatureHp;
+        this.creatureTier=creature.creatureTier;
+        this.archetype=creature.archetype;
+        this.toBeGeneratedDiploma=creature.toBeGeneratedDiploma;
+        this.currentDiploma=creature.currentDiploma;
+        this.effectList=creature.effectList.clone();
+        this.currentItem=creature.currentItem;
+        this.paniersBio=creature.paniersBio;
+        this.setCardName(creature.getCardName());
+
     }
 
 }
