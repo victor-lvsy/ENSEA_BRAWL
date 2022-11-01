@@ -3,7 +3,11 @@ import java.util.ArrayList;
 public class Effect {
     private String effectName;
 
-    private int effectId;
+    private String effectDescription;
+
+    private int effectMomentOfActivation;
+
+    private boolean isActive;
 
     public String getEffectName() {
         return effectName;

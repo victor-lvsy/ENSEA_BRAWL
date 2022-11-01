@@ -143,4 +143,8 @@ public class Fight {
         }
         return true;
     }
+
+    public void shuffleBoard(Player player){
+        Collections.shuffle(player.getCurrentOnBoard());
+    }
 }
