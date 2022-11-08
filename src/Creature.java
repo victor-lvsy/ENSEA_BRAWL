@@ -310,12 +310,51 @@ public class Creature extends Card {
 
     public void jeSuisAleatoArt(){
         int tab[];
+        int i=0;
         tab= new int[]{7, 31, 35, 46};
         int rand = (int) Math.floor(Math.random() * 4);
-        while (this.getEffectList()[tab[rand]]==true){
-            rand = (int) Math.floor(Math.random() * 4);
+        i++;
+        while (this.getEffectList()[tab[rand]]==true && i<4){
+            if(rand==3){
+                rand=0;
+            }
+            else {rand++;}
+            i++;
         }
-        this.getEffectList()[tab[rand]]=true;
+        if(i<4){
+            this.getEffectList()[tab[rand]]=true;
+        }
+        else {
+            System.out.println(this.getCardName()+" has already all the effects");
+        }
+    }
 
+    public void nousSommesAleatoART(Player player){
+        int tab[];
+        int i=0;
+        tab= new int[]{7, 46, 47};
+        ArrayList<Creature> bda= new ArrayList<Creature>();
+        int rand = (int) Math.floor(Math.random() * 3);
+
+        for(Creature creature: player.getCurrentOnBoard()){
+            if (creature.getArchetype().equals("BDA")){
+                bda.add(creature);
+            }
+        }
+        int alea = (int) Math.floor(Math.random() * bda.size());
+        i++;
+        while (bda.get(alea).getEffectList()[tab[rand]]==true && i<3){
+            if(rand==2){
+                rand=0;
+            }
+            else {rand++;}
+            i++;
+        }
+        if(i<3){
+            this.getEffectList()[tab[rand]]=true;
+        }
+        else {
+            System.out.println(this.getCardName()+" has already all the effects");
+        }
     }
 }
