@@ -97,7 +97,7 @@ public class Fight {
             toBeAdded.copyCreature(creature);
             toBeInitialized.getCurrentOnBoard().add(toBeAdded);
         }
-        for (Creature creature : toBeInitialized.getOnBoard()){
+        for (Creature creature : toBeInitialized.getCurrentOnBoard()){
             creature.setAlreadyFight(0);
         }
     }
