@@ -47,7 +47,7 @@ public class Player {
         boolean isDead[] = new boolean[2];
         ArrayList <Integer> haveTaunt = new ArrayList<Integer>();
         int alea,i=0,furieDesVents=0,j=0;
-        if(this.currentOnBoard.get(willFight).getEffectList()[20]==true){
+        if(this.currentOnBoard.get(willFight).getEffectList()[46]==true){
             furieDesVents=1;
         }
         for(j=0; j == furieDesVents; j++){

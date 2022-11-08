@@ -102,6 +102,10 @@ public class Fight {
         }
     }
 
+    public void twoPlayerInitialisation(Player player1, Player player2){
+
+    }
+
     public ArrayList<Player> getFightOrder() {
         return fightOrder;
     }

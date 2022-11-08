@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class Creature extends Card {
     private int creatureHp;
@@ -39,6 +40,9 @@ public class Creature extends Card {
         return creatureAtt;
     }
 
+    public String getArchetype() {
+        return archetype;
+    }
 
     public int getCreatureTier() {
         return creatureTier;
@@ -248,4 +252,70 @@ public class Creature extends Card {
 
     }
 
+    public void stealStatAtt(Creature toBeSteal,int n){
+        if (toBeSteal.creatureAtt-n>=0){
+            toBeSteal.creatureAtt=toBeSteal.creatureAtt-n;
+            this.creatureAtt=this.creatureAtt+n;
+            System.out.println(toBeSteal.getCardName()+" Attack has been stolen, it is now "+toBeSteal.creatureAtt+" and "+this.getCardName()+" Attack is now "+this.creatureHp+".");
+        } else if (toBeSteal.creatureAtt<0) {
+            this.creatureAtt=this.creatureAtt+toBeSteal.creatureAtt;
+            toBeSteal.creatureAtt=0;
+            System.out.println(toBeSteal.getCardName()+" Attack has been stolen, it is now 0 and "+this.getCardName()+" Attack is now "+this.creatureHp+".");
+        }
+        else {
+            System.out.println(toBeSteal.getCardName()+" Attack cannot be stolen, it is already 0.");
+        }
+    }
+
+    public void volDAssos(Player opponent){
+        for(Creature creature:opponent.getCurrentOnBoard()){
+            if(creature.getCardName().contains("Tresorier")){
+                this.creatureAtt++;
+                this.creatureHp++;
+            }
+        }
+    }
+
+    public void ardoiseKfet(Player opponent){
+        if(opponent.getPlayerGolds()<2){
+            opponent.setPlayerHp(opponent.getPlayerHp()-1);
+        }
+        else {
+            opponent.setPlayerGolds(opponent.getPlayerGolds()-2);
+        }
+    }
+
+    public void annulationDactivite(Player opponent){
+        ArrayList<String> archList=new ArrayList<String>();
+        for(Creature creature: opponent.getCurrentOnBoard()){
+            archList.add(creature.getArchetype());
+        }
+        int rand = (int) Math.floor(Math.random() * archList.size());
+        String nerfedArch = archList.get(rand);
+        for(Creature creature: opponent.getCurrentOnBoard()){
+            if (creature.getArchetype().equals(nerfedArch)){
+                if(creature.creatureAtt<0){
+                    creature.creatureAtt--;
+                }
+                if(creature.creatureHp<0){
+                    creature.creatureHp--;
+                    if(creature.creatureHp<=0){
+                        System.out.println(creature.getCardName() + " has been removed from "+opponent.getPlayerName() +" currentBoard");
+                        opponent.getCurrentOnBoard().remove(creature);
+                    }
+                }
+            }
+        }
+    }
+
+    public void jeSuisAleatoArt(){
+        int tab[];
+        tab= new int[]{7, 31, 35, 46};
+        int rand = (int) Math.floor(Math.random() * 4);
+        while (this.getEffectList()[tab[rand]]==true){
+            rand = (int) Math.floor(Math.random() * 4);
+        }
+        this.getEffectList()[tab[rand]]=true;
+
+    }
 }
