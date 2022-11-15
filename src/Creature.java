@@ -342,7 +342,7 @@ public class Creature extends Card {
     public void nousSommesAleatoART(Player player){
         int tab[];
         int i=0;
-        tab= new int[]{7, 46, 47};
+        tab= new int[]{7, 46, 46};
         ArrayList<Creature> bda= new ArrayList<Creature>();
         int rand = (int) Math.floor(Math.random() * 3);
 
