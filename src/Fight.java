@@ -48,7 +48,7 @@ public class Fight {
     }
 
     public void vsFight(Player player1, Player player2){
-        fightingBoardInitializer(player1);fightingBoardInitializer(player2);
+        twoPlayerInitialisation(player1,player2);
         int rand = (int) Math.floor(Math.random() * 2),i=0;
         boolean continueFight=true;
         if(rand==0){
@@ -91,10 +91,12 @@ public class Fight {
     }
 
     public void fightingBoardInitializer(Player toBeInitialized){
+        int i=0;
         toBeInitialized.getCurrentOnBoard().clear();
         for(Creature creature:toBeInitialized.getOnBoard()){
             Creature toBeAdded= new Creature();
             toBeAdded.copyCreature(creature);
+            toBeAdded.setIndexOfBoard(i);
             toBeInitialized.getCurrentOnBoard().add(toBeAdded);
         }
         for (Creature creature : toBeInitialized.getCurrentOnBoard()){
@@ -103,7 +105,33 @@ public class Fight {
     }
 
     public void twoPlayerInitialisation(Player player1, Player player2){
+        fightingBoardInitializer(player1);fightingBoardInitializer(player2);
+        initPlayerBeginningOfTurn(player2, player1);
+        initPlayerBeginningOfTurn(player1, player2);
+    }
 
+    private void initPlayerBeginningOfTurn(Player player1, Player player2) {
+        for (Creature creature : player2.getCurrentOnBoard()){
+            for(int i=1;i<47;i++){
+                if(creature.getEffectList()[i]==true){
+                    switch(i){
+                        case 1: creature.volDAssos(player1);break;
+                        case 2: creature.ardoiseKfet(player1);break;
+                        case 3: creature.annulationDactivite(player1);break;
+                        case 4: creature.jeSuisAleatoArt();break;
+                        case 5: creature.nousSommesAleatoART(player2);break;
+                        case 6: jaiBesoinDePlusDheures(player2,player1,creature);break;
+                        case 13: creature.armureEnPcbRecycle(player2);break;
+                        case 17: player2.cestQuoiUneListe();break;
+                        case 37: shuffleBoard(player1);break;
+                        case 39: creature.karsherisationDesFaibles(player1);break;
+                        case 40: creature.sippingDeSubventions(player1, player2);break;
+                        case 42: /*à ajouter*/break;
+                        default: break;
+                    }
+                }
+            }
+        }
     }
 
     public ArrayList<Player> getFightOrder() {

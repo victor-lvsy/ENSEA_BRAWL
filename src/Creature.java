@@ -20,7 +20,17 @@ public class Creature extends Card {
 
     private int alreadyFight;
 
+    private int indexOfBoard;
+
     private boolean effectList[] = new boolean[47];
+
+    public int getIndexOfBoard() {
+        return indexOfBoard;
+    }
+
+    public void setIndexOfBoard(int indexOfBoard) {
+        this.indexOfBoard = indexOfBoard;
+    }
 
     private int numberOfAttacks;
 
@@ -384,4 +394,30 @@ public class Creature extends Card {
             }
         }
     }
+
+    public void sippingDeSubventions(Player defender, Player attacker ){
+        int alea;
+        if(defender.getCurrentOnBoard().size()>0){
+            alea = (int) Math.floor(Math.random() * defender.getCurrentOnBoard().size());
+            while (defender.getCurrentOnBoard().get(alea).creatureAtt==0){
+                alea = (int) Math.floor(Math.random() * defender.getCurrentOnBoard().size());
+            }
+            this.creatureAtt++;
+            defender.getCurrentOnBoard().get(alea).creatureAtt--;
+            attacker.getOnBoard().get(this.indexOfBoard).creatureAtt++;
+        }
+        else {
+            System.out.println("No one can be sipped");
+        }
+
+    }
+
+    public void dontTalkAboutBruno(Creature creature, Player attacker){
+        int alea = ((int) Math.floor(Math.random() * 2));
+        creature.creatureAtt=creature.creatureAtt-alea;
+        creature.creatureHp=creature.creatureHp-(2-alea);
+        attacker.getOnBoard().get(creature.indexOfBoard).creatureAtt=attacker.getOnBoard().get(creature.indexOfBoard).creatureAtt-alea;
+        attacker.getOnBoard().get(creature.indexOfBoard).creatureHp=attacker.getOnBoard().get(creature.indexOfBoard).creatureHp-(2-alea);
+    }
+
 }

@@ -304,4 +304,13 @@ public class Player {
             }
         }
     }
+
+    public void boostAleatoART(Player player){
+        int rand = (int) Math.floor(Math.random() * player.getCurrentOnBoard().size());
+        player.getCurrentOnBoard().get(rand).setCreatureAtt(player.getCurrentOnBoard().get(rand).getCreatureAtt()+1);
+        player.getCurrentOnBoard().get(rand).setCreatureHp(player.getCurrentOnBoard().get(rand).getCreatureHp()+1);
+        rand = (int) Math.floor(Math.random() * player.getCurrentOnBoard().size());
+        player.getCurrentOnBoard().get(rand).setCreatureAtt(player.getCurrentOnBoard().get(rand).getCreatureAtt()+1);
+        player.getCurrentOnBoard().get(rand).setCreatureHp(player.getCurrentOnBoard().get(rand).getCreatureHp()+1);
+    }
 }
