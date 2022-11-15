@@ -357,4 +357,31 @@ public class Creature extends Card {
             System.out.println(bda.get(alea).getCardName()+" has already all the effects");
         }
     }
+
+    public void armureEnPcbRecycle(Player player){
+        for (Creature creature:player.getCurrentOnBoard()){
+            if(creature.effectList[35]==true){
+                creature.creatureHp=creature.creatureHp+2;
+            }
+        }
+    }
+
+    public void karsherisationDesFaibles(Player player){
+        for (Creature creature:player.getCurrentOnBoard()){
+            int i=0;
+            for (boolean bool:creature.currentDiploma.getSpellEffect()){
+                if(bool==true){
+                    i++;
+                }
+            }
+            if(creature.currentDiploma.getSpellAttBoost()==0 && creature.currentDiploma.getSpellHpBoost()==0 && i==1){
+                if(creature.creatureAtt-5>=0){
+                    creature.creatureAtt=creature.creatureAtt-5;
+                }
+                else{
+                    creature.creatureAtt=0;
+                }
+            }
+        }
+    }
 }

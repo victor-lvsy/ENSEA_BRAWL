@@ -152,7 +152,14 @@ public class Fight {
         Collections.shuffle(player.getCurrentOnBoard());
     }
 
-    public void jaiBesoinDePlusDheures (Player player,Creature creature){
-
+    public void jaiBesoinDePlusDheures (Player possessor, Player receiver, Creature mana){
+        int manaIndex = possessor.getCurrentOnBoard().indexOf(mana);
+        Creature crea = new Creature();
+        int alea = (int) Math.floor(Math.random() * receiver.getCurrentOnBoard().size());
+        crea=receiver.getCurrentOnBoard().get(alea);
+        receiver.getCurrentOnBoard().remove(alea);
+        receiver.getCurrentOnBoard().add(alea,mana);
+        possessor.getCurrentOnBoard().remove(manaIndex);
+        possessor.getCurrentOnBoard().add(manaIndex,crea);
     }
 }

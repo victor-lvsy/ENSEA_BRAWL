@@ -21,10 +21,13 @@ public class Player {
 
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
 
+    private int archetypeList[];
+
     public Player(String newPlayerName, int newPlayerHp, int newPlayerGolds) {
         playerName = newPlayerName;
         playerHp = newPlayerHp;
         playerGolds = newPlayerGolds;
+        archetypeList= new int[]{0, 0, 0, 0, 0, 0};
     }
 
     public ArrayList<Creature> getOnBoard() {
@@ -43,7 +46,15 @@ public class Player {
         return shop;
     }
 
-    public void attackTurn(Player toBeFight,int willFight){
+    public int[] getArchetypeList() {
+        return archetypeList;
+    }
+
+    public void setArchetypeList(int[] archetypeList) {
+        this.archetypeList = archetypeList;
+    }
+
+    public void attackTurn(Player toBeFight, int willFight){
         boolean isDead[] = new boolean[2];
         ArrayList <Integer> haveTaunt = new ArrayList<Integer>();
         int alea,i=0,furieDesVents=0,j=0;
@@ -261,4 +272,36 @@ public class Player {
         }
     }
 
+    public void cestQuoiUneListe(){
+        this.archetypeList[0]=this.archetypeList[0]+2;//à modifier
+    }
+
+    public void tauntEtRivalite(Player player1,Player player2){
+        boolean isDead[]=new boolean[]{false,false};
+        ArrayList<Creature>rivaux=new ArrayList<>();
+        for(Creature creature:player1.getCurrentOnBoard()){
+            if(creature.getEffectList()[36]==true){
+                rivaux.add(creature);
+            }
+        }
+        for(Creature creature:player2.getCurrentOnBoard()){
+            if(creature.getEffectList()[36]==true){
+                rivaux.add(creature);
+            }
+        }
+        while(rivaux.size()>1){
+            int rand = (int) Math.floor(Math.random() * rivaux.size()), rand2 = rand+1;
+            if(rand2>=rivaux.size()){rand2=0;}
+            isDead=rivaux.get(rand).attackCreature(rivaux.get(rand2));
+            if (isDead[0]==true){
+                System.out.println(player1.currentOnBoard.get(rand) + " has been removed from "+player1.playerName +" currentBoard");
+                player1.currentOnBoard.remove(rivaux.get(rand));
+                rivaux.remove(rand);
+            }
+            if (isDead[1]==true){
+                System.out.println(player2.currentOnBoard.get(rand2) + " has been removed from "+player2.playerName +" currentBoard");
+                player2.currentOnBoard.remove(rivaux.get(rand2));
+            }
+        }
+    }
 }
