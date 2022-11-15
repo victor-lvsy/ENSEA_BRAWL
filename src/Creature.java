@@ -351,10 +351,10 @@ public class Creature extends Card {
             i++;
         }
         if(i<3){
-            this.getEffectList()[tab[rand]]=true;
+            bda.get(alea).getEffectList()[tab[rand]]=true;
         }
         else {
-            System.out.println(this.getCardName()+" has already all the effects");
+            System.out.println(bda.get(alea).getCardName()+" has already all the effects");
         }
     }
 }

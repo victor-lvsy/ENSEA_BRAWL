@@ -151,4 +151,8 @@ public class Fight {
     public void shuffleBoard(Player player){
         Collections.shuffle(player.getCurrentOnBoard());
     }
+
+    public void jaiBesoinDePlusDheures (Player player,Creature creature){
+
+    }
 }
