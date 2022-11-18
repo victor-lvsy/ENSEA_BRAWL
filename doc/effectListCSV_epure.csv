@@ -16,13 +16,13 @@ SecretaireBDE;BDE;2;2;1;7;0;0;7
 Soubrette;Evil;2;4;1;8;0;0;0
 RespoComBDA;BDA;2;ALEA;2;14;ALEA;3;0
 TresorierBDE;BDE;2;1;3;15;1;2;0
-TresorBDLS;BDLS;2;2;2;16;2;2;0
+TresorierBDLS;BDLS;2;2;2;16;2;2;0
 SecretaireBDS;BDS;2;3;2;19;3;0;0
-TresorBDS;BDS;2;2;2;20;0;0;46
+TresorierBDS;BDS;2;2;2;20;0;0;46
 RespoComBDE;BDE;2;2;1;29;1;2;0
 RespoSoiree;BDE;2;1;3;30;1;2;0
 RespoComBDTech;BDTech;2;1;4;35;0;3;0
-TresorBDTech;BDTech;2;2;4;35;0;0;35
+TresorierBDTech;BDTech;2;2;4;35;0;0;35
 Major;Neutre;3;2;2;0;3;3;45
 Intervenant;Neutre;3;7;7;0;0;0;0
 Patrimoine;Personnel;3;4;4;3;0;0;0
@@ -30,7 +30,7 @@ VicePresBDA;BDA;3;ALEA;6;4;ALEA;6;0
 VicePresBDS;BDS;3;6;1;7;4;2;0
 VicePresBDTech;BDTech;3;3;6;13;2;4;0
 VicePresBDE;BDE;3;3;3;17;2;2;44
-TresorBDA;BDA;3;ALEA;6;18;ALEA;6;0
+TresorierBDA;BDA;3;ALEA;6;18;ALEA;6;0
 SecreBDLS;BDLS;3;4;3;22;3;3;0
 Luca Libe;BDFaillant;3;2;5;31;2;2;0
 Yannis Peloutier;BDFaillant;3;5;2;31;2;2;0

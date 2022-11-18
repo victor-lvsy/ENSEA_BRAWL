@@ -26,11 +26,26 @@ public class Turn extends Game{
                 Initialisation.players.get(k).handToBoard(0);
             }
         }
+        if(gameTurn%3==0){
+            int l=Initialisation.players.get(k).getOnBoard().size();
+            for(int i = 0;i<l;i++){
+                Initialisation.players.get(k).sellCreature(0,"Board");
+            }
+            l=Initialisation.players.get(k).getShop().getActuallySelling().size();
+            for(int i = 0; i<l;i++){
+                Initialisation.players.get(k).buyCreature(j);
+                j--;
+            }
+            j=Initialisation.players.get(k).getHand().size();
+            for(int i = 0; i<j;i++){
+                Initialisation.players.get(k).handToBoard(0);
+            }
+        }
     }
 
     public static void shopInit(){
         for(int i=0;i<Initialisation.players.size();i++){
-            Initialisation.players.get(i).shopLevelUp();
+            Initialisation.players.get(i).shopFreeLevelUp();
             Initialisation.players.get(i).testLevelUp();
             System.out.println("Shop level: "+Initialisation.players.get(i).getShopLvl()+" Shop level up cost: "+Initialisation.players.get(i).getShopLevelUpCost());
             Initialisation.players.get(i).getShop().shop(Initialisation.players.get(i).getShopLvl(),i);
