@@ -23,30 +23,28 @@ public class Card {
         pane.getChildren().add(health);
         pane.getChildren().add(name);
         pane.getChildren().add(shopLevel);
+        cardImgView.setImage(new Image("file:ImageJeu/" + CardName + ".png"));
+        name.setText(CardName);
+        Font font = new Font("Verdana", 20);
+        shopLevel.setFont(font);
+        health.setFont(font);
+        attack.setFont(font);
+        Font fontName = new Font("Verdana", 14);
+        name.setFont(fontName);
+        name.setFill(Color.WHITE);
     }
 
     public void update(){
-        cardImgView.setImage(new Image("file:ImageJeu/" + CardName + ".png"));
-        Font font = new Font("Verdana", 20);
-        Font fontName = new Font("Verdana", 14);
-        name.setText(CardName);
         cardImgView.setX(8);
         cardImgView.setY(53);
         shopLevel.setX(23);
         shopLevel.setY(35);
-        shopLevel.setFont(font);
-        shopLevel.setFill(Color.BLACK);
         attack.setX(16-(int)attack.getText().length()*6.2);
         attack.setY(309);
-        attack.setFont(font);
         health.setX(184-(int)health.getText().length()*6.2);
         health.setY(309);
-        health.setFont(font);
         name.setX(47);
         name.setY(33);
-        name.setFont(fontName);
-        name.setFill(Color.WHITE);
-
     }
 
     public String getCardName() {

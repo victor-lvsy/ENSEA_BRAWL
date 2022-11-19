@@ -85,6 +85,16 @@ public class Creature extends Card {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.update();
+        //this.setCreature(String.valueOf(this.getCardName()),"doc/effectListCSV_epure.csv");
+        this.getShopLevel().setText(String.valueOf(this.getCreatureTier()));
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        this.getAttack().setText(String.valueOf(this.getCreatureAtt()));
+        this.getHealth().setText(String.valueOf(this.getCreatureHp()));
     }
 
     public void stringToIntALEAStats(String toBeConverted1, String toBeConverted2) {
