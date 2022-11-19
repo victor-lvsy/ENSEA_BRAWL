@@ -3,67 +3,48 @@ import java.util.ArrayList;
 
 public class Creature extends Card {
     private int creatureHp;
-
     private int creatureAtt;
-
     private int creatureTier;
-
     private String archetype = new String();
-
     private Spell currentDiploma = new Spell();
-
     private Spell toBeGeneratedDiploma = new Spell();
-
     private Spell currentItem;
-
     private Spell paniersBio;
-
     private int alreadyFight;
-
     private boolean effectList[] = new boolean[47];
-
     private int numberOfAttacks;
-
-    public void setEffectList(boolean effect, int i) {
-        this.effectList[i] = effect;
-    }
 
     public boolean[] getEffectList() {
         return effectList;
     }
-
     public int getCreatureHp() {
         return creatureHp;
     }
-
     public int getCreatureAtt() {
         return creatureAtt;
     }
-
     public String getArchetype() {
         return archetype;
     }
-
     public int getCreatureTier() {
         return creatureTier;
+    }
+    public int getNumberOfAttacks() {
+        return numberOfAttacks;
     }
 
     public void setCreatureHp(int creatureHp) {
         this.creatureHp = creatureHp;
     }
-
     public void setCreatureAtt(int creatureAtt) {
         this.creatureAtt = creatureAtt;
     }
-
-    public int getNumberOfAttacks() {
-        return numberOfAttacks;
+    public void setEffectList(boolean effect, int i) {
+        this.effectList[i] = effect;
     }
-
     public void setNumberOfAttacks(int numberOfAttacks) {
         this.numberOfAttacks = numberOfAttacks;
     }
-
     public void setToFalseEffectList(boolean toBeSet[]) {
         for (int i = 0; i <= 46; i++) {
             toBeSet[i] = false;
