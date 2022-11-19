@@ -36,8 +36,6 @@ public class Shop {
             case 4: setShop(5);break;
             case 5: setShop(6);break;
         }
-
-
         Turn.playerTestInitializer(player);
         Game.init.getCreaturePool().addAll(actuallySelling);
         actuallySelling.clear();

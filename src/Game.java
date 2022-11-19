@@ -11,10 +11,11 @@ public class Game {
     public static void main(String[] args) {
         Turn turn = new Turn();
         init.Initialisation();
-        while(Initialisation.players.size()>1 && gameTurn<100){
+        while(Initialisation.players.size()>1 && gameTurn<50){
             turn.Turn();
             gameTurn++;
         }
+        System.out.println("Player "+Initialisation.players.get(0).getPlayerName()+" has won!");
     }
 
     public static void endOfPlayerGame(int toBeTested){

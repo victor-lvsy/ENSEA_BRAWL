@@ -1,3 +1,4 @@
+import java.awt.image.TileObserver;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,12 +12,13 @@ public class Player {
     private int playerGolds;
     private Player precedentOpponent = null;
     public Shop shop = new Shop();
-    private int shopLvl=1;
+    private int shopLvl=5;
     private int shopLevelUpCost=5;
     private ArrayList<Card> hand = new ArrayList<Card>();
     private ArrayList<Creature> onBoard = new ArrayList<Creature>();
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
     private int archetypeList[];
+    private ArrayList<Creature>deadBuffer= new ArrayList<>();
     public class Exile {
         Creature creature;
         int exilTime;
@@ -112,13 +114,12 @@ public class Player {
     public void attackTurn(Player toBeFight, int willFight){
         int isDead[];
         ArrayList <Integer> haveTaunt = new ArrayList<Integer>();
-        int alea,i=0,furieDesVents=0,j=0;
-        if(this.currentOnBoard.get(willFight).getEffectList()[46]==true){
-            furieDesVents=1;
-        }
-        for(j=0; j == furieDesVents; j++){
-            if(this.currentOnBoard.get(willFight).getCreatureHp()<=0){
-                System.out.println("This creature "+this.currentOnBoard.get(willFight).getCardName() +" is dead impossible to attack");
+        Creature creatureBuffer = new Creature();
+        creatureBuffer = this.currentOnBoard.get(willFight);
+        int alea,i=0;
+        if(creatureBuffer.getEffectList()[46]==true){
+            if(creatureBuffer.getCreatureHp()<=0){
+                System.out.println("This creature "+creatureBuffer.getCardName() +" is dead impossible to attack");
             }
             else{
                 for (Creature creature : toBeFight.getCurrentOnBoard()){
@@ -140,11 +141,11 @@ public class Player {
                     }
                     alea=haveTaunt.get(alea);
                     System.out.println( this.getPlayerName() +" "+ this.getCurrentOnBoard().get(willFight).getCardName() + " attacked " +toBeFight.getPlayerName()+" "+toBeFight.currentOnBoard.get(alea));
-                    if(this.currentOnBoard.get(willFight).getEffectList()[9]==true){
-                        isDead = this.currentOnBoard.get(willFight).cleave(toBeFight.getCurrentOnBoard().get(alea),toBeFight);
+                    if(creatureBuffer.getEffectList()[9]==true){
+                        isDead = creatureBuffer.cleave(toBeFight.getCurrentOnBoard().get(alea),toBeFight);
                     }
                     else {
-                        isDead = this.currentOnBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
+                        isDead = creatureBuffer.attackCreature(toBeFight.getCurrentOnBoard().get(alea));
                     }
                 }
                 else{
@@ -159,60 +160,149 @@ public class Player {
                         k++;
                     }
                     System.out.println( this.getPlayerName() +" "+ this.getCurrentOnBoard().get(willFight).getCardName() + " attacked " +toBeFight.getPlayerName()+" "+toBeFight.currentOnBoard.get(alea));
-                    if(this.currentOnBoard.get(willFight).getEffectList()[9]==true){
-                        isDead = this.currentOnBoard.get(willFight).cleave(toBeFight.getCurrentOnBoard().get(alea),toBeFight);
+                    if(creatureBuffer.getEffectList()[9]==true){
+                        isDead = creatureBuffer.cleave(toBeFight.getCurrentOnBoard().get(alea),toBeFight);
                     }
                     else {
-                        isDead = this.currentOnBoard.get(willFight).attackCreature(toBeFight.getCurrentOnBoard().get(alea));
+                        isDead = creatureBuffer.attackCreature(toBeFight.getCurrentOnBoard().get(alea));
                     }
                 }
+                this.deadBuffer.clear();
+                toBeFight.deadBuffer.clear();
                 if (isDead[1]==1){
-                    for (int k = 1; k < 47; k++) {
-                        if (this.currentOnBoard.get(willFight).getEffectList()[k] == true){
-                            switch (k) {
-                                case 15:
-                                    this.vousConnaisezLyfPay();
-                                    break;
-                                case 25:
-                                    this.delation(toBeFight);
-                                    break;
-                                case 29:
-                                    this.propagande();
-                                    break;
-                                case 30:
-                                    this.laSecuriteAvantTout();
-                                    break;
-                                case 31:
-                                    this.currentOnBoard.get(willFight).reincarnation();
-                                    break;
-                                case 32:
-                                    this.legendNeverDie();
-                                    break;
-                                case 33:
-                                    this.repopAleatoArt();
-                                    break;
-                            }
-                        }
-                    }
-                    if(this.currentOnBoard.get(willFight).isReincarnation()==false){
-                        System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.playerName +" currentBoard");
-                        this.currentOnBoard.remove(willFight);
+                    if(creatureBuffer.isReincarnation()==false){
+                        System.out.println(creatureBuffer + " has been removed from "+this.playerName +" currentBoard");
+                        this.deadBuffer.add(creatureBuffer);
+                        this.currentOnBoard.remove(creatureBuffer);
                     }
                 }
                 if (isDead[4]==1){
                     System.out.println(toBeFight.currentOnBoard.get(alea+1) + " has been removed from "+toBeFight.playerName +" currentBoard");
+                    toBeFight.deadBuffer.add(toBeFight.currentOnBoard.get(alea+1));
                     toBeFight.currentOnBoard.remove(alea+1);
                 }
                 if (isDead[2]==1){
                     System.out.println(toBeFight.currentOnBoard.get(alea) + " has been removed from "+toBeFight.playerName +" currentBoard");
+                    toBeFight.deadBuffer.add(toBeFight.currentOnBoard.get(alea));
                     toBeFight.currentOnBoard.remove(alea);
                 }
                 if (isDead[3]==1){
                     System.out.println(toBeFight.currentOnBoard.get(alea-1) + " has been removed from "+toBeFight.playerName +" currentBoard");
+                    toBeFight.deadBuffer.add(toBeFight.currentOnBoard.get(alea-1));
                     toBeFight.currentOnBoard.remove(alea-1);
                 }
+                uponDeathEffects(toBeFight, this);
+                uponDeathEffects(this, toBeFight);
 
                 System.out.println("_____________________________ROUND FINISHED_____________________________");
+            }
+        }
+        haveTaunt.clear();
+        i=0;
+        if(toBeFight.getCurrentOnBoard().size()!=0) {
+            if (this.deadBuffer.size() < 0) {
+                System.out.println("This creature already is dead impossible to attack");
+            } else {
+                for (Creature creature : toBeFight.getCurrentOnBoard()) {
+                    if (creature.getEffectList()[35] == true || creature.getEffectList()[36] == true) {
+                        haveTaunt.add(i);
+                    }
+                    i++;
+                }
+                if (haveTaunt.size() != 0) {
+                    i = 1;
+                    alea = (int) (Math.random() * (haveTaunt.size()));
+                    while (toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).getEffectList()[8] == true) {
+                        alea = (int) (Math.random() * (haveTaunt.size()));
+                        i++;
+                        if (i == haveTaunt.size()) {
+                            toBeFight.getCurrentOnBoard().get(haveTaunt.get(alea)).setEffectList(false, 8);
+                            System.out.println("Camouflage is set to false because of impossibility to attack");
+                        }
+                    }
+                    alea = haveTaunt.get(alea);
+                    System.out.println(this.getPlayerName() + " " + creatureBuffer.getCardName() + " attacked " + toBeFight.getPlayerName() + " " + toBeFight.currentOnBoard.get(alea));
+                    if (creatureBuffer.getEffectList()[9] == true) {
+                        isDead = creatureBuffer.cleave(toBeFight.getCurrentOnBoard().get(alea), toBeFight);
+                    } else {
+                        isDead = creatureBuffer.attackCreature(toBeFight.getCurrentOnBoard().get(alea));
+                    }
+                } else {
+                    int k = 1;
+                    alea = (int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
+                    while (toBeFight.getCurrentOnBoard().get(alea).getEffectList()[8] == true) {
+                        alea = (int) (Math.random() * (toBeFight.getCurrentOnBoard().size()));
+                        if (k == toBeFight.getCurrentOnBoard().size()) {
+                            toBeFight.getCurrentOnBoard().get(alea).setEffectList(false, 8);
+                            System.out.println("Camouflage is set to false because of impossibility to attack");
+                        }
+                        k++;
+                    }
+                    System.out.println(this.getPlayerName() + " " + creatureBuffer.getCardName() + " attacked " + toBeFight.getPlayerName() + " " + toBeFight.currentOnBoard.get(alea));
+                    if (creatureBuffer.getEffectList()[9] == true) {
+                            isDead = creatureBuffer.cleave(toBeFight.getCurrentOnBoard().get(alea), toBeFight);
+                        }
+                    else {
+                            isDead = creatureBuffer.attackCreature(toBeFight.getCurrentOnBoard().get(alea));
+                        }
+                    }
+                    this.deadBuffer.clear();
+                    toBeFight.deadBuffer.clear();
+                    if (isDead[1] == 1) {
+                        if (creatureBuffer.isReincarnation() == false) {
+                            System.out.println(creatureBuffer + " has been removed from " + this.playerName + " currentBoard");
+                            this.deadBuffer.add(creatureBuffer);
+                            this.currentOnBoard.remove(creatureBuffer);
+                        }
+                    }
+                     if (isDead[4] == 1) {
+                        System.out.println(toBeFight.currentOnBoard.get(alea + 1) + " has been removed from " + toBeFight.playerName + " currentBoard");
+                        toBeFight.deadBuffer.add(toBeFight.currentOnBoard.get(alea + 1));
+                        toBeFight.currentOnBoard.remove(alea + 1);
+                    }
+                    if (isDead[2] == 1) {
+                        System.out.println(toBeFight.currentOnBoard.get(alea) + " has been removed from " + toBeFight.playerName + " currentBoard");
+                        toBeFight.deadBuffer.add(toBeFight.currentOnBoard.get(alea));
+                        toBeFight.currentOnBoard.remove(alea);
+                    }
+                   if (isDead[3] == 1) {
+                        System.out.println(toBeFight.currentOnBoard.get(alea - 1) + " has been removed from " + toBeFight.playerName + " currentBoard");
+                        toBeFight.deadBuffer.add(toBeFight.currentOnBoard.get(alea - 1));
+                        toBeFight.currentOnBoard.remove(alea - 1);
+                    }
+                    uponDeathEffects(toBeFight, this);
+                    uponDeathEffects(this, toBeFight);
+
+                    System.out.println("_____________________________ROUND FINISHED_____________________________");
+                }
+            }
+        }
+
+    private void uponDeathEffects(Player x, Player toBeFight) {
+        for(Creature creature: x.deadBuffer){
+            for (int k = 1; k < 47; k++) {
+                if (creature.getEffectList()[k] == true){
+                    switch (k) {
+                        case 15:
+                            x.vousConnaisezLyfPay();
+                            break;
+                        case 25:
+                            x.delation(toBeFight);
+                            break;
+                        case 29:
+                            x.propagande();
+                            break;
+                        case 30:
+                            x.laSecuriteAvantTout();
+                            break;
+                        case 32:
+                            x.legendNeverDie();
+                            break;
+                        case 33:
+                            x.repopAleatoArt();
+                            break;
+                    }
+                }
             }
         }
     }
@@ -376,15 +466,31 @@ public class Player {
 
     public void favoritisme(){
         int rand = (int) Math.floor(Math.random() * this.getOnBoard().size());
-        int j=0;
+        int j=0, k = 0;
         for(int i=1;i<this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellEffect().length;i++){
             if(this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellEffect()[i]==true){
                 j++;
             }
         }
-        if(this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellAttBoost()!=0 || this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellHpBoost()!=0 || j>=1){
-           this.hand.add(this.getOnBoard().get(rand).generateDiploma());
-           System.out.println("Diploma has been added to "+this.getPlayerName()+" hand.");
+        while ((this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellAttBoost()==0 && this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellHpBoost()==0 && j<1) && k<=this.getOnBoard().size()){
+            j=0;
+            rand++;
+            k++;
+            if (rand>=this.getOnBoard().size()){
+                rand=0;
+            }
+            for(int i=1;i<this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellEffect().length;i++){
+                if(this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellEffect()[i]==true){
+                    j++;
+                }
+            }
+        }
+        if(k<=this.getOnBoard().size()){
+            System.out.println("No on can generate a diploma");
+        }
+        else {
+            this.hand.add(this.getOnBoard().get(rand).generateDiploma());
+            System.out.println("Diploma has been added to "+this.getPlayerName()+" hand.");
         }
     }
 

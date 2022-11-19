@@ -66,35 +66,54 @@ public class Fight {
 
     public void vsFight(Player player1, Player player2) {
         twoPlayerInitialisation(player1, player2);
-        int rand = (int) Math.floor(Math.random() * 2), i = 0, j = 0;
+        int rand = (int) Math.floor(Math.random() * 2);
         boolean continueFight = true;
         if (rand == 0) {
             while (continueFight == true) {
-                continueFight = oneTurnFight(player1, player2, i);
-                i++;
+                continueFight = oneTurnFight(player1, player2);
             }
         } else {
             while (continueFight == true) {
-                continueFight = oneTurnFight(player2, player1, j);
-                j++;
+                continueFight = oneTurnFight(player2, player1);
             }
         }
     }
 
-    public boolean oneTurnFight(Player first, Player second, int fightTurn) {
-        int i = 0;
+    public boolean oneTurnFight(Player first, Player second) {
+        int i = 0,j = 0;
+        boolean k=false;
         if (first.getCurrentOnBoard().size() != 0 && second.getCurrentOnBoard().size() != 0 && dmgDealerOnBoard(first, second) == true) {
-            while (first.getCurrentOnBoard().get(i).getAlreadyFight() > fightTurn) {
-                i++;
+            while(k!=true){
+                i=0;
+                for(Creature creature:first.getCurrentOnBoard()){
+                    if(creature.getAlreadyFight()>j){
+                        i++;
+                    }
+                    else{
+                        k=true;
+                    }
+                }
+                j++;
             }
             first.attackTurn(second, i);
         } else {
             haveLost(first, second);
             return false;
         }
+        k=false;
+        j = 0; i = 0;
         if (first.getCurrentOnBoard().size() != 0 && second.getCurrentOnBoard().size() != 0 && dmgDealerOnBoard(first, second) == true) {
-            while (second.getCurrentOnBoard().get(i).getAlreadyFight() > fightTurn) {
-                i++;
+            while(k!=true){
+                i=0;
+                for(Creature creature:second.getCurrentOnBoard()){
+                    if(creature.getAlreadyFight()>j){
+                        i++;
+                    }
+                    else{
+                        k=true;
+                    }
+                }
+                j++;
             }
             second.attackTurn(first, i);
         } else {
@@ -148,6 +167,7 @@ public class Fight {
     }
 
     private void initPlayerBeginningOfTurn(Player player2, Player player1) {
+        ArrayList<Creature>creatureBuffer  = new ArrayList<>();
         for (Creature creature : player1.getCurrentOnBoard()) {
             for (int i = 1; i < 47; i++) {
                 if (creature.getEffectList()[i] == true){
@@ -168,7 +188,7 @@ public class Fight {
                             creature.nousSommesAleatoART(player1);
                             break;
                         case 6:
-                            jaiBesoinDePlusDheures(player1, player2, creature);
+                            creatureBuffer.add(creature);
                             break;
                         case 13:
                             creature.armureEnPcbRecycle(player1);
@@ -197,6 +217,10 @@ public class Fight {
 
             }
         }
+        for (Creature creature:creatureBuffer){
+            jaiBesoinDePlusDheures(player1, player2, creature);
+        }
+
         tauntEtRivalite(player1, player2);
     }
 

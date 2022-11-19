@@ -51,9 +51,9 @@ public class Turn extends Game{
 
     public static void shopInit(){
         for(int i=0;i<Initialisation.players.size();i++){
-            Initialisation.players.get(i).shopFreeLevelUp();
+            /*Initialisation.players.get(i).shopFreeLevelUp();
             Initialisation.players.get(i).testLevelUp();
-            System.out.println("Shop level: "+Initialisation.players.get(i).getShopLvl()+" Shop level up cost: "+Initialisation.players.get(i).getShopLevelUpCost());
+            System.out.println("Shop level: "+Initialisation.players.get(i).getShopLvl()+" Shop level up cost: "+Initialisation.players.get(i).getShopLevelUpCost());*/
             Initialisation.players.get(i).getShop().shop(Initialisation.players.get(i).getShopLvl(),i);
         }
     }

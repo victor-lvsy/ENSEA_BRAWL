@@ -190,9 +190,10 @@ public class Creature extends Card {
             isDead[0]=3;
             boolean bd2=isAttacked.getCurrentOnBoard().get(1).getEffectList()[7];
             if (bd2==false){
-                isAttacked.getCurrentOnBoard().get(1).setCreatureHp(isAttacked.getCurrentOnBoard().get(1).getCreatureHp()-this.getCreatureAtt());
-                System.out.println("Attacker "+ this.getCardName()+" did " + this.getCreatureAtt() + "additional damages to" + isAttacked.getCurrentOnBoard().get(1).getCardName() +"due to cleave");
+                isAttacked.getCurrentOnBoard().get(1).setCreatureHp(isAttacked.getCurrentOnBoard().get(1).getCreatureHp()-this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(1)));
+                System.out.println("Attacker "+ this.getCardName()+" did " + this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(1)) + "additional damages to" + isAttacked.getCurrentOnBoard().get(1).getCardName() +"due to cleave");
                 isDead[4]=simpleIsDead(isAttacked.getCurrentOnBoard().get(1).getCreatureHp());
+                testReinca(isAttacked.getCurrentOnBoard().get(1), isDead[4]);
             }
             if(this.getCreatureAtt()>0){
                 isAttacked.getCurrentOnBoard().get(1).getEffectList()[7]=false;
@@ -202,9 +203,10 @@ public class Creature extends Card {
             isDead[0]=2;
             boolean bd2=isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getEffectList()[7];
             if (bd2==false){
-                isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).setCreatureHp(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCreatureHp()-this.getCreatureAtt());
-                System.out.println("Attacker "+ this.getCardName()+" did " + this.getCreatureAtt() + "additional damages to" + isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCardName() +"due to cleave");
+                isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).setCreatureHp(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCreatureHp()-this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1)));
+                System.out.println("Attacker "+ this.getCardName()+" did " + this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1)) + "additional damages to" + isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCardName() +"due to cleave");
                 isDead[3]=simpleIsDead(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCreatureHp());
+                testReinca(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1), isDead[3]);
             }
             if(this.getCreatureAtt()>0){
                 isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getEffectList()[7]=false;
@@ -215,14 +217,16 @@ public class Creature extends Card {
             boolean bd2=isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getEffectList()[7],
                         bd3=isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).getEffectList()[7];
             if (bd2==false){
-                isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).setCreatureHp(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCreatureHp()-this.getCreatureAtt());
-                System.out.println("Attacker "+ this.getCardName()+" did " + this.getCreatureAtt() + "additional damages to" + isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCardName() +"due to cleave");
+                isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).setCreatureHp(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCreatureHp()-this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1)));
+                System.out.println("Attacker "+ this.getCardName()+" did " + this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1)) + "additional damages to" + isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCardName() +"due to cleave");
                 isDead[3]=simpleIsDead(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getCreatureHp());
+                testReinca(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1), isDead[3]);
             }
             if (bd3==false){
-                isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).setCreatureHp(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).getCreatureHp()-this.getCreatureAtt());
-                System.out.println("Attacker "+ this.getCardName()+" did " + this.getCreatureAtt() + "additional damages to" + isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).getCardName() +"due to cleave");
+                isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).setCreatureHp(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).getCreatureHp()-this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1)));
+                System.out.println("Attacker "+ this.getCardName()+" did " + this.testDemissionForcee(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1)) + "additional damages to" + isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).getCardName() +"due to cleave");
                 isDead[4]=simpleIsDead(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).getCreatureHp());
+                testReinca(isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1), isDead[4]);
             }
             if(this.getCreatureAtt()>0){
                 isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)+1).getEffectList()[7]=false;
@@ -231,34 +235,50 @@ public class Creature extends Card {
                 isAttacked.getCurrentOnBoard().get(isAttacked.getCurrentOnBoard().indexOf(defender)-1).getEffectList()[7]=false;
             }
         }
-
+        this.setAlreadyFight(this.getAlreadyFight()+1);
         return isDead;
     }
 
     private int[] attackWithBDKnown(Creature defender, int[] isDead, int bd) {
         switch (bd){
-            case 0: defender.setCreatureHp(defender.getCreatureHp() - this.getCreatureAtt());
-                this.setCreatureHp(this.getCreatureHp() - defender.getCreatureAtt());
-                System.out.println("Attacker "+ this.getCardName()+" did " + this.getCreatureAtt() + " damages and Defender "+defender.getCardName()+" did " + defender.getCreatureAtt() + " damages");
+            case 0: defender.setCreatureHp(defender.getCreatureHp() - this.testDemissionForcee(defender));
+                this.setCreatureHp(this.getCreatureHp() - defender.testDemissionForcee(this));
+                System.out.println("Attacker "+ this.getCardName()+" did " + this.testDemissionForcee(defender) + " damages and Defender "+defender.getCardName()+" did " + defender.testDemissionForcee(this) + " damages");
                 isDead=isDead(this.getCreatureHp(),defender.getCreatureHp());
+                testReinca(this, isDead[1]);
+                testReinca(defender, isDead[2]);
                 break;
-            case 1: defender.setCreatureHp(defender.getCreatureHp() - this.getCreatureAtt());
-                System.out.println("Attacker "+ this.getCardName() +" did " + this.getCreatureAtt() + " damages and Defender "+defender.getCardName()+" did 0 damages");
+            case 1: defender.setCreatureHp(defender.getCreatureHp() - this.testDemissionForcee(defender));
+                System.out.println("Attacker "+ this.getCardName() +" did " + this.testDemissionForcee(defender) + " damages and Defender "+defender.getCardName()+" did 0 damages");
                 isDead=isDead(this.getCreatureHp(),defender.getCreatureHp());
                 voidingBD(this,defender);
+                testReinca(this, isDead[1]);
+                testReinca(defender, isDead[2]);
                 break;
-            case 2: this.setCreatureHp(this.getCreatureHp() - defender.getCreatureAtt());
-                System.out.println("Attacker "+this.getCardName()+" did 0 damages and Defender "+defender.getCardName()+" did " + defender.getCreatureAtt() + " damages");
+            case 2: this.setCreatureHp(this.getCreatureHp() - defender.testDemissionForcee(this));
+                System.out.println("Attacker "+this.getCardName()+" did 0 damages and Defender "+defender.getCardName()+" did " + defender.testDemissionForcee(this) + " damages");
                 isDead=isDead(this.getCreatureHp(),defender.getCreatureHp());
                 voidingBD(this,defender);
+                testReinca(this, isDead[1]);
+                testReinca(defender, isDead[2]);
                 break;
             case 3: System.out.println("Attacker "+ this.getCardName()+" did 0 damages and Defender "+defender.getCardName()+" did 0 damages");
                 isDead=isDead(this.getCreatureHp(),defender.getCreatureHp());
                 voidingBD(this,defender);
+                testReinca(this, isDead[1]);
+                testReinca(defender, isDead[2]);
                 break;
             default:
         }
         return isDead;
+    }
+
+    private void testReinca(Creature creature, int isDead) {
+        if(isDead==1){
+            if (creature.getEffectList()[31]==true){
+                creature.reincarnation();
+            }
+        }
     }
 
     public int gestionBoucliersDivins(boolean attacker, boolean defender) {
@@ -324,7 +344,6 @@ public class Creature extends Card {
         this.currentItem=creature.currentItem;
         this.paniersBio=creature.paniersBio;
         this.setCardName(creature.getCardName());
-
     }
 
     public void stealStatAtt(Creature toBeSteal,int n){
@@ -533,5 +552,16 @@ public class Creature extends Card {
         else {
             this.setReincarnation(false);
         }
+    }
+
+    public int testDemissionForcee( Creature defender){
+        int attackDmg;
+        if(this.getEffectList()[21]==true &&(defender.getArchetype().equals("Enseignants") || defender.archetype.equals("Personnel"))){
+            attackDmg=this.getCreatureAtt()*2;
+        }
+        else {
+            attackDmg=this.getCreatureAtt();
+        }
+        return attackDmg;
     }
 }

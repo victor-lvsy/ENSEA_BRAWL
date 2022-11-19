@@ -38,5 +38,6 @@ public class Spell extends Card{
         this.spellAttBoost=diploma.getSpellAttBoost();
         this.spellHpBoost=diploma.getSpellHpBoost();
         this.spellEffect=diploma.getSpellEffect().clone();
+        this.setCardName("Diplome");
     }
 }
