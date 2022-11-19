@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class Game {
 
     public static int gameTurn=1;
+    public static int boardSize=7;
     public static Initialisation init = new Initialisation();
-
     public static Player playerSave = new Player("Ghost",999999,0);
 
     public static void main(String[] args) {
@@ -24,10 +24,16 @@ public class Game {
             playerSave.getOnBoard().addAll(Initialisation.players.get(toBeTested).getOnBoard());
             int j, l=Initialisation.players.get(toBeTested).getOnBoard().size(), m=Initialisation.players.get(toBeTested).getHand().size();
             for(j=0;j<l;j++){
-                Initialisation.players.get(toBeTested).sellCreature(0,"Board");
+                Initialisation.players.get(toBeTested).sellCreature(0);
             }
             for(j=0;j<m;j++){
-                Initialisation.players.get(toBeTested).sellCreature(0,"Hand");
+                if (Initialisation.players.get(toBeTested).getHand().get(0) instanceof Creature){
+                    Creature creature = new Creature();
+                    creature.setCreature(Initialisation.players.get(toBeTested).getOnBoard().get(0).getCardName(),"doc/effectListCSV_epure.csv");
+                    Game.init.getCreaturePool().add(creature);
+                }
+                Initialisation.players.get(toBeTested).getHand().remove(0);
+
             }
             Initialisation.players.remove(toBeTested);
             for(int i=0;i<Initialisation.players.size();i++){

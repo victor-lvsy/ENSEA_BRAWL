@@ -4,79 +4,72 @@ import java.util.Arrays;
 
 public class Creature extends Card {
     private int creatureHp;
-
     private int creatureAtt;
-
     private int creatureTier;
-
     private String archetype = new String();
-
     private Spell currentDiploma = new Spell();
-
     private Spell toBeGeneratedDiploma = new Spell();
-
     private Spell currentItem;
-
-    private Spell paniersBio;
-
+    private int paniersBio;
     private int alreadyFight;
-
     private int indexOfBoard;
-
     private boolean effectList[] = new boolean[48];
+    private boolean reincarnation;
+    private int numberOfAttacks;
 
     public int getIndexOfBoard() {
         return indexOfBoard;
     }
-
     public void setIndexOfBoard(int indexOfBoard) {
         this.indexOfBoard = indexOfBoard;
     }
-
-    private int numberOfAttacks;
-
     public void setEffectList(boolean effect, int i) {
         this.effectList[i] = effect;
     }
-
     public boolean[] getEffectList() {
         return effectList;
     }
-
     public int getCreatureHp() {
         return creatureHp;
     }
-
     public int getCreatureAtt() {
         return creatureAtt;
     }
-
     public String getArchetype() {
         return archetype;
     }
-
     public int getCreatureTier() {
         return creatureTier;
     }
-
     public void setCreatureHp(int creatureHp) {
         this.creatureHp = creatureHp;
     }
-
     public void setCreatureAtt(int creatureAtt) {
         this.creatureAtt = creatureAtt;
     }
-
+    public boolean isReincarnation() {
+        return reincarnation;
+    }
+    public void setReincarnation(boolean reincarnation) {
+        this.reincarnation = reincarnation;
+    }
     public int getNumberOfAttacks() {
         return numberOfAttacks;
     }
-
     public void setNumberOfAttacks(int numberOfAttacks) {
         this.numberOfAttacks = numberOfAttacks;
     }
-
+    public Spell getCurrentDiploma() {
+        return currentDiploma;
+    }
     public Spell getToBeGeneratedDiploma() {
         return toBeGeneratedDiploma;
+    }
+    public int getPaniersBio() {
+        return paniersBio;
+    }
+    public void setPaniersBio(int paniersBio) {
+        this.paniersBio = paniersBio;
     }
 
     public void setToFalseEffectList(boolean toBeSet[]) {
@@ -460,12 +453,12 @@ public class Creature extends Card {
     public void karsherisationDesFaibles(Player player){
         for (Creature creature:player.getCurrentOnBoard()){
             int j=0;
-            for(int i=0;i<creature.toBeGeneratedDiploma.getSpellEffect().length;i++){
+            for(int i=1;i<creature.toBeGeneratedDiploma.getSpellEffect().length;i++){
                 if(creature.toBeGeneratedDiploma.getSpellEffect()[i]==true){
                     j++;
                 }
             }
-            if(creature.toBeGeneratedDiploma.getSpellAttBoost()!=0 || creature.toBeGeneratedDiploma.getSpellHpBoost()!=0 || j!=1){
+            if(creature.toBeGeneratedDiploma.getSpellAttBoost()!=0 || creature.toBeGeneratedDiploma.getSpellHpBoost()!=0 || j>=1){
                 if(creature.currentDiploma.getSpellAttBoost()==0 && creature.currentDiploma.getSpellHpBoost()==0 && creature.currentDiploma.getSpellEffect()[0]==false){
                     if(creature.getCreatureAtt()-5>=0){
                         creature.setCreatureAtt(creature.getCreatureAtt()-5);
@@ -479,8 +472,11 @@ public class Creature extends Card {
     }
 
     public void sippingDeSubventions(Player defender, Player attacker ){
-        int alea;
-        if(defender.getCurrentOnBoard().size()>0){
+        int alea, i=0;
+        for(Creature creature:defender.getCurrentOnBoard()){
+            i=i+creature.getCreatureAtt();
+        }
+        if(defender.getCurrentOnBoard().size()>0 && i>0){
             alea = (int) Math.floor(Math.random() * defender.getCurrentOnBoard().size());
             while (defender.getCurrentOnBoard().get(alea).getCreatureAtt()==0){
                 alea = (int) Math.floor(Math.random() * defender.getCurrentOnBoard().size());
@@ -529,4 +525,13 @@ public class Creature extends Card {
         return diploma;
     }
 
+    public void reincarnation(){
+        if(this.isReincarnation()==false){
+            this.setCreatureHp(1);
+            this.setReincarnation(true);
+        }
+        else {
+            this.setReincarnation(false);
+        }
+    }
 }

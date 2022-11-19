@@ -29,7 +29,7 @@ public class Turn extends Game{
         if(gameTurn%3==0){
             int l=Initialisation.players.get(k).getOnBoard().size();
             for(int i = 0;i<l;i++){
-                Initialisation.players.get(k).sellCreature(0,"Board");
+                Initialisation.players.get(k).sellCreature(0);
             }
             l=Initialisation.players.get(k).getShop().getActuallySelling().size();
             for(int i = 0; i<l;i++){
@@ -37,8 +37,14 @@ public class Turn extends Game{
                 j--;
             }
             j=Initialisation.players.get(k).getHand().size();
+            int m = 0;
             for(int i = 0; i<j;i++){
-                Initialisation.players.get(k).handToBoard(0);
+                if(Initialisation.players.get(k).getHand().get(m) instanceof Creature){
+                    Initialisation.players.get(k).handToBoard(m);
+                }
+                else {
+                    m++;
+                }
             }
         }
     }

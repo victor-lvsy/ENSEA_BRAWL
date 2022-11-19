@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Fight {
-    private ArrayList<Player> fightOrder = new ArrayList<Player>();
 
+    private ArrayList<Player> fightOrder = new ArrayList<Player>();
     private class Rivaux {
         Creature creature;
         int playerParent;
@@ -15,6 +15,10 @@ public class Fight {
         public void setPlayerParent(int playerParent) {
             this.playerParent = playerParent;
         }
+    }
+
+    public ArrayList<Player> getFightOrder() {
+        return fightOrder;
     }
 
     public void drawFights(ArrayList<Player> players) {
@@ -123,8 +127,15 @@ public class Fight {
             toBeAdded.setIndexOfBoard(i);
             toBeInitialized.getCurrentOnBoard().add(toBeAdded);
         }
-        for (Creature creature : toBeInitialized.getCurrentOnBoard()) {
+        for (Creature creature : toBeInitialized.getCurrentOnBoard()) { //ajouter l'archetype BDLS pour panier bio*2
             creature.setAlreadyFight(0);
+            creature.setCreatureHp(creature.getCreatureHp()+creature.getCurrentDiploma().getSpellHpBoost()+creature.getPaniersBio());
+            creature.setCreatureAtt(creature.getCreatureAtt()+creature.getCurrentDiploma().getSpellAttBoost()+creature.getPaniersBio());
+            for(i = 0; i<48;i++){
+                if(creature.getCurrentDiploma().getThisSpellEffect(i)==true){
+                    creature.getEffectList()[i]=true;
+                }
+            }
         }
     }
 
@@ -139,7 +150,7 @@ public class Fight {
     private void initPlayerBeginningOfTurn(Player player2, Player player1) {
         for (Creature creature : player1.getCurrentOnBoard()) {
             for (int i = 1; i < 47; i++) {
-                if (creature.getEffectList()[i] == true) {
+                if (creature.getEffectList()[i] == true){
                     switch (i) {
                         case 1:
                             creature.volDAssos(player2);
@@ -183,13 +194,10 @@ public class Fight {
                             break;
                     }
                 }
+
             }
         }
         tauntEtRivalite(player1, player2);
-    }
-
-    public ArrayList<Player> getFightOrder() {
-        return fightOrder;
     }
 
     public void haveLost(Player player1, Player player2) {

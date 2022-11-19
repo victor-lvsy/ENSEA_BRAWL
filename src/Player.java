@@ -1,28 +1,22 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Player {
+
     private String playerName;
-
     private int playerHp;
-
     private int playerGolds;
-
     private Player precedentOpponent = null;
-
     public Shop shop = new Shop();
-
     private int shopLvl=1;
-
     private int shopLevelUpCost=5;
-
     private ArrayList<Card> hand = new ArrayList<Card>();
-
     private ArrayList<Creature> onBoard = new ArrayList<Creature>();
-
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
-
     private int archetypeList[];
-
     public class Exile {
         Creature creature;
         int exilTime;
@@ -48,29 +42,71 @@ public class Player {
     public ArrayList<Creature> getOnBoard() {
         return onBoard;
     }
-
     public ArrayList<Creature> getCurrentOnBoard() {
         return currentOnBoard;
     }
-
     public void setCurrentOnBoard() {
         this.currentOnBoard = currentOnBoard;
     }
-
     public ArrayList<Exile> getExil() {
         return exil;
     }
-
     public Shop getShop() {
         return shop;
     }
-
     public int[] getArchetypeList() {
         return archetypeList;
     }
-
     public void setArchetypeList(int[] archetypeList) {
         this.archetypeList = archetypeList;
+    }
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
+    }
+    public void setOnBoard(ArrayList<Creature> onBoard) {
+        this.onBoard = onBoard;
+    }
+    public Player getPrecedentOpponent() {
+        return precedentOpponent;
+    }
+    public String getPlayerName() {
+        return playerName;
+    }
+    public int getPlayerHp() {
+        return playerHp;
+    }
+    public void setPlayerHp(int playerHp) {
+        this.playerHp = playerHp;
+    }
+    public int getPlayerGolds() {
+        return playerGolds;
+    }
+    public int getShopLvl() {
+        return shopLvl;
+    }
+    public void setPlayerGolds(int golds) {
+        playerGolds = golds;
+    }
+    public void setShopLvl(int shopLvl) {
+        this.shopLvl = shopLvl;
+    }
+    public void shopFreeLevelUp(){
+        if(shopLvl<5){
+            shopLevelUpCost--;
+            testLevelUp();
+        }
+        else {
+            System.out.println("Last shop level reached");
+        }
+    }
+    public int getShopLevelUpCost() {
+        return shopLevelUpCost;
+    }
+    public void setShopLevelUpCost(int shopLevelUpCost) {
+        this.shopLevelUpCost = shopLevelUpCost;
     }
 
     public void attackTurn(Player toBeFight, int willFight){
@@ -131,8 +167,37 @@ public class Player {
                     }
                 }
                 if (isDead[1]==1){
-                    System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.playerName +" currentBoard");
-                    this.currentOnBoard.remove(willFight);
+                    for (int k = 1; k < 47; k++) {
+                        if (this.currentOnBoard.get(willFight).getEffectList()[k] == true){
+                            switch (k) {
+                                case 15:
+                                    this.vousConnaisezLyfPay();
+                                    break;
+                                case 25:
+                                    this.delation(toBeFight);
+                                    break;
+                                case 29:
+                                    this.propagande();
+                                    break;
+                                case 30:
+                                    this.laSecuriteAvantTout();
+                                    break;
+                                case 31:
+                                    this.currentOnBoard.get(willFight).reincarnation();
+                                    break;
+                                case 32:
+                                    this.legendNeverDie();
+                                    break;
+                                case 33:
+                                    this.repopAleatoArt();
+                                    break;
+                            }
+                        }
+                    }
+                    if(this.currentOnBoard.get(willFight).isReincarnation()==false){
+                        System.out.println(this.currentOnBoard.get(willFight) + " has been removed from "+this.playerName +" currentBoard");
+                        this.currentOnBoard.remove(willFight);
+                    }
                 }
                 if (isDead[4]==1){
                     System.out.println(toBeFight.currentOnBoard.get(alea+1) + " has been removed from "+toBeFight.playerName +" currentBoard");
@@ -171,21 +236,7 @@ public class Player {
         }
     }
 
-    public void sellCreature(int indexOfCreature, String i){
-        if(i=="Hand"){
-            Creature creature = new Creature();
-            creature.setCreature(this.hand.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
-            Game.init.getCreaturePool().add(creature);
-            System.out.println("Creature: "+this.hand.get(indexOfCreature).getCardName()+" has been sold");
-            if(this.hand.get(indexOfCreature).getCardName().equals("Absenteiste")){
-                //this.setPlayerGolds(this.getPlayerGolds()+cardValue());
-            }
-            else {
-                this.setPlayerGolds(this.getPlayerGolds()+1);
-            }
-            this.hand.remove(indexOfCreature);
-        }
-        if(i=="Board"){
+    public void sellCreature(int indexOfCreature){
             Creature creature = new Creature();
             creature.setCreature(this.onBoard.get(indexOfCreature).getCardName(),"doc/effectListCSV_epure.csv");
             Game.init.getCreaturePool().add(creature);
@@ -197,10 +248,7 @@ public class Player {
                 this.setPlayerGolds(this.getPlayerGolds()+1);
             }
             this.onBoard.remove(indexOfCreature);
-        }
-        else {
-            System.out.println("ERROR, argument has to be set to Board or Hand");
-        }
+
     }
 
     public int cardValue(){
@@ -218,33 +266,35 @@ public class Player {
 
     public void handToBoard(int indexOfHand){
         if(this.hand.get(indexOfHand) instanceof Creature){
-            this.onBoard.add((Creature) this.hand.get(indexOfHand));
-            this.onBoard.get(this.onBoard.size()-1).setIndexOfBoard(this.onBoard.size()-1);
-            for (int i = 1; i < 47; i++) {
-                if (((Creature) this.hand.get(indexOfHand)).getEffectList()[i] == true) {
-                    switch (i) {
-                        case 11:
-                            //cursusEtranger();
-                            break;
-                        case 14:
-                            this.boostAleatoART();
-                            break;
-                        case 16:
-                            givePanierBio(3);
-                            break;
-                        case 18:
-                            gainsAleatoArt();
-                            break;
-                        case 27:
-                            //Favoritisme
-                            break;
-                        case 28:
-                            givePanierBio(1);
-                            break;
+            if(this.onBoard.size()<Game.boardSize){
+                this.onBoard.add((Creature) this.hand.get(indexOfHand));
+                this.onBoard.get(this.onBoard.size()-1).setIndexOfBoard(this.onBoard.size()-1);
+                for (int i = 1; i < 47; i++) {
+                    if (((Creature) this.hand.get(indexOfHand)).getEffectList()[i] == true) {
+                        switch (i) {
+                            case 11:
+                                //cursusEtranger();
+                                break;
+                            case 14:
+                                this.boostAleatoART();
+                                break;
+                            case 16:
+                                this.givePanierBio(3);
+                                break;
+                            case 18:
+                                this.gainsAleatoArt();
+                                break;
+                            case 27:
+                                this.favoritisme();
+                                break;
+                            case 28:
+                                this.givePanierBio(1);
+                                break;
+                        }
                     }
                 }
+                this.hand.remove(indexOfHand);
             }
-            this.hand.remove(indexOfHand);
         }
         else {
             System.out.println("This card "+ this.hand.get(indexOfHand).getCardName() +" is not a creature");//à modifier pour poser spells et items
@@ -264,50 +314,6 @@ public class Player {
         this.onBoard.get(toBeInverted2).setIndexOfBoard(i);
     }
 
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
-
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
-    }
-
-    public void setOnBoard(ArrayList<Creature> onBoard) {
-        this.onBoard = onBoard;
-    }
-
-    public Player getPrecedentOpponent() {
-        return precedentOpponent;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public int getPlayerHp() {
-        return playerHp;
-    }
-
-    public void setPlayerHp(int playerHp) {
-        this.playerHp = playerHp;
-    }
-
-    public int getPlayerGolds() {
-        return playerGolds;
-    }
-
-    public int getShopLvl() {
-        return shopLvl;
-    }
-
-    public void setPlayerGolds(int golds) {
-        playerGolds = golds;
-    }
-
-    public void setShopLvl(int shopLvl) {
-        this.shopLvl = shopLvl;
-    }
-
     public void shopLevelUp(){
         if(shopLvl<5){
             shopLevelUpCost--;
@@ -317,24 +323,6 @@ public class Player {
     else {
         System.out.println("Last shop level reached");
     }
-    }
-
-    public void shopFreeLevelUp(){
-        if(shopLvl<5){
-            shopLevelUpCost--;
-            testLevelUp();
-        }
-        else {
-            System.out.println("Last shop level reached");
-        }
-    }
-
-    public int getShopLevelUpCost() {
-        return shopLevelUpCost;
-    }
-
-    public void setShopLevelUpCost(int shopLevelUpCost) {
-        this.shopLevelUpCost = shopLevelUpCost;
     }
 
     public void testLevelUp(){
@@ -352,14 +340,16 @@ public class Player {
         this.archetypeList[0]=this.archetypeList[0]+2;//à modifier
     }
 
-
     public void boostAleatoART(){
-        int rand = (int) Math.floor(Math.random() * this.getCurrentOnBoard().size());
-        this.getCurrentOnBoard().get(rand).setCreatureAtt(this.getCurrentOnBoard().get(rand).getCreatureAtt()+1);
-        this.getCurrentOnBoard().get(rand).setCreatureHp(this.getCurrentOnBoard().get(rand).getCreatureHp()+1);
-        rand = (int) Math.floor(Math.random() * this.getCurrentOnBoard().size());
-        this.getCurrentOnBoard().get(rand).setCreatureAtt(this.getCurrentOnBoard().get(rand).getCreatureAtt()+1);
-        this.getCurrentOnBoard().get(rand).setCreatureHp(this.getCurrentOnBoard().get(rand).getCreatureHp()+1);
+        if(this.getOnBoard().size()>0){
+            int rand = (int) Math.floor(Math.random() * this.getOnBoard().size());
+            this.getOnBoard().get(rand).setCreatureAtt(this.getOnBoard().get(rand).getCreatureAtt()+1);
+            this.getOnBoard().get(rand).setCreatureHp(this.getOnBoard().get(rand).getCreatureHp()+1);
+            rand = (int) Math.floor(Math.random() * this.getOnBoard().size());
+            this.getOnBoard().get(rand).setCreatureAtt(this.getOnBoard().get(rand).getCreatureAtt()+1);
+            this.getOnBoard().get(rand).setCreatureHp(this.getOnBoard().get(rand).getCreatureHp()+1);
+        }
+
     }
 
     public void cursusEtranger(Creature creature){
@@ -367,12 +357,14 @@ public class Player {
         exile.creature=creature;
         exile.exilTime=0;
         this.exil.add(exile);
+        System.out.println(this.getPlayerName()+" "+creature.getCardName()+" has been exiled for 1 turn.");
         this.onBoard.remove(creature);
     }
 
     public void givePanierBio(int n){
         for (int i = 0; i<n; i++){
             hand.add(Spell.generatePanierBio());
+            System.out.println("Panier BIO has been added to "+this.getPlayerName()+" hand.");
         }
     }
 
@@ -385,13 +377,115 @@ public class Player {
     public void favoritisme(){
         int rand = (int) Math.floor(Math.random() * this.getOnBoard().size());
         int j=0;
-        for(int i=0;i<this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellEffect().length;i++){
+        for(int i=1;i<this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellEffect().length;i++){
             if(this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellEffect()[i]==true){
                 j++;
             }
         }
-        if(this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellAttBoost()!=0 || this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellHpBoost()!=0 || j!=1){
+        if(this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellAttBoost()!=0 || this.getOnBoard().get(rand).getToBeGeneratedDiploma().getSpellHpBoost()!=0 || j>=1){
            this.hand.add(this.getOnBoard().get(rand).generateDiploma());
+           System.out.println("Diploma has been added to "+this.getPlayerName()+" hand.");
         }
+    }
+
+    public void addSpell(Spell spell, Creature creature){
+        if(spell.getCardName().equals("Panier BIO")){
+            creature.setPaniersBio(creature.getPaniersBio()+1);
+        }
+        else{
+            creature.getCurrentDiploma().cloneDiploma(spell);
+        }
+        this.hand.remove(spell);
+    }
+
+    public void vousConnaisezLyfPay(){
+        this.setPlayerGolds(this.getPlayerGolds()+1);
+        System.out.println(this.getPlayerName()+" won 1 gold.");
+    }
+
+    public void delation(Player opponent){
+        ArrayList<Creature>toBeRemoved=new ArrayList<>();
+        for(Creature creature: opponent.currentOnBoard){
+            if(creature.getEffectList()[7]==true){
+                creature.getEffectList()[7]=false;
+                System.out.println(opponent.getPlayerName()+" creature "+creature.getCardName()+" has lost his Bouclier Divin.");
+            }
+            else if(creature.getCreatureHp()>1){
+                creature.setCreatureHp(creature.getCreatureHp()-1);
+                System.out.println(opponent.getPlayerName()+" creature "+creature.getCardName()+" has lost 1 hp.");
+            }
+            else if(creature.getCreatureHp()==1){
+                toBeRemoved.add(creature);
+            }
+        }
+        for (Creature creature:toBeRemoved){
+            opponent.getCurrentOnBoard().remove(creature);
+            System.out.println(creature.getCardName()+" has been removed from "+opponent.getPlayerName()+" currentBoard.");
+        }
+    }
+
+    public void propagande(){
+        Creature creature=new Creature();
+        creature.setCreature("CotisantBDE","doc/effectListCSV_epure.csv");
+        this.getCurrentOnBoard().add(creature);
+        System.out.println("Creature "+creature.getCardName()+" has appeard on "+this.getPlayerName()+" board.");
+    }
+
+    public void laSecuriteAvantTout(){
+        Creature creature=new Creature();
+        creature.setCreature("Vigile","doc/effectListCSV_epure.csv");
+        this.getCurrentOnBoard().add(creature);
+        System.out.println("Creature "+creature.getCardName()+" has appeard on "+this.getPlayerName()+" board.");
+    }
+
+    public void legendNeverDie(){
+        ArrayList<Creature>willPop=new ArrayList<>();
+        String tab[]={"CotisantBDE","TresorierBDE","VicePresBDE","RespoSoiree","RespoComBDE"};
+        int j;
+        if(this.getCurrentOnBoard().size()-3>=Game.boardSize){
+            j=Game.boardSize-this.getCurrentOnBoard().size()-1;
+        }
+        else {
+            j=4;
+        }
+        for(int i=0;i<j;i++){
+            Creature creature=new Creature();
+            int rand = (int) Math.floor(Math.random() * 4);
+            creature.setCreature(tab[rand],"doc/effectListCSV_epure.csv");
+            willPop.add(creature);
+        }
+        this.getCurrentOnBoard().addAll(willPop);
+        for(Creature creature:willPop){
+            System.out.println("Creature "+creature.getCardName()+" has appeard on "+this.getPlayerName()+" board.");
+        }
+    }
+
+    public void repopAleatoArt(){
+        ArrayList<String> nameList = new ArrayList<String>();
+        try {
+            FileReader fr = new FileReader("doc/effectListCSV_epure.csv");
+            BufferedReader br = new BufferedReader(fr);
+            String li = br.readLine();
+            while (li != null) {
+                Integer firstComma = li.indexOf(';');
+                Integer secondComma = li.indexOf(';', firstComma + 1);
+                Integer thirdComma = li.indexOf(';', secondComma + 1);
+                if(Integer.valueOf((li.substring(secondComma + 1, thirdComma)))==1){
+                    nameList.add((li.substring(0, firstComma)));
+                }
+                li = br.readLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Creature creature=new Creature();
+        int rand = (int) Math.floor(Math.random() * nameList.size());
+        creature.setCreature(nameList.get(rand),"doc/effectListCSV_epure.csv");
+        this.getCurrentOnBoard().add(creature);
+        System.out.println("Creature "+creature.getCardName()+" has appeard on "+this.getPlayerName()+" board.");
     }
 }

@@ -4,10 +4,15 @@ import java.util.Collections;
 
 public class Shop {
     private int level;
-
     private ArrayList<Creature> actuallySelling = new ArrayList<Creature>();
-
     private ArrayList<Creature> canBeSold = new ArrayList<Creature>();
+
+    public ArrayList<Creature> getCanBeSold() {
+        return canBeSold;
+    }
+    public ArrayList<Creature> getActuallySelling() {
+        return actuallySelling;
+    }
 
     public void shop(int lvl, int player){
         level=lvl;
@@ -53,15 +58,5 @@ public class Shop {
         }
         System.out.println("========================================================================");
     }
-
-
-    public ArrayList<Creature> getCanBeSold() {
-        return canBeSold;
-    }
-
-    public ArrayList<Creature> getActuallySelling() {
-        return actuallySelling;
-    }
-
 
 }

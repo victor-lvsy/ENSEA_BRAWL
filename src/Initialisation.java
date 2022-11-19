@@ -5,31 +5,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Initialisation {
-    int i=0;
-
-    private Player player1 = new Player("zssnu",30,100);
-
-    private Player player2 = new Player("Sltmapoule",30,100);
-
-    private Player player3 = new Player("Eitonan",30,100);
-
-    private Player player4 = new Player("I rule ENSEA",30,100);
-
-    private Player player5 = new Player("PPZ",30,100);
-
-    private Player player6 = new Player("PixelBlot",30,100);
 
     public static ArrayList<Player> players = new ArrayList<Player>();
 
+    int i=0;
+    private Player player1 = new Player("zssnu",30,100);
+    private Player player2 = new Player("Sltmapoule",30,100);
+    private Player player3 = new Player("Eitonan",30,100);
+    private Player player4 = new Player("I rule ENSEA",30,100);
+    private Player player5 = new Player("PPZ",30,100);
+    private Player player6 = new Player("PixelBlot",30,100);
+    private ArrayList<String> nameList = new ArrayList<String>();
+    private ArrayList<Integer> tierList = new ArrayList<Integer>();
+    private ArrayList<Creature> creaturePool = new ArrayList<Creature>();
     public ArrayList<String> getNameList() {
         return nameList;
     }
-
-    private ArrayList<String> nameList = new ArrayList<String>();
-
-    private ArrayList<Integer> tierList = new ArrayList<Integer>();
-
-    private ArrayList<Creature> creaturePool = new ArrayList<Creature>();
 
     public void Initialisation (){
         try {
