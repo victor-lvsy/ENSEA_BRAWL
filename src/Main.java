@@ -32,7 +32,7 @@ public class Main extends Application  {
     AnimationTimer at = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            creature.setCreature("PresBDS","doc/effectListCSV_epure.csv");
+            creature.setCreature("President BDS","doc/effectListCSV_epure.csv");
             creature.getShopLevel().setText(String.valueOf(creature.getCreatureTier()));
             creature.update();
             creature2.setCreature("Directeur des etudes","doc/effectListCSV_epure.csv");
