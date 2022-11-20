@@ -29,8 +29,6 @@ public class Card {
         pane.getChildren().add(health);
         pane.getChildren().add(name);
         pane.getChildren().add(shopLevel);
-        cardImgView.setImage(new Image("file:ImageJeu/" + CardName + ".png"));
-        name.setText(CardName);
         Font font = new Font("Verdana", 20);
         shopLevel.setFont(font);
         health.setFont(font);
@@ -48,8 +46,10 @@ public class Card {
     }
 
     public void update(){
-        cardImgView.setX(8);
-        cardImgView.setY(53);
+        name.setText(CardName);
+        cardImgView.setImage(new Image("file:ImageJeu/" + CardName + ".png"));
+        cardImgView.setX(13);
+        cardImgView.setY(54);
         shopLevel.setX(23);
         shopLevel.setY(35);
         attack.setX(16-(int)attack.getText().length()*6.2);
