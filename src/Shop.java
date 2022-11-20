@@ -22,6 +22,29 @@ public ArrayList<Creature> getCanBeSold() {
     }    public void shop(int lvl, int player) {
         level = lvl;
         ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
+        ArrayList<Creature> removeBuffer = new ArrayList<>();
+        for (Creature creature: Initialisation.players.get(player).getOnBoard()){
+            if(creature.isStudent()==true && creature.getTimeOnBoard()>=3){
+                for(Creature creature1:Initialisation.players.get(player).getOnBoard()){
+                    if(creature1.getEffectList()[38]==true){
+                        creature.getToBeGeneratedDiploma().setSpellAttBoost(creature.getToBeGeneratedDiploma().getSpellAttBoost()+2);
+                        creature.getToBeGeneratedDiploma().setSpellHpBoost(creature.getToBeGeneratedDiploma().getSpellHpBoost()+2);
+                    }
+                }
+                creature.effectAdder();
+                Initialisation.players.get(player).getHand().add(creature.generateDiploma());
+                if(creature.getEffectList()[45]==true){
+                    Initialisation.players.get(player).getHand().add(creature.generateDiploma());
+                }
+                removeBuffer.add(creature);
+            }
+        }
+        for(Creature creature: removeBuffer){
+            Creature hasBeenRemoved = new Creature();
+            hasBeenRemoved.setCreature(creature.getCardName(),"doc/effectListCSV_epure.csv");
+            Game.init.getCreaturePool().add(creature);
+            Initialisation.players.get(player).getOnBoard().remove(creature);
+        }
         int i = 0;
         for (Creature creature : Game.init.getCreaturePool()) {
             if (creature.getCreatureTier() <= level) {
