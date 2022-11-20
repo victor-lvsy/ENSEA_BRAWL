@@ -15,7 +15,7 @@ public class Main extends Application  {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        creature.setCardName("PresBDS");
+        creature.setCardName("President BDS");
         creature2.setCardName("Directeur des etudes");
         Scene scene = new Scene(group);
         primaryStage.setTitle("Hello world");
