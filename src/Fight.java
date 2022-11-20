@@ -4,11 +4,11 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
+
 
 public class Fight {
-    private ArrayList<Player> fightOrder = new ArrayList<Player>();
-    private class Rivaux {
+    private final ArrayList<Player> fightOrder = new ArrayList<>();
+    private static class Rivaux {
         Creature creature;
         int playerParent;
 
