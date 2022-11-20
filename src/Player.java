@@ -631,4 +631,20 @@ public class Player {
             }
         }
     }
+
+    public void giveSpell(Creature creature, Spell spell){
+        if(spell.getCardName().equals("Panier BIO")){
+            creature.setPaniersBio(creature.getPaniersBio()+1);
+        }
+        else{
+            int i;
+            creature.getCurrentDiploma().setSpellAttBoost(spell.getSpellAttBoost()+creature.getCurrentDiploma().getSpellAttBoost());
+            creature.getCurrentDiploma().setSpellHpBoost(spell.getSpellHpBoost()+creature.getCurrentDiploma().getSpellHpBoost());
+            for (i=0; i<48;i++) {
+                if (creature.getCurrentDiploma().getThisSpellEffect(i) != spell.getThisSpellEffect(i)) {
+                    creature.getCurrentDiploma().setThisSpellEffect(i, true);
+                }
+            }
+        }
+    }
 }
