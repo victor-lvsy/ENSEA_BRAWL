@@ -28,7 +28,7 @@ public class Turn{
                 Initialisation.players.get(k).handToBoard(0);
             }
         }
-        if(gameTurn%3==0){
+        if(Game.gameTurn%3==0){
             int l=Initialisation.players.get(k).getOnBoard().size();
             for(int i = 0;i<l;i++){
                 Initialisation.players.get(k).sellCreature(0);
@@ -58,6 +58,7 @@ public class Turn{
             System.out.println("Shop level: "+Initialisation.players.get(i).getShopLvl()+" Shop level up cost: "+Initialisation.players.get(i).getShopLevelUpCost());*/
             Initialisation.players.get(i).getShop().shop(Initialisation.players.get(i).getShopLvl(),i);
         }
+    }
 
         public Player player1Enemy(){
             return fight.searchPlayer1Enemy();
