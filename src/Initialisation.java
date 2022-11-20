@@ -83,4 +83,8 @@ public class Initialisation {
     public ArrayList<Creature> getCreaturePool() {
         return creaturePool;
     }
+
+    public Player getPlayer1() {
+        return player1;
+    }
 }

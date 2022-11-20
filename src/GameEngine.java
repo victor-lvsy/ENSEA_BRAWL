@@ -4,12 +4,14 @@ enum State{WELCOME, PLAY_SHOP, PLAY_FIGHT, WIN, LOST}
 
 public class GameEngine {
     private State state=State.WELCOME;
-    public GameEngine(){
-
-    }
+    public GameEngine(){}
 
     public State getState(){
         return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public void update(String input){

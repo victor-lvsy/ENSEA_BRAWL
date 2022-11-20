@@ -1,5 +1,4 @@
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.time.Clock;
 
@@ -8,7 +7,7 @@ public class Counter {
     private int time1 = (int)clock.millis()/1000;
     private int time2;
     private Boolean bool = false;
-    private final TextField time = new TextField();
+    private final Text time = new Text();
 
 
     public Counter(){
@@ -38,7 +37,7 @@ public class Counter {
         bool = false;
     }
 
-    public TextField getTime() {
+    public Text getTime() {
         return time;
     }
 }

@@ -1,3 +1,7 @@
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -6,15 +10,17 @@ public class Shop {
     private int level;
 
     private ArrayList<Creature> actuallySelling = new ArrayList<Creature>();
-
     private ArrayList<Creature> canBeSold = new ArrayList<Creature>();
 
-    public void shop(int lvl, int player){
-        level=lvl;
+
+
+
+    public void shop(int lvl, int player) {
+        level = lvl;
         ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
-        int i=0;
+        int i = 0;
         for (Creature creature : Game.init.getCreaturePool()) {
-            if(creature.getCreatureTier()<=level){
+            if (creature.getCreatureTier() <= level) {
                 canBeSold.add(creature);
                 indexToBeRemoved.add(i);
             }
@@ -24,12 +30,22 @@ public class Shop {
         for (Integer j : indexToBeRemoved) {
             Game.init.getCreaturePool().remove((int) j);
         }
-        switch (level){
-            case 1: setShop(3);break;
-            case 2: setShop(4);break;
-            case 3: setShop(4);break;
-            case 4: setShop(5);break;
-            case 5: setShop(6);break;
+        switch (level) {
+            case 1:
+                setShop(3);
+                break;
+            case 2:
+                setShop(4);
+                break;
+            case 3:
+                setShop(4);
+                break;
+            case 4:
+                setShop(5);
+                break;
+            case 5:
+                setShop(6);
+                break;
         }
 
         Game.init.getCreaturePool().addAll(actuallySelling);
@@ -37,9 +53,9 @@ public class Shop {
         actuallySelling.clear();
     }
 
-    private void setShop(int numberOfDraw){
+    private void setShop(int numberOfDraw) {
         int choice;
-        for(int i=0;i<numberOfDraw;i++){
+        for (int i = 0; i < numberOfDraw; i++) {
             choice = (int) (Math.random() * (canBeSold.size()));
             actuallySelling.add(canBeSold.get(choice));
             canBeSold.remove(choice);
@@ -47,7 +63,7 @@ public class Shop {
         Game.init.getCreaturePool().addAll(canBeSold);
         canBeSold.clear();
         System.out.println("==================================SHOP===================================");
-        for (Creature creature:actuallySelling){
+        for (Creature creature : actuallySelling) {
             System.out.println(creature);
         }
         System.out.println("========================================================================");

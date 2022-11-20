@@ -1,27 +1,64 @@
+import javafx.scene.control.Button;
+import javafx.scene.effect.Shadow;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+
 import java.util.ArrayList;
 
 public class Player {
     private String playerName;
-
     private int playerHp;
-
     private int playerGolds;
-
     private Player precedentOpponent = null;
-
     public Shop shop = new Shop();
-
     private int shopLvl=1;
-
     private int shopLevelUpCost=5;
-
     private ArrayList<Card> hand = new ArrayList<Card>();
-
     private ArrayList<Creature> onBoard = new ArrayList<Creature>();
-
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
-
     private int archetypeList[];
+    private final Pane pane = new Pane();
+    Button fight = new Button("Passer au combat");
+    Button lose = new Button("Lose");
+    private String output;
+    private final Counter timerShop = new Counter();
+    public void clear(){
+        output = "";
+    }
+    public Pane getPaneShop() {
+        return pane;
+    }
+    public String getOutput() {
+        return output;
+    }
+    public Counter getTimerShop() {
+        return timerShop;
+    }
+
+
+    public void Init() {
+        for (Card card : shop.getActuallySelling()) {
+            pane.getChildren().add(card.getButton());
+        }
+        for (Card card : onBoard) {
+            pane.getChildren().add(card.getButton());
+        }
+        for (Card card : onBoard) {
+            pane.getChildren().add(card.getButton());
+        }
+    }
+
+    public void InitShop() {
+        pane.getChildren().add(fight);
+        pane.getChildren().add(lose);
+        pane.getChildren().add(timerShop.getTime());
+        fight.setVisible(true);
+        fight.setOnMouseClicked(mouseEvent -> output = "PLAY_FIGHT");
+        lose.setVisible(true);
+        lose.setOnMouseClicked(mouseEvent -> output = "LOST");
+        timerShop.getTime().setFont(new Font("Comic sans MS", 20));
+    }
 
     public Player(String newPlayerName, int newPlayerHp, int newPlayerGolds) {
         playerName = newPlayerName;
@@ -30,26 +67,171 @@ public class Player {
         archetypeList= new int[]{0, 0, 0, 0, 0, 0};
     }
 
+    public void update(double width, double height, State state) {
+        if (timerShop.getBool() && state == State.PLAY_SHOP) {
+            this.output = "PLAY_FIGHT";
+        }
+        lose.setTranslateX(10);
+        lose.setTranslateY(10);
+        fight.setTranslateX((width - fight.getWidth()) / 2);
+        fight.setTranslateY((height - fight.getHeight()) / 2);
+        timerShop.getTime().setTranslateX(width - timerShop.getTime().getText().length()*10 - 20);
+        timerShop.getTime().setTranslateY(height - 42);
+
+        for (int i = 0; i < shop.getActuallySelling().size(); i++) {
+            if (shop.getActuallySelling().get(i).getAction() == 1) {
+                shop.getActuallySelling().get(i).clear();
+
+                hand.add(shop.getActuallySelling().get(i));
+                shop.getActuallySelling().remove(i);
+
+            }
+        }
+
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand.get(i).getAction() == 2) {
+                hand.get(i).clear();
+
+                hand.add(hand.get(i));
+                hand.remove(i);
+
+            }
+        }
+
+        for (int i = 0; i < hand.size(); i++) {
+            if (hand.get(i).getAction() == 3) {
+                hand.get(i).clear();
+                hand.get(i).getCardView().setVisible(false);
+                hand.get(i).getButton().setVisible(false);
+                hand.remove(i);
+
+            }
+        }
+
+
+        for (Card card : shop.getActuallySelling()) {
+            if (!pane.getChildren().contains(card.getCardView())) {
+                pane.getChildren().add(card.getCardView());
+            }
+        }
+        for (Card card : onBoard) {
+            if (!pane.getChildren().contains(card.getCardView())) {
+                pane.getChildren().add(card.getCardView());
+            }
+        }
+        for (Card card : hand) {
+            if (!pane.getChildren().contains(card.getCardView())) {
+                pane.getChildren().add(card.getCardView());
+            }
+        }
+        placeCards(width, height, shop.getActuallySelling(),onBoard,hand, true);
+
+    }
+
+    public void placeCards(double totalWidth, double totalHeight, ArrayList<Creature> enemy, ArrayList<Creature> board,
+                           ArrayList<Card> hand, Boolean shopPhase) {
+        int pasHorizontalBoardPlayer = (int) (totalWidth / (2 * board.size() + 1));
+        int pasVertical = (int) (totalHeight / 7);
+        for (int i = 0; i < board.size(); i++) {
+            board.get(i).getCardView().setX((2 * i + 1) * pasHorizontalBoardPlayer);
+            board.get(i).getCardView().setY(4 * pasVertical);
+            board.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardPlayer);
+            board.get(i).getButton().setTranslateY(4 * pasVertical + 60);
+        }
+        int pasHorizontalHandPlayer = (int) (totalWidth / (2 * hand.size() + 1));
+        for (int i = 0; i < hand.size(); i++) {
+            hand.get(i).getCardView().setX((2 * i + 1) * pasHorizontalHandPlayer);
+            hand.get(i).getCardView().setY(6 * pasVertical);
+            hand.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalHandPlayer);
+            hand.get(i).getButton().setTranslateY(6 * pasVertical + 60);
+        }
+        int pasHorizontalBoardEnemy = (int) (totalWidth / (2 * enemy.size() + 1));
+        for (int i = 0; i < enemy.size(); i++) {
+            enemy.get(i).getCardView().setX((2 * i + 1) * pasHorizontalBoardEnemy);
+            enemy.get(i).getCardView().setY(2 * pasVertical);
+            enemy.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardEnemy);
+            enemy.get(i).getButton().setTranslateY(2 * pasVertical + 60);
+        }
+
+        if (shopPhase) {
+            for (int i = 0; i < board.size(); i++) {
+                for (int j = i + 1; j < board.size(); j++)
+                    if (board.get(i).isBool() && board.get(j).isBool()) {
+                        Creature creaTampon = board.get(i);
+                        board.set(i, board.get(j));
+                        board.set(j, creaTampon);
+                        board.get(i).clear();
+                        board.get(i).setNewBool(false);
+                        board.get(j).clear();
+                        board.get(j).setNewBool(false);
+                    }
+            }
+
+            for (Card card : enemy) {
+                if (card.isBool()) {
+                    card.getButton().setVisible(true);
+                    card.getCardView().setEffect(new Shadow(1, Color.BLACK));
+                    card.getButton().setText("Buy");
+                }
+            }
+            for (Card card : hand) {
+                if (card.isBool()) {
+                    card.getButton().setVisible(true);
+                    card.getCardView().setEffect(new Shadow(1, Color.BLACK));
+
+                    card.getButton().setText("Put");
+                }
+            }
+            for (Card card : board) {
+                if (card.isBool()) {
+                    card.getButton().setVisible(true);
+                    card.getCardView().setEffect(new Shadow(1, Color.BLACK));
+                    card.getButton().setText("Sell");
+                }
+            }
+
+            ArrayList<Card> tamp = new ArrayList<>();
+            tamp.addAll(hand);
+            tamp.addAll(board);
+            tamp.addAll(enemy);
+            for ( Card card : tamp){
+                if (card.isNewBool()){
+                    for (Card card0 : enemy) {
+                        card0.clear();
+                    }
+                    for (Card card0 : hand) {
+                        card0.clear();
+                    }
+                    for (Card card0 : board) {
+                        card0.clear();
+                    }
+                    card.setNewBool(false);
+                    card.setBool(true);
+                }
+
+            }
+
+        }
+
+    }
+
+
     public ArrayList<Creature> getOnBoard() {
         return onBoard;
     }
-
     public ArrayList<Creature> getCurrentOnBoard() {
         return currentOnBoard;
+    }
+    public Shop getShop() {
+        return shop;
+    }
+    public int[] getArchetypeList() {
+        return archetypeList;
     }
 
     public void setCurrentOnBoard() {
         this.currentOnBoard = currentOnBoard;
     }
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public int[] getArchetypeList() {
-        return archetypeList;
-    }
-
     public void setArchetypeList(int[] archetypeList) {
         this.archetypeList = archetypeList;
     }

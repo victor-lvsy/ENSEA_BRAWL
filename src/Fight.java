@@ -1,8 +1,74 @@
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class Fight {
     private ArrayList<Player> fightOrder = new ArrayList<Player>();
+    private final Pane pane = new Pane();
+    Button win = new Button("Win");
+    Button lose = new Button("Lose");
+    Button shop = new Button("Shop");
+    private String output;
+    private final Counter timerFight = new Counter();
+    Player enemy;
+
+    public Fight(){
+        pane.getChildren().add(win);
+        pane.getChildren().add(lose);
+        pane.getChildren().add(shop);
+        pane.getChildren().add(timerFight.getTime());
+        win.setVisible(true);
+        win.setOnMouseClicked(mouseEvent -> output = "WIN");
+        lose.setVisible(true);
+        lose.setOnMouseClicked(mouseEvent -> output = "LOST");
+        shop.setVisible(true);
+        shop.setOnMouseClicked(mouseEvent -> output = "PLAY_SHOP");
+    }
+
+    public void update(double width,double height,State state,Player player, Player player2){
+        if (timerFight.getBool() && state == State.PLAY_FIGHT){this.output = "PLAY_SHOP";}
+        win.setTranslateX((2*width-win.getWidth())/5);
+        win.setTranslateY((height-win.getHeight())/2);
+        lose.setTranslateX((3*width-win.getWidth())/5);
+        lose.setTranslateY((height-win.getHeight())/2);
+        shop.setTranslateX((width- shop.getWidth())/2);
+        shop.setTranslateY((height-shop.getHeight())/2);
+        timerFight.getTime().setFont(new Font("Comic sans MS",20));
+        timerFight.getTime().setTranslateX(width-timerFight.getTime().getText().length()*10-20);
+        timerFight.getTime().setTranslateY(height-42);
+
+        for (Card card: player2.getCurrentOnBoard()) {
+            if  (!pane.getChildren().contains(card.getCardView())){pane.getChildren().add(card.getCardView());}
+        }
+        for (Card card: player.getCurrentOnBoard()) {
+            if  (!pane.getChildren().contains(card.getCardView())){pane.getChildren().add(card.getCardView());}
+        }
+        for (Card card: player.getHand()) {
+            if (!pane.getChildren().contains(card.getCardView())){pane.getChildren().add(card.getCardView());}
+        }
+        player.placeCards(width,height,player2.getCurrentOnBoard(),player.getCurrentOnBoard(),player.getHand(),false);
+
+    }
+
+    public void clear(){
+        output = "";
+    }
+
+    public Pane getFight() {
+        return pane;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public Counter getTimerFight() {
+        return timerFight;
+    }
 
     public void drawFights(ArrayList<Player> players){
         ArrayList<Integer> i = new ArrayList<Integer>();
@@ -48,6 +114,8 @@ public class Fight {
     }
 
     public void vsFight(Player player1, Player player2){
+        if (player1== Game.init.getPlayer1()) {enemy = player2;}
+        if (player2 == Game.init.getPlayer1()) {enemy = player1;}
         fightingBoardInitializer(player1);fightingBoardInitializer(player2);
         int rand = (int) Math.floor(Math.random() * 2),i=0;
         boolean continueFight=true;
@@ -63,6 +131,11 @@ public class Fight {
                 i++;
             }
         }
+        this.output = "PLAY_SHOP";
+    }
+
+    public Player searchPlayer1Enemy(){
+        return enemy;
     }
 
     public boolean oneTurnFight(Player first, Player second, int fightTurn){

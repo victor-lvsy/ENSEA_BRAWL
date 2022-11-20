@@ -1,3 +1,5 @@
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -14,6 +16,10 @@ public class Card {
     private final Text health = new Text();
     private final Text name = new Text();
     private final ImageView cardImgView = new ImageView();
+    private boolean bool = false ;
+    private final Button button = new Button("Buy");
+    private int action = 0;
+    private boolean newBool = false;
 
     public Card() {
         ImageView fondCarte = new ImageView(new Image("file:ImageJeu/fondCarte.png"));
@@ -32,6 +38,13 @@ public class Card {
         Font fontName = new Font("Verdana", 14);
         name.setFont(fontName);
         name.setFill(Color.WHITE);
+        button.setVisible(false);
+        cardImgView.setOnMouseClicked(mouseEvent -> {
+            newBool = true;
+            bool = !bool;
+        });
+
+        button.setOnMouseClicked(mouseEvent -> action += 1);
     }
 
     public void update(){
@@ -46,30 +59,55 @@ public class Card {
         name.setX(47);
         name.setY(33);
     }
+    public ImageView getCardView() {
+        return cardImgView;
+    }
 
+    public boolean isBool() {
+        return bool;
+    }
+
+    public void clear() {
+        this.bool = false;
+        this.cardImgView.setEffect(null);
+        button.setVisible(false);
+    }
+
+    public Button getButton() {
+        return button;
+    }
+    public int getAction() {
+        return action;
+    }
     public String getCardName() {
         return CardName;
     }
+    public Text getShopLevel() {
+        return shopLevel;
+    }
+    public Pane getPane() {
+        return pane;
+    }
+    public Text getAttack() {
+        return attack;
+    }
+    public Text getHealth() {
+        return health;
+    }
 
+    public boolean isNewBool() {
+        return newBool;
+    }
+    public void setNewBool(boolean newBool) {
+        this.newBool = newBool;
+    }
+    public void setBool(boolean bool) {
+        this.bool = bool;
+    }
     public void setCardName(String cardName) {
         CardName = cardName;
     }
 
-    public Text getShopLevel() {
-        return shopLevel;
-    }
-
-    public Pane getPane() {
-        return pane;
-    }
-
-    public Text getAttack() {
-        return attack;
-    }
-
-    public Text getHealth() {
-        return health;
-    }
 
     @Override
     public String toString() {
