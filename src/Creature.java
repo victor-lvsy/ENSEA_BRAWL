@@ -672,5 +672,6 @@ public class Creature extends Card {
                 this.setCreatureHp(this.getCreatureHp()+1);
             }
         }
+
     }
 }
