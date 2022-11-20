@@ -23,6 +23,9 @@ public class Game {
             int k=1000;
             System.out.println(Initialisation.players.get(toBeTested).getPlayerName()+" is eliminated, his hp fell to 0.");
             playerSave.getOnBoard().addAll(Initialisation.players.get(toBeTested).getOnBoard());
+            for(Creature creature:playerSave.getOnBoard()){
+                creature.setTimeOnBoard(-999999999);
+            }
             int j, l=Initialisation.players.get(toBeTested).getOnBoard().size(), m=Initialisation.players.get(toBeTested).getHand().size();
             for(j=0;j<l;j++){
                 Initialisation.players.get(toBeTested).sellCreature(0);
@@ -30,7 +33,7 @@ public class Game {
             for(j=0;j<m;j++){
                 if (Initialisation.players.get(toBeTested).getHand().get(0) instanceof Creature){
                     Creature creature = new Creature();
-                    creature.setCreature(Initialisation.players.get(toBeTested).getOnBoard().get(0).getCardName(),"doc/effectListCSV_epure.csv");
+                    creature.setCreature(Initialisation.players.get(toBeTested).getHand().get(0).getCardName(),"doc/effectListCSV_epure.csv");
                     Game.init.getCreaturePool().add(creature);
                 }
                 Initialisation.players.get(toBeTested).getHand().remove(0);

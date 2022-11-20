@@ -17,7 +17,7 @@ public class Turn extends Game{
     public static void playerTestInitializer(int k){
         int j=Initialisation.players.get(k).getShop().getActuallySelling().size()-1;
         if(gameTurn==1){
-            for(int i = 0; i<3;i++){
+            for(int i = 0; i<5;i++){
                 Initialisation.players.get(k).buyCreature(j);
                 j--;
             }
@@ -26,24 +26,29 @@ public class Turn extends Game{
                 Initialisation.players.get(k).handToBoard(0);
             }
         }
-        if(gameTurn%3==0){
-            int l=Initialisation.players.get(k).getOnBoard().size();
-            for(int i = 0;i<l;i++){
-                Initialisation.players.get(k).sellCreature(0);
-            }
-            l=Initialisation.players.get(k).getShop().getActuallySelling().size();
-            for(int i = 0; i<l;i++){
-                Initialisation.players.get(k).buyCreature(j);
-                j--;
-            }
-            j=Initialisation.players.get(k).getHand().size();
-            int m = 0;
-            for(int i = 0; i<j;i++){
-                if(Initialisation.players.get(k).getHand().get(m) instanceof Creature){
-                    Initialisation.players.get(k).handToBoard(m);
+        else if (Initialisation.players.get(k).getPlayerName().equals("Ghost")){}
+        else {
+            if(Initialisation.players.get(k).getOnBoard().size()<=6){
+                int l;
+                if(Initialisation.players.get(k).getOnBoard().size()-7<0 && (Initialisation.players.get(k).getOnBoard().size()-7)*(-1)<Initialisation.players.get(k).getShop().getActuallySelling().size()){
+                    l=(Initialisation.players.get(k).getOnBoard().size()-7)*(-1);
                 }
                 else {
-                    m++;
+                    l=Initialisation.players.get(k).getShop().getActuallySelling().size();
+                }
+                for(int i = 0; i<l;i++){
+                    Initialisation.players.get(k).buyCreature(j);
+                    j--;
+                }
+                j=Initialisation.players.get(k).getHand().size();
+                int m = 0;
+                for(int i = 0; i<j;i++){
+                    if(Initialisation.players.get(k).getHand().get(m) instanceof Creature){
+                        Initialisation.players.get(k).handToBoard(m);
+                    }
+                    else {
+                        m++;
+                    }
                 }
             }
         }
