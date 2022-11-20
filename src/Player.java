@@ -519,6 +519,16 @@ public class Player {
         Creature creature=new Creature();
         creature.setCreature("CotisantBDE","doc/effectListCSV_epure.csv");
         creature.setInvoctation(true);
+        if(this.archetypeList[0]==1){
+            creature.setCreatureHp(creature.getCreatureHp()+1);
+            if (this.archetypeList[0]==2){
+                creature.setCreatureAtt(creature.getCreatureAtt()+1);
+                creature.setCreatureHp(creature.getCreatureHp()+1);
+            }
+            if (this.archetypeList[0]==3){
+                creature.getEffectList()[31]=true;
+            }
+        }
         this.getCurrentOnBoard().add(creature);
         System.out.println("Creature "+creature.getCardName()+" has appeard on "+this.getPlayerName()+" board.");
     }
@@ -527,6 +537,16 @@ public class Player {
         Creature creature=new Creature();
         creature.setCreature("Vigile","doc/effectListCSV_epure.csv");
         creature.setInvoctation(true);
+        if(this.archetypeList[0]==1){
+            creature.setCreatureHp(creature.getCreatureHp()+1);
+            if (this.archetypeList[0]==2){
+                creature.setCreatureAtt(creature.getCreatureAtt()+1);
+                creature.setCreatureHp(creature.getCreatureHp()+1);
+            }
+            if (this.archetypeList[0]==3){
+                creature.getEffectList()[31]=true;
+            }
+        }
         this.getCurrentOnBoard().add(creature);
         System.out.println("Creature "+creature.getCardName()+" has appeard on "+this.getPlayerName()+" board.");
     }
@@ -546,6 +566,16 @@ public class Player {
             int rand = (int) Math.floor(Math.random() * 4);
             creature.setCreature(tab[rand],"doc/effectListCSV_epure.csv");
             creature.setInvoctation(true);
+            if(this.archetypeList[0]==1){
+                creature.setCreatureHp(creature.getCreatureHp()+1);
+                if (this.archetypeList[0]==2){
+                    creature.setCreatureAtt(creature.getCreatureAtt()+1);
+                    creature.setCreatureHp(creature.getCreatureHp()+1);
+                }
+                if (this.archetypeList[0]==3){
+                    creature.getEffectList()[31]=true;
+                }
+            }
             willPop.add(creature);
         }
         this.getCurrentOnBoard().addAll(willPop);
@@ -580,6 +610,16 @@ public class Player {
         int rand = (int) Math.floor(Math.random() * nameList.size());
         creature.setCreature(nameList.get(rand),"doc/effectListCSV_epure.csv");
         creature.setInvoctation(true);
+        if(this.archetypeList[0]==1){
+            creature.setCreatureHp(creature.getCreatureHp()+1);
+            if (this.archetypeList[0]==2){
+                creature.setCreatureAtt(creature.getCreatureAtt()+1);
+                creature.setCreatureHp(creature.getCreatureHp()+1);
+            }
+            if (this.archetypeList[0]==3){
+                creature.getEffectList()[31]=true;
+            }
+        }
         this.getCurrentOnBoard().add(creature);
         System.out.println("Creature "+creature.getCardName()+" has appeard on "+this.getPlayerName()+" board.");
     }
