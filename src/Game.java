@@ -4,8 +4,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Game extends Application {
-    double width;
-    double height;
+    static double width;
+    static double height;
     Stage stage = new Stage();
     GameEngine gameEngine = new GameEngine();
     Welcome welcome = new Welcome();

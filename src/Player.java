@@ -1,9 +1,10 @@
 import javafx.scene.control.Button;
 import javafx.scene.effect.Shadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import java.awt.image.TileObserver;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -71,9 +72,17 @@ public class Player {
     }
 
     public void InitShop() {
+        ImageView board = new ImageView(new Image("file:ImageJeu/board_ENSEA_BRAWL.png"));
+        ImageView bob = new ImageView(new Image("file:ImageJeu/tavernier.png"));
+        pane.getChildren().add(board);
         pane.getChildren().add(fight);
         pane.getChildren().add(lose);
+        pane.getChildren().add(bob);
+        bob.setTranslateX(1696);
+        bob.setTranslateY(14);
         pane.getChildren().add(timerShop.getTime());
+        board.setFitWidth(Game.width);
+        board.setFitHeight(Game.height);
         fight.setVisible(true);
         fight.setOnMouseClicked(mouseEvent -> output = "PLAY_FIGHT");
         lose.setVisible(true);
