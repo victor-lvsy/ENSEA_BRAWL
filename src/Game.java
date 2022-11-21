@@ -1,6 +1,8 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -21,7 +23,7 @@ public class Game extends Application {
     public static int boardSize=7;
     public static Initialisation init = new Initialisation();
     Scene shopScene = new Scene(init.getPlayer1().getPaneShop());
-    public static Player playerSave = new Player("Ghost",999999,0);
+    public static Player playerSave = new Player("Ghost",999999,0, new ImageView(new Image("file:ImageJeu/ghost.png")));
 
     public Game() {
         init.getPlayer1().Init();

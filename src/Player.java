@@ -27,6 +27,7 @@ public class Player {
     private ArrayList<Creature>deadBuffer= new ArrayList<>();
     private ImageView board = new ImageView(new Image("file:ImageJeu/board_ENSEA_BRAWL.png"));
     private ImageView bob = new ImageView(new Image("file:ImageJeu/tavernier.png"));
+    private ImageView profile;
 
     public class Exile {
         Creature creature;
@@ -79,6 +80,7 @@ public class Player {
         pane.getChildren().add(fight);
         pane.getChildren().add(lose);
         pane.getChildren().add(bob);
+        pane.getChildren().add(profile);
         pane.getChildren().add(timerShop.getTime());
         fight.setVisible(true);
         fight.setOnMouseClicked(mouseEvent -> output = "PLAY_FIGHT");
@@ -91,11 +93,12 @@ public class Player {
         return board;
     }
 
-    public Player(String newPlayerName, int newPlayerHp, int newPlayerGolds) {
+    public Player(String newPlayerName, int newPlayerHp, int newPlayerGolds, ImageView newProfile) {
         playerName = newPlayerName;
         playerHp = newPlayerHp;
         playerGolds = newPlayerGolds;
         archetypeList= new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        profile = newProfile;
     }
 
     public void update(double width, double height, State state) {
@@ -110,6 +113,10 @@ public class Player {
         bob.setTranslateY(14*height_ratio);
         bob.setFitWidth(200*width_ratio);
         bob.setFitHeight(316*height_ratio);
+        profile.setTranslateX(1696*width_ratio);
+        profile.setTranslateY(750*height_ratio);
+        profile.setFitWidth(200*width_ratio);
+        profile.setFitHeight(316*height_ratio);
         lose.setTranslateX(10);
         lose.setTranslateY(10);
         fight.setTranslateX((width - fight.getWidth()) / 2);
@@ -309,6 +316,7 @@ public class Player {
     public void setShopLvl(int shopLvl) {
         this.shopLvl = shopLvl;
     }
+
     public void shopFreeLevelUp(){
         if(shopLvl<5){
             shopLevelUpCost--;

@@ -1,3 +1,6 @@
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,12 +12,12 @@ public class Initialisation {
     public static ArrayList<Player> players = new ArrayList<Player>();
 
     int i=0;
-    private Player player1 = new Player("zssnu",30,999999);
-    private Player player2 = new Player("Sltmapoule",30,999999);
-    private Player player3 = new Player("Eitonan",30,999999);
-    private Player player4 = new Player("I rule ENSEA",30,999999);
-    private Player player5 = new Player("PPZ",30,999999);
-    private Player player6 = new Player("PixelBlot",30,999999);
+    private Player player1 = new Player("zssnu",30,999999, new ImageView(new Image("file:ImageJeu/joueur1.png")));
+    private Player player2 = new Player("Sltmapoule",30,999999, new ImageView(new Image("file:ImageJeu/joueur2.png")));
+    private Player player3 = new Player("Eitonan",30,999999, new ImageView(new Image("file:ImageJeu/joueur3.png")));
+    private Player player4 = new Player("I rule ENSEA",30,999999, new ImageView(new Image("file:ImageJeu/joueur4.png")));
+    private Player player5 = new Player("PPZ",30,999999, new ImageView(new Image("file:ImageJeu/joueur5.png")));
+    private Player player6 = new Player("PixelBlot",30,999999, new ImageView(new Image("file:ImageJeu/joueur6.png")));
     private ArrayList<String> nameList = new ArrayList<String>();
     private ArrayList<Integer> tierList = new ArrayList<Integer>();
     private ArrayList<Creature> creaturePool = new ArrayList<Creature>();
