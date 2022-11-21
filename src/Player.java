@@ -119,8 +119,8 @@ public class Player {
         profile.setFitHeight(316*height_ratio);
         lose.setTranslateX(10);
         lose.setTranslateY(10);
-        fight.setTranslateX((width - fight.getWidth()) / 2);
-        fight.setTranslateY((height - fight.getHeight()) / 2);
+        fight.setTranslateX(10);
+        fight.setTranslateY(Game.height-40);
         timerShop.getTime().setTranslateX(width - timerShop.getTime().getText().length()*10 - 20);
         timerShop.getTime().setTranslateY(height - 42);
 
@@ -156,18 +156,18 @@ public class Player {
 
 
         for (Card card : shop.getActuallySelling()) {
-            if (!pane.getChildren().contains(card.getPane())) {
-                pane.getChildren().add(card.getPane());
+            if (!pane.getChildren().contains(card.getCardView())) {
+                pane.getChildren().add(card.getCardView());
             }
         }
         for (Card card : onBoard) {
-            if (!pane.getChildren().contains(card.getPane())) {
-                pane.getChildren().add(card.getPane());
+            if (!pane.getChildren().contains(card.getCardView())) {
+                pane.getChildren().add(card.getCardView());
             }
         }
         for (Card card : hand) {
-            if (!pane.getChildren().contains(card.getPane())) {
-                pane.getChildren().add(card.getPane());
+            if (!pane.getChildren().contains(card.getCardView())) {
+                pane.getChildren().add(card.getCardView());
             }
         }
         placeCards(width, height, shop.getActuallySelling(),onBoard,hand, true);
@@ -176,27 +176,52 @@ public class Player {
 
     public void placeCards(double totalWidth, double totalHeight, ArrayList<Creature> enemy, ArrayList<Creature> board,
                            ArrayList<Card> hand, Boolean shopPhase) {
-        int pasHorizontalBoardPlayer = (int) (totalWidth / (2 * board.size() + 1));
-        int pasVertical = (int) (totalHeight / 7);
+        double width_ratio=  Game.width/1920;
+        double height_ratio= Game.height/1080;
+        int pasHorizontalBoardPlayer =
+                (int) (((((1662)- board.size()*172)*width_ratio)/ board.size()-1)+172*width_ratio);
         for (int i = 0; i < board.size(); i++) {
-            board.get(i).getPane().setTranslateX((2 * i + 1) * pasHorizontalBoardPlayer);
-            board.get(i).getPane().setTranslateY(4 * pasVertical);
-            //board.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardPlayer);
-            //board.get(i).getButton().setTranslateY(4 * pasVertical + 120);
+            board.get(i).reduit();
+            board.get(i).getCardView().setTranslateX(i * pasHorizontalBoardPlayer);
+            board.get(i).getCardView().setTranslateY(340*height_ratio);
+            board.get(i).getButton().setTranslateX(i * pasHorizontalBoardPlayer);
+            board.get(i).getButton().setTranslateY(340*height_ratio + 120);
         }
-        int pasHorizontalHandPlayer = (int) (totalWidth / (2 * hand.size() + 1));
-        for (int i = 0; i < hand.size(); i++) {
-            hand.get(i).getPane().setTranslateX((2 * i + 1) * pasHorizontalHandPlayer);
-            hand.get(i).getPane().setTranslateY(6 * pasVertical);
-            //hand.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalHandPlayer);
-            //hand.get(i).getButton().setTranslateY(6 * pasVertical + 120);
+        if (hand.size()<8){
+            for (int i = 0; i < hand.size(); i++) {
+                hand.get(i).reduit();
+                int pasHorizontalHandPlayer =
+                        (int) (((((1662 - 40)- hand.size()*172)*width_ratio)/ hand.size()-1)+172*width_ratio);
+                hand.get(i).getCardView().setTranslateX(i * pasHorizontalHandPlayer);
+                hand.get(i).getCardView().setTranslateY(500*height_ratio);
+                hand.get(i).getButton().setTranslateX(i * pasHorizontalHandPlayer);
+                hand.get(i).getButton().setTranslateY(500*height_ratio+120);
+            }
+        } else{
+            for (int i = 0; i < 8; i++) {
+                int pasHorizontalHandPlayer = (int) (((((1634 - 40)- 7*172)*width_ratio)/ 7-1)+172*width_ratio);
+                hand.get(i).getCardView().setTranslateX(i * pasHorizontalHandPlayer);
+                hand.get(i).getCardView().setTranslateY(721*height_ratio);
+                hand.get(i).getButton().setTranslateX(i* pasHorizontalHandPlayer);
+                hand.get(i).getButton().setTranslateY(721*height_ratio + 120);
+            }
+            for (int i = 0; i < 8; i++){
+                int pasHorizontalHandPlayer =
+                        (int) (((((1634 - 40)- (hand.size()-7)*172)*width_ratio)/ (hand.size()-7)-1)+172*width_ratio);
+            hand.get(i).getCardView().setTranslateX(i * pasHorizontalHandPlayer);
+            hand.get(i).getCardView().setTranslateY(891*height_ratio);
+            hand.get(i).getButton().setTranslateX(i* pasHorizontalHandPlayer);
+            hand.get(i).getButton().setTranslateY(891*height_ratio + 120);
+            }
         }
-        int pasHorizontalBoardEnemy = (int) (totalWidth / (2 * enemy.size() + 1));
+        int pasHorizontalBoardEnemy =
+                (int) (((((1634 - 40)- (enemy.size()-7)*172)*width_ratio)/ (enemy.size()-7)-1)+172*width_ratio);
         for (int i = 0; i < enemy.size(); i++) {
-            enemy.get(i).getPane().setTranslateX((2 * i + 1) * pasHorizontalBoardEnemy);
-            enemy.get(i).getPane().setTranslateY(2 * pasVertical);
-            //enemy.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardEnemy);
-            //enemy.get(i).getButton().setTranslateY(2 * pasVertical + 120);
+            enemy.get(i).reduit();
+            enemy.get(i).getPane().setTranslateX(i * pasHorizontalBoardEnemy);
+            enemy.get(i).getPane().setTranslateY(149*height_ratio);
+            enemy.get(i).getButton().setTranslateX(i * pasHorizontalBoardEnemy);
+            enemy.get(i).getButton().setTranslateY(149*height_ratio + 120);
         }
 
         if (shopPhase) {

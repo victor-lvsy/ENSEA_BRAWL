@@ -29,8 +29,9 @@ public class Game extends Application {
         init.getPlayer1().Init();
         init.getPlayer1().InitShop();
         stage.setTitle("ENSEA BRAWL !");
+        stage.minWidthProperty().bind(stage.heightProperty().multiply(16/9));
+        stage.minHeightProperty().bind(stage.widthProperty().multiply(9/16));
         stage.show();
-
     }
 
     public static void endOfPlayerGame(int toBeTested){
@@ -82,7 +83,7 @@ public class Game extends Application {
         @Override
         public void handle(long l) {
             width = stage.getWidth();
-            height = stage.getHeight();
+            height = stage.getHeight()-37;
             gameEngine.update(welcome.getOutput());
             gameEngine.update(init.getPlayer1().getOutput());
             gameEngine.update(fight.getOutput());
@@ -113,15 +114,9 @@ public class Game extends Application {
             case WELCOME:
                 if (stage.getScene() != welcomeScene)
                 {
-                    //stage.setWidth(1920);
-                    //stage.setHeight(1080);
-
-
                     stage.setScene(welcomeScene);
                     init.Initialisation();
                     stage.setMaximized(true);
-
-
                 }
                 break;
             case PLAY_SHOP:
@@ -132,9 +127,7 @@ public class Game extends Application {
                     shopInit();
                     init.getPlayer1().getTimerShop().clear();
                     stage.setScene(shopScene);
-
-
-
+                    stage.setMaximized(true);
                 }
                 break;
             case PLAY_FIGHT:
@@ -144,6 +137,7 @@ public class Game extends Application {
                     gameTurn++;
                     fight.getTimerFight().clear();
                     stage.setScene(fightScene);
+                    stage.setMaximized(true);
                 }
                 break;
             case WIN:

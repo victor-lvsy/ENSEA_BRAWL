@@ -19,11 +19,11 @@ public class Card {
     private final Button button = new Button("Buy");
     private int action = 0;
     private boolean newBool = false;
-
+    private final ImageView fondCarte = new ImageView(new Image("file:ImageJeu/fondCarte.png"));
 
     public Card() {
         pane.getChildren().add(cardImgView);
-        pane.getChildren().add(new ImageView(new Image("file:ImageJeu/fondCarte.png")));
+        pane.getChildren().add(fondCarte);
         pane.getChildren().add(attack);
         pane.getChildren().add(health);
         pane.getChildren().add(name);
@@ -42,6 +42,22 @@ public class Card {
         });
 
         button.setOnMouseClicked(mouseEvent -> action += 1);
+    }
+
+    public void reduit(){
+        fondCarte.setVisible(false);
+        attack.setVisible(false);
+        health.setVisible(false);
+        name.setVisible(false);
+        shopLevel.setVisible(false);
+    }
+
+    public void entiere(){
+        fondCarte.setVisible(true);
+        attack.setVisible(true);
+        health.setVisible(true);
+        name.setVisible(true);
+        shopLevel.setVisible(true);
     }
 
     public void update(){
