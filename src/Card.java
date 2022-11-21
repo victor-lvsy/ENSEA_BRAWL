@@ -20,10 +20,10 @@ public class Card {
     private int action = 0;
     private boolean newBool = false;
 
+
     public Card() {
-        ImageView fondCarte = new ImageView(new Image("file:ImageJeu/fondCarte.png"));
         pane.getChildren().add(cardImgView);
-        pane.getChildren().add(fondCarte);
+        pane.getChildren().add(new ImageView(new Image("file:ImageJeu/fondCarte.png")));
         pane.getChildren().add(attack);
         pane.getChildren().add(health);
         pane.getChildren().add(name);

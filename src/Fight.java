@@ -60,13 +60,13 @@ public class Fight {
         timerFight.getTime().setTranslateY(height-42);
 
         for (Card card: player2.getCurrentOnBoard()) {
-            if  (!pane.getChildren().contains(card.getCardView())){pane.getChildren().add(card.getCardView());}
+            if  (!pane.getChildren().contains(card.getPane())){pane.getChildren().add(card.getPane());}
         }
         for (Card card: player.getCurrentOnBoard()) {
-            if  (!pane.getChildren().contains(card.getCardView())){pane.getChildren().add(card.getCardView());}
+            if  (!pane.getChildren().contains(card.getPane())){pane.getChildren().add(card.getPane());}
         }
         for (Card card: player.getHand()) {
-            if (!pane.getChildren().contains(card.getCardView())){pane.getChildren().add(card.getCardView());}
+            if (!pane.getChildren().contains(card.getPane())){pane.getChildren().add(card.getPane());}
         }
         player.placeCards(width,height,player2.getCurrentOnBoard(),player.getCurrentOnBoard(),player.getHand(),false);
 

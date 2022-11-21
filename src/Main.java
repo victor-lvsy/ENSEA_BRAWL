@@ -26,18 +26,18 @@ public class Main extends Application  {
         group.getChildren().add(creature2.getPane());
         pane.setTranslateX(1000);
         at.start();
+        creature.getShopLevel().setText(String.valueOf(creature.getCreatureTier()));
+        creature2.getShopLevel().setText(String.valueOf(creature2.getCreatureTier()));
+        creature.setCreature("Intervenant","doc/effectListCSV_epure.csv");
+        creature2.setCreature("Directeur des etudes","doc/effectListCSV_epure.csv");
+        creature.update();
+        creature2.update();
 
     }
 
     AnimationTimer at = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            creature.setCreature("President BDS","doc/effectListCSV_epure.csv");
-            creature.getShopLevel().setText(String.valueOf(creature.getCreatureTier()));
-            creature.update();
-            creature2.setCreature("Directeur des etudes","doc/effectListCSV_epure.csv");
-            creature2.getShopLevel().setText(String.valueOf(creature2.getCreatureTier()));
-            creature2.update();
         }
     };
 

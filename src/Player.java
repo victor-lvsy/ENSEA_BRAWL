@@ -24,6 +24,7 @@ public class Player {
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
     private int archetypeList[];
     private ArrayList<Creature>deadBuffer= new ArrayList<>();
+
     public class Exile {
         Creature creature;
         int exilTime;
@@ -132,18 +133,18 @@ public class Player {
 
 
         for (Card card : shop.getActuallySelling()) {
-            if (!pane.getChildren().contains(card.getCardView())) {
-                pane.getChildren().add(card.getCardView());
+            if (!pane.getChildren().contains(card.getPane())) {
+                pane.getChildren().add(card.getPane());
             }
         }
         for (Card card : onBoard) {
-            if (!pane.getChildren().contains(card.getCardView())) {
-                pane.getChildren().add(card.getCardView());
+            if (!pane.getChildren().contains(card.getPane())) {
+                pane.getChildren().add(card.getPane());
             }
         }
         for (Card card : hand) {
-            if (!pane.getChildren().contains(card.getCardView())) {
-                pane.getChildren().add(card.getCardView());
+            if (!pane.getChildren().contains(card.getPane())) {
+                pane.getChildren().add(card.getPane());
             }
         }
         placeCards(width, height, shop.getActuallySelling(),onBoard,hand, true);
@@ -155,24 +156,24 @@ public class Player {
         int pasHorizontalBoardPlayer = (int) (totalWidth / (2 * board.size() + 1));
         int pasVertical = (int) (totalHeight / 7);
         for (int i = 0; i < board.size(); i++) {
-            board.get(i).getCardView().setX((2 * i + 1) * pasHorizontalBoardPlayer);
-            board.get(i).getCardView().setY(4 * pasVertical);
-            board.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardPlayer);
-            board.get(i).getButton().setTranslateY(4 * pasVertical + 60);
+            board.get(i).getPane().setTranslateX((2 * i + 1) * pasHorizontalBoardPlayer);
+            board.get(i).getPane().setTranslateY(4 * pasVertical);
+            //board.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardPlayer);
+            //board.get(i).getButton().setTranslateY(4 * pasVertical + 120);
         }
         int pasHorizontalHandPlayer = (int) (totalWidth / (2 * hand.size() + 1));
         for (int i = 0; i < hand.size(); i++) {
-            hand.get(i).getCardView().setX((2 * i + 1) * pasHorizontalHandPlayer);
-            hand.get(i).getCardView().setY(6 * pasVertical);
-            hand.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalHandPlayer);
-            hand.get(i).getButton().setTranslateY(6 * pasVertical + 60);
+            hand.get(i).getPane().setTranslateX((2 * i + 1) * pasHorizontalHandPlayer);
+            hand.get(i).getPane().setTranslateY(6 * pasVertical);
+            //hand.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalHandPlayer);
+            //hand.get(i).getButton().setTranslateY(6 * pasVertical + 120);
         }
         int pasHorizontalBoardEnemy = (int) (totalWidth / (2 * enemy.size() + 1));
         for (int i = 0; i < enemy.size(); i++) {
-            enemy.get(i).getCardView().setX((2 * i + 1) * pasHorizontalBoardEnemy);
-            enemy.get(i).getCardView().setY(2 * pasVertical);
-            enemy.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardEnemy);
-            enemy.get(i).getButton().setTranslateY(2 * pasVertical + 60);
+            enemy.get(i).getPane().setTranslateX((2 * i + 1) * pasHorizontalBoardEnemy);
+            enemy.get(i).getPane().setTranslateY(2 * pasVertical);
+            //enemy.get(i).getButton().setTranslateX((2 * i + 1) * pasHorizontalBoardEnemy);
+            //enemy.get(i).getButton().setTranslateY(2 * pasVertical + 120);
         }
 
         if (shopPhase) {
