@@ -25,6 +25,8 @@ public class Player {
     private ArrayList<Creature> currentOnBoard = new ArrayList<Creature>();
     private int archetypeList[];
     private ArrayList<Creature>deadBuffer= new ArrayList<>();
+    private ImageView board = new ImageView(new Image("file:ImageJeu/board_ENSEA_BRAWL.png"));
+
 
     public class Exile {
         Creature creature;
@@ -72,7 +74,6 @@ public class Player {
     }
 
     public void InitShop() {
-        ImageView board = new ImageView(new Image("file:ImageJeu/board_ENSEA_BRAWL.png"));
         ImageView bob = new ImageView(new Image("file:ImageJeu/tavernier.png"));
         pane.getChildren().add(board);
         pane.getChildren().add(fight);
@@ -81,8 +82,7 @@ public class Player {
         bob.setTranslateX(1696);
         bob.setTranslateY(14);
         pane.getChildren().add(timerShop.getTime());
-        board.setFitWidth(1920);
-        board.setFitHeight(1080);
+        board.setPreserveRatio(true);
         fight.setVisible(true);
         fight.setOnMouseClicked(mouseEvent -> output = "PLAY_FIGHT");
         lose.setVisible(true);
@@ -90,7 +90,9 @@ public class Player {
         timerShop.getTime().setFont(new Font("Comic sans MS", 20));
     }
 
-
+    public ImageView getBoard() {
+        return board;
+    }
 
     public Player(String newPlayerName, int newPlayerHp, int newPlayerGolds) {
         playerName = newPlayerName;

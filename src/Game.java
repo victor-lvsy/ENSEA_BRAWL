@@ -109,12 +109,13 @@ public class Game extends Application {
             case WELCOME:
                 if (stage.getScene() != welcomeScene)
                 {
-                    stage.setWidth(300);
-                    stage.setHeight(800);
-                    stage.setMaximized(false);
-                    stage.centerOnScreen();
+                    //stage.setWidth(1920);
+                    //stage.setHeight(1080);
+
+
                     stage.setScene(welcomeScene);
                     init.Initialisation();
+                    stage.setMaximized(true);
 
 
                 }
@@ -126,9 +127,10 @@ public class Game extends Application {
                     if (init.getPlayer1().getPlayerHp()<1){gameEngine.setState(State.LOST);}
                     shopInit();
                     init.getPlayer1().getTimerShop().clear();
-                    stage.setWidth(1920);
-                    stage.setHeight(1080);
                     stage.setScene(shopScene);
+                    init.getPlayer1().getBoard().setPreserveRatio(true);
+                    init.getPlayer1().getBoard().setFitHeight(Game.height);
+
 
                 }
                 break;
@@ -138,8 +140,6 @@ public class Game extends Application {
                     turn.Turn();
                     gameTurn++;
                     fight.getTimerFight().clear();
-                    stage.setWidth(1920);
-                    stage.setHeight(1080);
                     stage.setScene(fightScene);
                 }
                 break;
