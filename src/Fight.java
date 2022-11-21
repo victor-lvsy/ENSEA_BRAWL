@@ -11,20 +11,11 @@ public class Fight {
     private static class Rivaux {
         Creature creature;
         int playerParent;
-
-        public void setCreature(Creature creature) {
-            this.creature = creature;
-        }
-
-        public void setPlayerParent(int playerParent) {
-            this.playerParent = playerParent;
-        }
     }
 
     public ArrayList<Player> getFightOrder() {
         return fightOrder;
     }
-
 
     private final Pane pane = new Pane();
     Button win = new Button("Win");

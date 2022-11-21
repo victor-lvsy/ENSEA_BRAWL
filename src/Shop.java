@@ -72,7 +72,9 @@ public class Shop {
                 setShop(6);
                 break;
         }
-        Turn.playerTestInitializer(player);
+        if (Initialisation.players.get(player).getPlayerName() != "zssnu") {
+            Turn.playerTestInitializer(player);
+        }
         Game.init.getCreaturePool().addAll(actuallySelling);
         actuallySelling.clear();
     }
