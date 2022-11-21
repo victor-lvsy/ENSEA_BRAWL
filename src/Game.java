@@ -126,7 +126,8 @@ public class Game extends Application {
                     if (init.getPlayer1().getPlayerHp()<1){gameEngine.setState(State.LOST);}
                     shopInit();
                     init.getPlayer1().getTimerShop().clear();
-                    stage.setMaximized(true);
+                    stage.setWidth(1280);
+                    stage.setHeight(720);
                     stage.setScene(shopScene);
 
                 }
@@ -137,7 +138,8 @@ public class Game extends Application {
                     turn.Turn();
                     gameTurn++;
                     fight.getTimerFight().clear();
-                    stage.setMaximized(true);
+                    stage.setWidth(1280);
+                    stage.setHeight(720);
                     stage.setScene(fightScene);
                 }
                 break;

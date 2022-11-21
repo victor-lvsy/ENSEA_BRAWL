@@ -81,8 +81,8 @@ public class Player {
         bob.setTranslateX(1696);
         bob.setTranslateY(14);
         pane.getChildren().add(timerShop.getTime());
-        board.setFitWidth(Game.width);
-        board.setFitHeight(Game.height);
+        board.setFitWidth(1280);
+        board.setFitHeight(720);
         fight.setVisible(true);
         fight.setOnMouseClicked(mouseEvent -> output = "PLAY_FIGHT");
         lose.setVisible(true);
