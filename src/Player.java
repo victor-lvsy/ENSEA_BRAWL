@@ -80,7 +80,6 @@ public class Player {
         pane.getChildren().add(lose);
         pane.getChildren().add(bob);
         pane.getChildren().add(timerShop.getTime());
-        board.setPreserveRatio(true);
         fight.setVisible(true);
         fight.setOnMouseClicked(mouseEvent -> output = "PLAY_FIGHT");
         lose.setVisible(true);
@@ -105,12 +104,10 @@ public class Player {
         if (timerShop.getBool() && state == State.PLAY_SHOP) {
             this.output = "PLAY_FIGHT";
         }
-        board.setPreserveRatio(true);
         board.setFitWidth(Game.width);
         board.setFitHeight(Game.height);
         bob.setTranslateX(1696*width_ratio);
         bob.setTranslateY(14*height_ratio);
-        board.setPreserveRatio(true);
         bob.setFitWidth(200*width_ratio);
         bob.setFitHeight(316*height_ratio);
         lose.setTranslateX(10);
