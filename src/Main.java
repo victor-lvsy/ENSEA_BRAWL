@@ -16,6 +16,7 @@ public class Main extends Application  {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        creature2.entiere();
         creature.reduit();
         creature.setCardName("Prof d'info");
         creature2.setCardName("Directeur des etudes");

@@ -59,7 +59,7 @@ public class Fight {
         for (Card card: player.getHand()) {
             if (!pane.getChildren().contains(card.getPane())){pane.getChildren().add(card.getPane());}
         }
-        player.placeCards(width,height,player2.getCurrentOnBoard(),player.getCurrentOnBoard(),player.getHand(),false);
+        player.placeCards(player2.getCurrentOnBoard(),player.getCurrentOnBoard(),player.getHand(),false);
 
     }
 

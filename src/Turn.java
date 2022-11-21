@@ -1,10 +1,10 @@
 public class Turn{
     private Boolean shopPhase = true;
     static Fight fight = new Fight();
-    private Player enemy;
 
     public static void Turn(){
-
+        for (Player player: Initialisation.players
+             ) {player.getShop().clearShop();}
         fight.drawFights(Initialisation.players);
         for(int i=0;i<Initialisation.players.size()/2;i++){
             System.out.println("===============================NEXT FIGHT===============================");

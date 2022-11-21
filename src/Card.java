@@ -28,6 +28,7 @@ public class Card {
         pane.getChildren().add(health);
         pane.getChildren().add(name);
         pane.getChildren().add(shopLevel);
+        pane.getChildren().add(button);
         Font font = new Font("Verdana", 20);
         shopLevel.setFont(font);
         health.setFont(font);
@@ -41,10 +42,15 @@ public class Card {
             bool = !bool;
         });
 
-        button.setOnMouseClicked(mouseEvent -> action += 1);
+        button.setOnMouseClicked(mouseEvent -> {
+            action += 1;
+            this.reduit();
+        });
+        this.reduit();
     }
 
     public void reduit(){
+        button.setVisible(false);
         fondCarte.setVisible(false);
         attack.setVisible(false);
         health.setVisible(false);
@@ -53,6 +59,7 @@ public class Card {
     }
 
     public void entiere(){
+        button.setVisible(true);
         fondCarte.setVisible(true);
         attack.setVisible(true);
         health.setVisible(true);
@@ -73,7 +80,10 @@ public class Card {
         health.setY(309);
         name.setX(47);
         name.setY(33);
+        button.setTranslateX(50);
+        button.setTranslateY(150);
     }
+
     public ImageView getCardView() {
         return cardImgView;
     }

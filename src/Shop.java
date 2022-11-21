@@ -76,6 +76,9 @@ public class Shop {
             Turn.playerTestInitializer(player);
         }
         Game.init.getCreaturePool().addAll(actuallySelling);
+    }
+
+    public void clearShop(){
         actuallySelling.clear();
     }
 

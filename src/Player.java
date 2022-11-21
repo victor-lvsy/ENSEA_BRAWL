@@ -5,6 +5,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,6 +30,14 @@ public class Player {
     private ImageView board = new ImageView(new Image("file:ImageJeu/board_ENSEA_BRAWL.png"));
     private ImageView bob = new ImageView(new Image("file:ImageJeu/tavernier.png"));
     private ImageView profile;
+    private Text bobText = new Text("BOB");
+    private final Pane pane = new Pane();
+    Button fight = new Button("Passer au combat");
+    Button lose = new Button("Lose");
+    private String output;
+    private final Counter timerShop = new Counter();
+
+
 
     public class Exile {
         Creature creature;
@@ -43,11 +53,7 @@ public class Player {
     }
     private ArrayList<Exile> exil = new ArrayList<>();
 
-    private final Pane pane = new Pane();
-    Button fight = new Button("Passer au combat");
-    Button lose = new Button("Lose");
-    private String output;
-    private final Counter timerShop = new Counter();
+
     public void clear(){
         output = "";
     }
@@ -82,6 +88,7 @@ public class Player {
         pane.getChildren().add(bob);
         pane.getChildren().add(profile);
         pane.getChildren().add(timerShop.getTime());
+        pane.getChildren().add(bobText);
         fight.setVisible(true);
         fight.setOnMouseClicked(mouseEvent -> output = "PLAY_FIGHT");
         lose.setVisible(true);
@@ -107,12 +114,15 @@ public class Player {
         if (timerShop.getBool() && state == State.PLAY_SHOP) {
             this.output = "PLAY_FIGHT";
         }
+        bobText.setFont(new Font("Verdana",24*height_ratio));
         board.setFitWidth(Game.width);
         board.setFitHeight(Game.height);
         bob.setTranslateX(1696*width_ratio);
         bob.setTranslateY(14*height_ratio);
         bob.setFitWidth(200*width_ratio);
         bob.setFitHeight(316*height_ratio);
+        bobText.setX(1773*width_ratio);
+        bobText.setY(81*height_ratio);
         profile.setTranslateX(1696*width_ratio);
         profile.setTranslateY(750*height_ratio);
         profile.setFitWidth(200*width_ratio);
@@ -122,7 +132,7 @@ public class Player {
         fight.setTranslateX(10);
         fight.setTranslateY(Game.height-40);
         timerShop.getTime().setTranslateX(width - timerShop.getTime().getText().length()*10 - 20);
-        timerShop.getTime().setTranslateY(height - 42);
+        timerShop.getTime().setTranslateY(height-330*height_ratio);
 
         for (int i = 0; i < shop.getActuallySelling().size(); i++) {
             if (shop.getActuallySelling().get(i).getAction() == 1) {
@@ -147,7 +157,7 @@ public class Player {
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i).getAction() == 3) {
                 hand.get(i).clear();
-                hand.get(i).getCardView().setVisible(false);
+                hand.get(i).getPane().setVisible(false);
                 hand.get(i).getButton().setVisible(false);
                 hand.remove(i);
 
@@ -156,73 +166,64 @@ public class Player {
 
 
         for (Card card : shop.getActuallySelling()) {
-            if (!pane.getChildren().contains(card.getCardView())) {
-                pane.getChildren().add(card.getCardView());
+            if (!pane.getChildren().contains(card.getPane())) {
+                pane.getChildren().add(card.getPane());
             }
         }
         for (Card card : onBoard) {
-            if (!pane.getChildren().contains(card.getCardView())) {
-                pane.getChildren().add(card.getCardView());
+            if (!pane.getChildren().contains(card.getPane())) {
+                pane.getChildren().add(card.getPane());
             }
         }
         for (Card card : hand) {
-            if (!pane.getChildren().contains(card.getCardView())) {
-                pane.getChildren().add(card.getCardView());
+            if (!pane.getChildren().contains(card.getPane())) {
+                pane.getChildren().add(card.getPane());
             }
         }
-        placeCards(width, height, shop.getActuallySelling(),onBoard,hand, true);
+        placeCards(shop.getActuallySelling(),onBoard,hand, true);
 
     }
 
-    public void placeCards(double totalWidth, double totalHeight, ArrayList<Creature> enemy, ArrayList<Creature> board,
-                           ArrayList<Card> hand, Boolean shopPhase) {
-        double width_ratio=  Game.width/1920;
-        double height_ratio= Game.height/1080;
+    public void placeCards(ArrayList<Creature> enemy, ArrayList<Creature> board, ArrayList<Card> hand, Boolean shopPhase) {
+        double width_ratio =  Game.width/1920;
+        double height_ratio = Game.height/1080;
+
         int pasHorizontalBoardPlayer =
                 (int) (((((1662)- board.size()*172)*width_ratio)/ board.size()-1)+172*width_ratio);
         for (int i = 0; i < board.size(); i++) {
-            board.get(i).reduit();
-            board.get(i).getCardView().setTranslateX(i * pasHorizontalBoardPlayer);
-            board.get(i).getCardView().setTranslateY(340*height_ratio);
-            board.get(i).getButton().setTranslateX(i * pasHorizontalBoardPlayer);
-            board.get(i).getButton().setTranslateY(340*height_ratio + 120);
+            board.get(i).getPane().setTranslateX(i * pasHorizontalBoardPlayer);
+            board.get(i).getPane().setTranslateY(340*height_ratio);
         }
-        if (hand.size()<8){
-            for (int i = 0; i < hand.size(); i++) {
-                hand.get(i).reduit();
-                int pasHorizontalHandPlayer =
-                        (int) (((((1662 - 40)- hand.size()*172)*width_ratio)/ hand.size()-1)+172*width_ratio);
-                hand.get(i).getCardView().setTranslateX(i * pasHorizontalHandPlayer);
-                hand.get(i).getCardView().setTranslateY(500*height_ratio);
-                hand.get(i).getButton().setTranslateX(i * pasHorizontalHandPlayer);
-                hand.get(i).getButton().setTranslateY(500*height_ratio+120);
-            }
-        } else{
-            for (int i = 0; i < 8; i++) {
-                int pasHorizontalHandPlayer = (int) (((((1634 - 40)- 7*172)*width_ratio)/ 7-1)+172*width_ratio);
-                hand.get(i).getCardView().setTranslateX(i * pasHorizontalHandPlayer);
-                hand.get(i).getCardView().setTranslateY(721*height_ratio);
-                hand.get(i).getButton().setTranslateX(i* pasHorizontalHandPlayer);
-                hand.get(i).getButton().setTranslateY(721*height_ratio + 120);
-            }
-            for (int i = 0; i < 8; i++){
-                int pasHorizontalHandPlayer =
-                        (int) (((((1634 - 40)- (hand.size()-7)*172)*width_ratio)/ (hand.size()-7)-1)+172*width_ratio);
-            hand.get(i).getCardView().setTranslateX(i * pasHorizontalHandPlayer);
-            hand.get(i).getCardView().setTranslateY(891*height_ratio);
-            hand.get(i).getButton().setTranslateX(i* pasHorizontalHandPlayer);
-            hand.get(i).getButton().setTranslateY(891*height_ratio + 120);
-            }
-        }
+
         int pasHorizontalBoardEnemy =
-                (int) (((((1634 - 40)- (enemy.size()-7)*172)*width_ratio)/ (enemy.size()-7)-1)+172*width_ratio);
+                (int) ((((1662- (enemy.size()-7)*172)*width_ratio)/ (enemy.size()-7)-1)+172*width_ratio);
         for (int i = 0; i < enemy.size(); i++) {
-            enemy.get(i).reduit();
             enemy.get(i).getPane().setTranslateX(i * pasHorizontalBoardEnemy);
-            enemy.get(i).getPane().setTranslateY(149*height_ratio);
-            enemy.get(i).getButton().setTranslateX(i * pasHorizontalBoardEnemy);
-            enemy.get(i).getButton().setTranslateY(149*height_ratio + 120);
+            enemy.get(i).getPane().setTranslateY(80*height_ratio);
         }
+
+        if (hand.size()<7){
+            for (int i = 0; i < hand.size(); i++) {
+                int pasHorizontalHandPlayer =
+                        (int) (((((1662)- hand.size()*172)*width_ratio)/ hand.size()-1)+172*width_ratio);
+                hand.get(i).getPane().setTranslateX(i * pasHorizontalHandPlayer);
+                hand.get(i).getPane().setTranslateY(721*height_ratio);
+            }
+
+        } else{
+            for (int i = 0; i < 7; i++) {
+                int pasHorizontalHandPlayer = (int) ((((1662- 7*172)*width_ratio)/ 6-1)+172*width_ratio);
+                hand.get(i).getPane().setTranslateX(i * pasHorizontalHandPlayer);
+                hand.get(i).getPane().setTranslateY(721*height_ratio);
+            }
+            for (int i = 0; i < hand.size()-7; i++){
+                int pasHorizontalHandPlayer =
+                        (int) ((((1662- (hand.size()-7)*172)*width_ratio)/ (hand.size()-7)-1)+172*width_ratio);
+            hand.get(i+7).getPane().setTranslateX(i * pasHorizontalHandPlayer);
+            hand.get(i+7).getPane().setTranslateY(891*height_ratio);
+            }
+        }
+
 
         if (shopPhase) {
             for (int i = 0; i < board.size(); i++) {
@@ -240,23 +241,31 @@ public class Player {
 
             for (Card card : enemy) {
                 if (card.isBool()) {
-                    card.getButton().setVisible(true);
-                    card.getCardView().setEffect(new Shadow(1, Color.BLACK));
+                    card.entiere();
+                    card.getPane().setTranslateX(1663*width_ratio-card.getPane().getTranslateX());
+                    card.getPane().setTranslateY(405*height_ratio-card.getPane().getTranslateY());
+                    card.getPane().setScaleX(width_ratio);
+                    card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Buy");
                 }
             }
             for (Card card : hand) {
                 if (card.isBool()) {
-                    card.getButton().setVisible(true);
-                    card.getCardView().setEffect(new Shadow(1, Color.BLACK));
-
+                    card.entiere();
+                    card.getPane().setTranslateX(1663*width_ratio-card.getPane().getTranslateX());
+                    card.getPane().setTranslateY(100*height_ratio-card.getPane().getTranslateY());
+                    card.getPane().setScaleX(width_ratio);
+                    card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Put");
                 }
             }
             for (Card card : board) {
                 if (card.isBool()) {
-                    card.getButton().setVisible(true);
-                    card.getCardView().setEffect(new Shadow(1, Color.BLACK));
+                    card.entiere();
+                    card.getPane().setTranslateX(1663*width_ratio-card.getPane().getTranslateX());
+                    card.getPane().setTranslateY(405*height_ratio-card.getPane().getTranslateY());
+                    card.getPane().setScaleX(width_ratio);
+                    card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Sell");
                 }
             }
@@ -278,6 +287,7 @@ public class Player {
                     }
                     card.setNewBool(false);
                     card.setBool(true);
+                    card.reduit();
                 }
 
             }
