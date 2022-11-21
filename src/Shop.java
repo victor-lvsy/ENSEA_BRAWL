@@ -10,16 +10,14 @@ public class Shop {
     private int level;
     private ArrayList<Creature> actuallySelling = new ArrayList<Creature>();
     private ArrayList<Creature> canBeSold = new ArrayList<Creature>();
-
-
-
-
-public ArrayList<Creature> getCanBeSold() {
+    public ArrayList<Creature> getCanBeSold() {
         return canBeSold;
     }
     public ArrayList<Creature> getActuallySelling() {
         return actuallySelling;
-    }    public void shop(int lvl, int player) {
+    }
+
+    public void shop(int lvl, int player) {
         level = lvl;
         ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
         ArrayList<Creature> removeBuffer = new ArrayList<>();

@@ -27,6 +27,9 @@ public class Game extends Application {
         init.getPlayer1().Init();
         init.getPlayer1().InitShop();
         stage.setTitle("ENSEA BRAWL !");
+        stage.minWidthProperty().bind(stage.heightProperty().multiply(16/9));
+        stage.minHeightProperty().bind(stage.widthProperty().multiply(9/16));
+
         stage.show();
 
     }
@@ -128,8 +131,7 @@ public class Game extends Application {
                     shopInit();
                     init.getPlayer1().getTimerShop().clear();
                     stage.setScene(shopScene);
-                    init.getPlayer1().getBoard().setPreserveRatio(true);
-                    init.getPlayer1().getBoard().setFitHeight(Game.height);
+
 
 
                 }

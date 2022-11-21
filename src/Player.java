@@ -26,7 +26,7 @@ public class Player {
     private int archetypeList[];
     private ArrayList<Creature>deadBuffer= new ArrayList<>();
     private ImageView board = new ImageView(new Image("file:ImageJeu/board_ENSEA_BRAWL.png"));
-
+    private ImageView bob = new ImageView(new Image("file:ImageJeu/tavernier.png"));
 
     public class Exile {
         Creature creature;
@@ -74,13 +74,11 @@ public class Player {
     }
 
     public void InitShop() {
-        ImageView bob = new ImageView(new Image("file:ImageJeu/tavernier.png"));
+
         pane.getChildren().add(board);
         pane.getChildren().add(fight);
         pane.getChildren().add(lose);
         pane.getChildren().add(bob);
-        bob.setTranslateX(1696);
-        bob.setTranslateY(14);
         pane.getChildren().add(timerShop.getTime());
         board.setPreserveRatio(true);
         fight.setVisible(true);
@@ -102,9 +100,19 @@ public class Player {
     }
 
     public void update(double width, double height, State state) {
+        double width_ratio=  Game.width/1920;
+        double height_ratio= Game.height/1080;
         if (timerShop.getBool() && state == State.PLAY_SHOP) {
             this.output = "PLAY_FIGHT";
         }
+        board.setPreserveRatio(true);
+        board.setFitWidth(Game.width);
+        board.setFitHeight(Game.height);
+        bob.setTranslateX(1696*width_ratio);
+        bob.setTranslateY(14*height_ratio);
+        board.setPreserveRatio(true);
+        bob.setFitWidth(200*width_ratio);
+        bob.setFitHeight(316*height_ratio);
         lose.setTranslateX(10);
         lose.setTranslateY(10);
         fight.setTranslateX((width - fight.getWidth()) / 2);
