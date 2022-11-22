@@ -34,12 +34,15 @@ public class Main extends Application  {
             creas.add(tamp);
         }
         imgs.add(new ImageView(new Image("file:ImageJeu/joueur1.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/joueur1.png")));
         imgs.add(new ImageView(new Image("file:ImageJeu/joueur2.png")));
         imgs.add(new ImageView(new Image("file:ImageJeu/joueur3.png")));
         imgs.add(new ImageView(new Image("file:ImageJeu/joueur4.png")));
         imgs.add(new ImageView(new Image("file:ImageJeu/joueur5.png")));
         imgs.add(new ImageView(new Image("file:ImageJeu/joueur6.png")));
         imgs.add(new ImageView(new Image("file:ImageJeu/tavernier.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/ghost.png")));
+
 
         group.getChildren().add(creas.get(i).getPane());
         creas.get(i).entiere();
