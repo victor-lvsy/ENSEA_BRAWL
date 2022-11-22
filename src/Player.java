@@ -190,9 +190,11 @@ public class Player {
         }
 
         int pasHorizontalBoardEnemy =
-                (int) ((((1662- (enemy.size()-7)*172)*width_ratio)/ (enemy.size()-7)-1)+172*width_ratio);
+                (int) (((((1662)- enemy.size()*172)*width_ratio)/ enemy.size()-1)+172*width_ratio);
         for (int i = 0; i < enemy.size(); i++) {
             enemy.get(i).getPane().relocate(i * pasHorizontalBoardEnemy,40*height_ratio);
+            enemy.get(i).getPane().setScaleX(width_ratio);
+            enemy.get(i).getPane().setScaleY(height_ratio);
         }
 
         if (hand.size()<7){
@@ -200,19 +202,23 @@ public class Player {
                 int pasHorizontalHandPlayer =
                         (int) (((((1662)- hand.size()*172)*width_ratio)/ hand.size()-1)+172*width_ratio);
                 hand.get(i).getPane().relocate(i*pasHorizontalHandPlayer,721*height_ratio);
+                hand.get(i).getPane().setScaleX(width_ratio);
+                hand.get(i).getPane().setScaleY(height_ratio);
             }
 
         } else{
             for (int i = 0; i < 7; i++) {
                 int pasHorizontalHandPlayer = (int) ((((1662- 7*172)*width_ratio)/ 6-1)+172*width_ratio);
                 hand.get(i).getPane().relocate(i*pasHorizontalHandPlayer,721*height_ratio);
-
+                hand.get(i).getPane().setScaleX(width_ratio);
+                hand.get(i).getPane().setScaleY(height_ratio);
             }
             for (int i = 0; i < hand.size()-7; i++){
                 int pasHorizontalHandPlayer =
                         (int) ((((1662- (hand.size()-7)*172)*width_ratio)/ (hand.size()-7)-1)+172*width_ratio);
                 hand.get(i).getPane().relocate(i*pasHorizontalHandPlayer,891*height_ratio);
-
+                hand.get(i).getPane().setScaleX(width_ratio);
+                hand.get(i).getPane().setScaleY(height_ratio);
             }
         }
 
@@ -234,7 +240,7 @@ public class Player {
             for (Card card : enemy) {
                 if (card.isBool()) {
                     card.entiere();
-                    card.getPane().relocate(1830*height_ratio,295*width_ratio);
+                    card.getPane().relocate((1613-card.getPane().getTranslateX())*height_ratio,(340-card.getPane().getTranslateY())*width_ratio);
                     card.getPane().setScaleX(width_ratio);
                     card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Buy");
@@ -243,7 +249,7 @@ public class Player {
             for (Card card : hand) {
                 if (card.isBool()) {
                     card.entiere();
-                    card.getPane().relocate(1830*height_ratio,295*width_ratio);
+                    card.getPane().relocate((1613-card.getPane().getTranslateX())*height_ratio,(340-card.getPane().getTranslateY())*width_ratio);
                     card.getPane().setScaleX(width_ratio);
                     card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Put");
@@ -252,7 +258,7 @@ public class Player {
             for (Card card : board) {
                 if (card.isBool()) {
                     card.entiere();
-                    card.getPane().relocate(1830*height_ratio,295*width_ratio);
+                    card.getPane().relocate((1613-card.getPane().getTranslateX())*height_ratio,(340-card.getPane().getTranslateY())*width_ratio);
                     card.getPane().setScaleX(width_ratio);
                     card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Sell");
