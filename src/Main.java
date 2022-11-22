@@ -4,6 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -17,9 +19,10 @@ public class Main extends Application  {
     private Button button = new Button("Passe");
     private Pane pane = new Pane(group);
     private int i = 0;
+    private int j = 0;
     private Scene scene = new Scene(pane);
     Stage stage = new Stage();
-
+    private ArrayList<ImageView> imgs = new ArrayList<>();
 
 
     @Override
@@ -30,6 +33,14 @@ public class Main extends Application  {
             tamp.setCreature(name,"doc/effectListCSV_epure.csv");
             creas.add(tamp);
         }
+        imgs.add(new ImageView(new Image("file:ImageJeu/joueur1.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/joueur2.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/joueur3.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/joueur4.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/joueur5.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/joueur6.png")));
+        imgs.add(new ImageView(new Image("file:ImageJeu/tavernier.png")));
+
         group.getChildren().add(creas.get(i).getPane());
         creas.get(i).entiere();
         creas.get(i).getPane().setTranslateX(680);
@@ -43,14 +54,27 @@ public class Main extends Application  {
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                group.getChildren().remove(creas.get(i).getPane());
-                i++;
-                group.getChildren().add(creas.get(i).getPane());
-                creas.get(i).entiere();
-                creas.get(i).getPane().setTranslateX(680);
-                creas.get(i).getPane().setTranslateY(250);
-                creas.get(i).getPane().setScaleX(2);
-                creas.get(i).getPane().setScaleY(2);
+                if (i<creas.size()-1) {
+                    group.getChildren().remove(creas.get(i).getPane());
+                    i++;
+                    group.getChildren().add(creas.get(i).getPane());
+                    creas.get(i).entiere();
+                    creas.get(i).getPane().setTranslateX(680);
+                    creas.get(i).getPane().setTranslateY(250);
+                    creas.get(i).getPane().setScaleX(2);
+                    creas.get(i).getPane().setScaleY(2);
+                } else if (i == creas.size()){
+                    group.getChildren().remove(creas.get(i-1).getPane());
+                } else {
+                    group.getChildren().remove(imgs.get(i-1-creas.size()));
+                    i++;
+                    group.getChildren().add(imgs.get(i-creas.size()));
+                    imgs.get(i-creas.size()).setTranslateX(680);
+                    imgs.get(i-creas.size()).setTranslateY(250);
+                    imgs.get(i-creas.size()).setScaleX(2);
+                    imgs.get(i-creas.size()).setScaleY(2);
+                }
+
 
             }
         });
