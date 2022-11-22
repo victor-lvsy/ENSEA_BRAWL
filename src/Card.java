@@ -19,17 +19,23 @@ public class Card {
     private final Button button = new Button("Buy");
     private int action = 0;
     private boolean newBool = false;
+    private final ImageView pvatt = new ImageView(new Image("file:ImageJeu/HP_ATT.png"));
     private final ImageView fondCarte = new ImageView(new Image("file:ImageJeu/fondCarte.png"));
+    private Font font = new Font("Verdana", 24);
+    private Font font2 = new Font("Verdana", 20);
+
 
     public Card() {
         pane.getChildren().add(cardImgView);
         pane.getChildren().add(fondCarte);
+        pane.getChildren().add(pvatt);
         pane.getChildren().add(attack);
         pane.getChildren().add(health);
         pane.getChildren().add(name);
         pane.getChildren().add(shopLevel);
         pane.getChildren().add(button);
-        Font font = new Font("Verdana", 24);
+        pvatt.setX(15);
+        pvatt.setY(60);
         shopLevel.setFont(font);
         health.setFont(font);
         attack.setFont(font);
@@ -50,19 +56,29 @@ public class Card {
     }
 
     public void reduit(){
+        attack.setFont(font2);
+        health.setFont(font2);
+        attack.setY(154);
+        health.setY(154);
+        attack.setX(28);
+        health.setX(169);
+        pvatt.setVisible(true);
         button.setVisible(false);
         fondCarte.setVisible(false);
-        attack.setVisible(false);
-        health.setVisible(false);
         name.setVisible(false);
         shopLevel.setVisible(false);
     }
 
     public void entiere(){
+        attack.setFont(font);
+        health.setFont(font);
+        attack.setY(300);
+        health.setY(300);
+        attack.setX(25);
+        health.setX(172);
+        pvatt.setVisible(false);
         button.setVisible(true);
         fondCarte.setVisible(true);
-        attack.setVisible(true);
-        health.setVisible(true);
         name.setVisible(true);
         shopLevel.setVisible(true);
     }
@@ -74,10 +90,6 @@ public class Card {
         cardImgView.setY(55);
         shopLevel.setX(21);
         shopLevel.setY(35);
-        attack.setX(25);
-        attack.setY(300);
-        health.setX(172);
-        health.setY(300);
         name.setX(58);
         name.setY(33);
         name.setFill(Color.BLACK);

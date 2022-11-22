@@ -1,4 +1,6 @@
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
@@ -24,8 +26,11 @@ public class Fight {
     private String output;
     private final Counter timerFight = new Counter();
     Player enemy;
+    private ImageView board = new ImageView(new Image("file:ImageJeu/board_ENSEA_BRAWL.png"));
+
 
     public Fight(){
+        pane.getChildren().add(board);
         pane.getChildren().add(win);
         pane.getChildren().add(lose);
         pane.getChildren().add(shop);
@@ -40,6 +45,8 @@ public class Fight {
 
     public void update(double width,double height,State state,Player player, Player player2){
         if (timerFight.getBool() && state == State.PLAY_FIGHT){this.output = "PLAY_SHOP";}
+        board.setFitWidth(Game.width);
+        board.setFitHeight(Game.height);
         win.setTranslateX((2*width-win.getWidth())/5);
         win.setTranslateY((height-win.getHeight())/2);
         lose.setTranslateX((3*width-win.getWidth())/5);
