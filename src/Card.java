@@ -29,11 +29,11 @@ public class Card {
         pane.getChildren().add(name);
         pane.getChildren().add(shopLevel);
         pane.getChildren().add(button);
-        Font font = new Font("Verdana", 20);
+        Font font = new Font("Verdana", 24);
         shopLevel.setFont(font);
         health.setFont(font);
         attack.setFont(font);
-        Font fontName = new Font("Verdana", 14);
+        Font fontName = new Font("Verdana", 12);
         name.setFont(fontName);
         name.setFill(Color.WHITE);
         button.setVisible(false);
@@ -70,18 +70,19 @@ public class Card {
     public void update(){
         name.setText(CardName);
         cardImgView.setImage(new Image("file:ImageJeu/" + CardName + ".png"));
-        cardImgView.setX(13);
-        cardImgView.setY(54);
-        shopLevel.setX(23);
+        cardImgView.setX(17);
+        cardImgView.setY(55);
+        shopLevel.setX(21);
         shopLevel.setY(35);
-        attack.setX(16-(int)attack.getText().length()*6.2);
-        attack.setY(309);
-        health.setX(184-(int)health.getText().length()*6.2);
-        health.setY(309);
-        name.setX(47);
+        attack.setX(25);
+        attack.setY(300);
+        health.setX(172);
+        health.setY(300);
+        name.setX(58);
         name.setY(33);
-        button.setTranslateX(50);
-        button.setTranslateY(150);
+        name.setFill(Color.BLACK);
+        button.setTranslateX(85);
+        button.setTranslateY(285);
     }
 
     public ImageView getCardView() {

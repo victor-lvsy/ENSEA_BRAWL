@@ -73,8 +73,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.minWidthProperty().bind(stage.heightProperty().multiply(16/9));
-        stage.minHeightProperty().bind(stage.widthProperty().multiply(9/16));
+        stage.setMaximized(true);
         at.start();
     }
 
@@ -117,6 +116,7 @@ public class Game extends Application {
                     stage.setScene(welcomeScene);
                     init.Initialisation();
                     stage.setMaximized(true);
+
                 }
                 break;
             case PLAY_SHOP:

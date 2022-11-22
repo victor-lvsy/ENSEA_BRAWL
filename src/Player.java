@@ -137,29 +137,24 @@ public class Player {
         for (int i = 0; i < shop.getActuallySelling().size(); i++) {
             if (shop.getActuallySelling().get(i).getAction() == 1) {
                 shop.getActuallySelling().get(i).clear();
-
-                hand.add(shop.getActuallySelling().get(i));
-                shop.getActuallySelling().remove(i);
-
+                this.buyCreature(i);
             }
         }
 
         for (int i = 0; i < hand.size(); i++) {
             if (hand.get(i).getAction() == 2) {
                 hand.get(i).clear();
-
-                hand.add(hand.get(i));
-                hand.remove(i);
+                this.handToBoard(i);
 
             }
         }
 
-        for (int i = 0; i < hand.size(); i++) {
-            if (hand.get(i).getAction() == 3) {
-                hand.get(i).clear();
-                hand.get(i).getPane().setVisible(false);
-                hand.get(i).getButton().setVisible(false);
-                hand.remove(i);
+        for (int i = 0; i < onBoard.size(); i++) {
+            if (onBoard.get(i).getAction() == 3) {
+                onBoard.get(i).clear();
+                onBoard.get(i).getPane().setVisible(false);
+                onBoard.get(i).getButton().setVisible(false);
+                this.sellCreature(i);
 
             }
         }
@@ -180,7 +175,7 @@ public class Player {
                 pane.getChildren().add(card.getPane());
             }
         }
-        placeCards(shop.getActuallySelling(),onBoard,hand, true);
+        placeCards(shop.getActuallySelling(), onBoard, hand, true);
 
     }
 
@@ -191,36 +186,33 @@ public class Player {
         int pasHorizontalBoardPlayer =
                 (int) (((((1662)- board.size()*172)*width_ratio)/ board.size()-1)+172*width_ratio);
         for (int i = 0; i < board.size(); i++) {
-            board.get(i).getPane().setTranslateX(i * pasHorizontalBoardPlayer);
-            board.get(i).getPane().setTranslateY(340*height_ratio);
+            board.get(i).getPane().relocate(i * pasHorizontalBoardPlayer,340*height_ratio);
         }
 
         int pasHorizontalBoardEnemy =
                 (int) ((((1662- (enemy.size()-7)*172)*width_ratio)/ (enemy.size()-7)-1)+172*width_ratio);
         for (int i = 0; i < enemy.size(); i++) {
-            enemy.get(i).getPane().setTranslateX(i * pasHorizontalBoardEnemy);
-            enemy.get(i).getPane().setTranslateY(80*height_ratio);
+            enemy.get(i).getPane().relocate(i * pasHorizontalBoardEnemy,40*height_ratio);
         }
 
         if (hand.size()<7){
             for (int i = 0; i < hand.size(); i++) {
                 int pasHorizontalHandPlayer =
                         (int) (((((1662)- hand.size()*172)*width_ratio)/ hand.size()-1)+172*width_ratio);
-                hand.get(i).getPane().setTranslateX(i * pasHorizontalHandPlayer);
-                hand.get(i).getPane().setTranslateY(721*height_ratio);
+                hand.get(i).getPane().relocate(i*pasHorizontalHandPlayer,721*height_ratio);
             }
 
         } else{
             for (int i = 0; i < 7; i++) {
                 int pasHorizontalHandPlayer = (int) ((((1662- 7*172)*width_ratio)/ 6-1)+172*width_ratio);
-                hand.get(i).getPane().setTranslateX(i * pasHorizontalHandPlayer);
-                hand.get(i).getPane().setTranslateY(721*height_ratio);
+                hand.get(i).getPane().relocate(i*pasHorizontalHandPlayer,721*height_ratio);
+
             }
             for (int i = 0; i < hand.size()-7; i++){
                 int pasHorizontalHandPlayer =
                         (int) ((((1662- (hand.size()-7)*172)*width_ratio)/ (hand.size()-7)-1)+172*width_ratio);
-            hand.get(i+7).getPane().setTranslateX(i * pasHorizontalHandPlayer);
-            hand.get(i+7).getPane().setTranslateY(891*height_ratio);
+                hand.get(i).getPane().relocate(i*pasHorizontalHandPlayer,891*height_ratio);
+
             }
         }
 
@@ -242,32 +234,29 @@ public class Player {
             for (Card card : enemy) {
                 if (card.isBool()) {
                     card.entiere();
-                    card.getPane().setTranslateX(1663*width_ratio-card.getPane().getTranslateX());
-                    card.getPane().setTranslateY(405*height_ratio-card.getPane().getTranslateY());
+                    card.getPane().relocate(1830*height_ratio,295*width_ratio);
                     card.getPane().setScaleX(width_ratio);
                     card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Buy");
-                }
+                }else {card.reduit();}
             }
             for (Card card : hand) {
                 if (card.isBool()) {
                     card.entiere();
-                    card.getPane().setTranslateX(1663*width_ratio-card.getPane().getTranslateX());
-                    card.getPane().setTranslateY(100*height_ratio-card.getPane().getTranslateY());
+                    card.getPane().relocate(1830*height_ratio,295*width_ratio);
                     card.getPane().setScaleX(width_ratio);
                     card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Put");
-                }
+                }else {card.reduit();}
             }
             for (Card card : board) {
                 if (card.isBool()) {
                     card.entiere();
-                    card.getPane().setTranslateX(1663*width_ratio-card.getPane().getTranslateX());
-                    card.getPane().setTranslateY(405*height_ratio-card.getPane().getTranslateY());
+                    card.getPane().relocate(1830*height_ratio,295*width_ratio);
                     card.getPane().setScaleX(width_ratio);
                     card.getPane().setScaleY(height_ratio);
                     card.getButton().setText("Sell");
-                }
+                } else {card.reduit();}
             }
 
             ArrayList<Card> tamp = new ArrayList<>();
@@ -278,6 +267,7 @@ public class Player {
                 if (card.isNewBool()){
                     for (Card card0 : enemy) {
                         card0.clear();
+
                     }
                     for (Card card0 : hand) {
                         card0.clear();
@@ -287,7 +277,6 @@ public class Player {
                     }
                     card.setNewBool(false);
                     card.setBool(true);
-                    card.reduit();
                 }
 
             }
