@@ -65,14 +65,21 @@ public class Main extends Application  {
                     creas.get(i).getPane().setScaleY(2);
                 } else if (i == creas.size()){
                     group.getChildren().remove(creas.get(i-1).getPane());
-                } else {
-                    group.getChildren().remove(imgs.get(i-1-creas.size()));
+                    group.getChildren().remove(imgs.get(i+1-creas.size()));
                     i++;
-                    group.getChildren().add(imgs.get(i-creas.size()));
-                    imgs.get(i-creas.size()).setTranslateX(680);
-                    imgs.get(i-creas.size()).setTranslateY(250);
-                    imgs.get(i-creas.size()).setScaleX(2);
-                    imgs.get(i-creas.size()).setScaleY(2);
+                    group.getChildren().add(imgs.get(i+1-creas.size()));
+                    imgs.get(i+1-creas.size()).setTranslateX(680);
+                    imgs.get(i+1-creas.size()).setTranslateY(250);
+                    imgs.get(i+1-creas.size()).setScaleX(2);
+                    imgs.get(i+1-creas.size()).setScaleY(2);
+                } else {
+                    group.getChildren().remove(imgs.get(i+1-creas.size()));
+                    i++;
+                    group.getChildren().add(imgs.get(i+1-creas.size()));
+                    imgs.get(i+1-creas.size()).setTranslateX(680);
+                    imgs.get(i+1-creas.size()).setTranslateY(250);
+                    imgs.get(i+1-creas.size()).setScaleX(2);
+                    imgs.get(i+1-creas.size()).setScaleY(2);
                 }
 
 
