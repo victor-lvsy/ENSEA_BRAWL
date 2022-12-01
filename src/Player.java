@@ -1,7 +1,9 @@
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -29,7 +31,7 @@ public class Player {
     private ImageView bob = new ImageView(new Image("file:ImageJeu/tavernier.png"));
     private ImageView profile;
     private Text bobText = new Text("BOB");
-    private final Pane pane = new Pane();
+    private final AnchorPane pane = new AnchorPane();
     Button fight = new Button("Passer au combat");
     Button lose = new Button("Lose");
     private String output;
@@ -173,7 +175,7 @@ public class Player {
                 pane.getChildren().add(card.getPane());
             }
         }
-        placeCards(shop.getActuallySelling(), onBoard, hand, true);
+        //placeCards(shop.getActuallySelling(), onBoard, hand, true);
 
     }
 
@@ -183,17 +185,82 @@ public class Player {
 
         int pasHorizontalBoardPlayer =
                 (int) (((((1662)- board.size()*172)*width_ratio)/ board.size()-1)+172*width_ratio);
+
         for (int i = 0; i < board.size(); i++) {
             board.get(i).getPane().relocate(i * pasHorizontalBoardPlayer,340*height_ratio);
         }
 
-        int pasHorizontalBoardEnemy =
+        /*int pasHorizontalBoardEnemy =
                 (int) (((((1662)- enemy.size()*172)*width_ratio)/ enemy.size()-1)+172*width_ratio);
         for (int i = 0; i < enemy.size(); i++) {
             enemy.get(i).getPane().relocate(i * pasHorizontalBoardEnemy,40*height_ratio);
             enemy.get(i).getPane().setScaleX(width_ratio);
             enemy.get(i).getPane().setScaleY(height_ratio);
+        }*/
+        switch (enemy.size()){
+            case 0:break;
+            case 1: relocateAndResizeCard(enemy.get(0).getPane(),753,40,width_ratio,height_ratio);
+                    break;
+            case 2: relocateAndResizeCard(enemy.get(0).getPane(),627,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(1).getPane(),863,40,width_ratio,height_ratio);
+                    break;
+            case 3: relocateAndResizeCard(enemy.get(0).getPane(),517,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(1).getPane(),753,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(2).getPane(),989,40,width_ratio,height_ratio);
+                    break;
+            case 4: relocateAndResizeCard(enemy.get(0).getPane(),391,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(1).getPane(),627,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(2).getPane(),863,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(3).getPane(),1099,40,width_ratio,height_ratio);
+                    break;
+            case 5: relocateAndResizeCard(enemy.get(0).getPane(),281,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(1).getPane(),517,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(2).getPane(),753,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(3).getPane(),989,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(4).getPane(),1225,40,width_ratio,height_ratio);
+                    break;
+            case 6: relocateAndResizeCard(enemy.get(0).getPane(),155,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(1).getPane(),391,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(2).getPane(),627,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(3).getPane(),863,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(4).getPane(),1099,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(5).getPane(),1335,40,width_ratio,height_ratio);
+                    break;
+            case 7: relocateAndResizeCard(enemy.get(0).getPane(),45,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(1).getPane(),281,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(2).getPane(),517,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(3).getPane(),753,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(4).getPane(),989,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(5).getPane(),1225,40,width_ratio,height_ratio);
+                    relocateAndResizeCard(enemy.get(6).getPane(),1441,40,width_ratio,height_ratio);
+                    break;
         }
+        /*if(enemy.size()>0){
+            if(enemy.size()%2==0){
+                for (int i = 0; i == ((enemy.size()/2)-1); i++) {
+                    enemy.get(2*i).getPane().relocate((863+(i*236))*width_ratio,40*height_ratio);
+                    enemy.get(2*i+1).getPane().relocate((627-(i*236))*width_ratio,40*height_ratio);
+                    enemy.get(2*i).getPane().setScaleX(width_ratio);
+                    enemy.get(2*i).getPane().setScaleY(height_ratio);
+                    enemy.get(2*i+1).getPane().setScaleX(width_ratio);
+                    enemy.get(2*i+1).getPane().setScaleY(height_ratio);
+                }
+            }
+            else {
+                enemy.get(0).getPane().relocate(799*width_ratio,40*height_ratio);
+                enemy.get(0).getPane().setScaleX(width_ratio);
+                enemy.get(0).getPane().setScaleY(height_ratio);
+                for (int i = 1; i == (((enemy.size()+1)/2)-1); i++) {
+                    enemy.get(2*i).getPane().relocate((799-(i*236))*width_ratio,40*height_ratio);
+                    enemy.get(2*i-1).getPane().relocate((927+(i*236))*width_ratio,40*height_ratio);
+                    enemy.get(2*i).getPane().setScaleX(width_ratio);
+                    enemy.get(2*i).getPane().setScaleY(height_ratio);
+                    enemy.get(2*i-1).getPane().setScaleX(width_ratio);
+                    enemy.get(2*i-1).getPane().setScaleY(height_ratio);
+                }
+            }
+        }*/
+
 
         if (hand.size()<7){
             for (int i = 0; i < hand.size(); i++) {
@@ -286,9 +353,14 @@ public class Player {
             }
 
         }
-
     }
 
+    public void relocateAndResizeCard(Pane card, double x, double y, double width_ratio, double height_ratio){
+        card.relocate((x+card.getTranslateX())*width_ratio,(y+card.getTranslateY())*height_ratio);
+        System.out.println((x+card.getTranslateX())*width_ratio+" "+(y+card.getTranslateY())*height_ratio);
+        card.setScaleX(width_ratio);
+        card.setScaleY(height_ratio);
+    }
 
     public ArrayList<Creature> getOnBoard() {
         return onBoard;

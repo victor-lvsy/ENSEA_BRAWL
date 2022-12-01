@@ -84,6 +84,8 @@ public class Card {
     }
 
     public void update(){
+        double width_ratio=  Game.width/1920;
+        double height_ratio= Game.height/1080;
         name.setText(CardName);
         cardImgView.setImage(new Image("file:ImageJeu/" + CardName + ".png"));
         cardImgView.setX(17);
